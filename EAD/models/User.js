@@ -4,16 +4,26 @@ const UserSchema = new mongoose.Schema({
     type:String,
     required:[true,'Valid Email Id Required'],
     unique: true,
+    lowecase:true
   },
   password : {
     type:String,
-    required:[true,'Valid Email Id Required'],
-
-
+  },
+  googleid:{
+    type:String,
+  },
+  method:{
+    type:String
   },
   resetPasswordToken: {type:String},
   resetPasswordExpires: {type:Date},
-  profile:{type:mongoose.Types.ObjectId}
+  profile:{
+    type:mongoose.Schema.Types.ObjectId
+  },
+  isVerified:{
+    type:Boolean,
+    default:false
+  }
 
 })
 

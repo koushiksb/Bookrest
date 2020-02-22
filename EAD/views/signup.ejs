@@ -28,28 +28,29 @@ Bookrest
           <div class="col-lg-6 col-md-6 col-sm-7 col-12 ml-auto">
             <div class="info info-horizontal">
               <div class="icon">
-                <i class="fa fa-umbrella"></i>
+                <i class="fa fa-book"></i>
+
               </div>
               <div class="description">
-                <h3> We've got you covered </h3>
+                <h3> Find rare books </h3>
                 <p>Larger, yet dramatically thinner. More powerful, but remarkably power efficient. Everything you need in a single case.</p>
               </div>
             </div>
             <div class="info info-horizontal">
               <div class="icon">
-                <i class="fa fa-map-signs"></i>
+                <i class="fa fa-money"></i>
               </div>
               <div class="description">
-                <h3> Clear Directions </h3>
+                <h3> Earn money </h3>
                 <p>Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.</p>
               </div>
             </div>
             <div class="info info-horizontal">
               <div class="icon">
-                <i class="fa fa-user-secret"></i>
+                <i class="fa fa-exchange"></i>
               </div>
               <div class="description">
-                <h3> We value your privacy </h3>
+                <h3> Exchange books</h3>
                 <p>Completely synergize resource taxing relationships via premier niche markets.</p>
               </div>
             </div>
@@ -58,9 +59,7 @@ Bookrest
             <div class="card card-register">
               <h3 class="card-title text-center">Register</h3>
               <div class="social">
-                <button href="#paper-kit" class="btn btn-just-icon btn-facebook"><i class="fa fa-facebook"></i></button>
-                <button href="#paper-kit" class="btn btn-just-icon btn-google"><i class="fa fa-google"></i></button>
-                <button href="#paper-kit" class="btn btn-just-icon btn-twitter"><i class="fa fa-twitter"></i></button>
+                <a href="/users/google" class="btn btn-just-icon btn-google"><i class="fa fa-google"></i></a>
               </div>
               <div class="division">
                 <div class="line l"></div>
@@ -69,13 +68,21 @@ Bookrest
               </div>
               <form id='signupform' class="register-form" method='post'>
                 <input type="email" id = 'useremail' class="form-control" name='email' required placeholder="Email">
-                <input type="password" id = 'userpassword' class="form-control"  name='password' pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,15}$' title = 'Password must contain One uppercase,One lower case,special character and a number' required  placeholder="Password">
-                <input type="password" id = 'userpassword1' class="form-control" name='password1' required pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,15}$' 'Password must contain One uppercase,One lower case,special character and a number' placeholder="Confirm Password">
-                <button class="btn btn-block btn-round">Register</button>
+                <p id='msgs' style="color:red"></p>
+                <a id='next' class="btn btn-block btn-round" onclick="check()" >Next</a>
+                <div id="passwords" style='display:none'>
+                  <input type="password" id = 'userpassword' class="form-control"  name='password' pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,15}$' title = 'Password must contain One uppercase,One lower case,special character and a number,of min length 6' required  placeholder="Password">
+                  <input type="password" id = 'userpassword1' class="form-control" name='password1' required pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,15}$' 'Password must contain One uppercase,One lower case,special character and a number,of min length 6' placeholder="Confirm Password">
+                  <p id='msgs2' style="color:red"></p>
+
+                  <a onclick='submitform()' class="btn btn-block btn-round">Register</a>
+
+                </div>
+
               </form>
               <div class="login">
                 <p>Already have an account?
-                  <a href="#0">Log in</a>.</p>
+                  <a href="/users/login">Log in</a>.</p>
               </div>
             </div>
           </div>
@@ -88,19 +95,59 @@ Bookrest
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
   <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/validator/12.2.0/validator.min.js'></script>
+  <script>
+function check(){
+  var temp = document.getElementById('useremail').value
+  console.log(validator.isEmail(temp));
+  if(validator.isEmail(temp) == true){
+  $.ajax({
+      type:'POST',
+      url:'/users/checkemail',
+      data:{
+        email:document.getElementById('useremail').value,
+      },
+      success:function(result){
+        console.log(result);
+        if(result=='1'){
+
+          document.getElementById('next').style.display = 'none'
+          document.getElementById('passwords').style.display = 'block'
+          var k=document.getElementById('signupform').innerHTML +=  "<input type=hidden name='email'" + "value = "+ temp+">"
+           document.getElementById('useremail').value = temp
+           document.getElementById('useremail').disabled = true
+
+        }
+        else{
+          document.getElementById('msgs').innerHTML += '<p>Email already linked to another account</p> '
+          console.log('Email already linked to another account')
+        }
+        return false
+      }
+    });
+}else{
+  document.getElementById('msgs').innerHTML += '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
+}
+}
+</script>
+
   <script type="text/javascript" >
-  $('#signupform').submit(function() {
+  function submitform() {
+
+
+
     // Stop the form from submitting until validation occurs
     var valid = true;
-    e.preventDefault();
-    var email = $('#email').value
-    var password = $('#password').value
-    var password1 = $('#password1').value
+
+    var email = document.getElementById('useremail').value
+    var password = document.getElementById('userpassword').value
+    var password1 = document.getElementById('userpassword1').value
 
     console.log(email)
     // If card number or CVC code are invalid, notify the user
     if (!validator.equals(password,password1)) {
       valid = false;
+      console.log('invalid');
+document.getElementById('msgs2').innerHTML += '<p style="font-size:10px"><b>Passwords does not match</b></p> '
     }
     if (! password.length>6) {
       valid = false;
@@ -108,10 +155,10 @@ Bookrest
 
     // Submit the form if all went well
     if (valid) {
-      $(this).get(0).submit();
+      document.getElementById('signupform').submit()
     }
-  }
-  </script>
 
+}
+  </script>
 </body>
 </html>

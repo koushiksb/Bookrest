@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>
+Bookrest
+  </title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
+  <!-- Extra details for Live View on GitHub Pages -->
+<style media="screen">
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css */
+*,::after,::before{box-sizing:border-box;}
+h3{margin-top:0;margin-bottom:.5rem;}
+p{margin-top:0;margin-bottom:1rem;}
+a{color:#007bff;text-decoration:none;background-color:transparent;}
+a:hover{color:#0056b3;text-decoration:underline;}
+h3{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
+h3{font-size:1.75rem;}
+.row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px;}
+.col-12,.col-lg-6,.col-md-6,.col-sm-5{position:relative;width:100%;padding-right:15px;padding-left:15px;}
+.col-12{-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%;}
+@media (min-width:576px){
+.col-sm-5{-ms-flex:0 0 41.666667%;flex:0 0 41.666667%;max-width:41.666667%;}
+}
+@media (min-width:768px){
+.col-md-6{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;}
+}
+@media (min-width:992px){
+.col-lg-6{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;}
+}
+.card{position:relative;display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;min-width:0;word-wrap:break-word;background-color:#fff;background-clip:border-box;border:1px solid rgba(0,0,0,.125);border-radius:.25rem;}
+.card-title{margin-bottom:.75rem;}
+.mr-auto{margin-right:auto!important;}
+.text-center{text-align:center!important;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+a:not(.btn){text-decoration:underline;}
+h3,p{orphans:3;widows:3;}
+h3{page-break-after:avoid;}
+}
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0 */
+a,h3,p{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+h3{margin:30px 0 0;}
+h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
+p{line-height:1.5em;}
+#note{font-size:18px;margin-bottom:5px;}
+
+p{font-size:15px;margin-bottom:5px;}
+.card-title{font-family:"Comic Sans MS",cursive,sans-serif;}
+.card-title{color:#333;text-decoration:none;}
+a{color:#51bcda;}
+a:focus,a:hover{color:#2ba9cd;text-decoration:none;}
+a:active,a:focus{outline:0;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+.card{border-radius:12px;box-shadow:0px 6px 10px -4px rgba(0,0,0,.15);background-color:#fff;color:#333;margin-bottom:20px;margin-left:20%;position:relative;z-index:1;border:1px solid #333;transition:transform .3s cubic-bezier(.34,2,.6,1),box-shadow .2s ease;}
+.card:not(.card-plain):hover{box-shadow:0 12px 19px -7px rgba(0,0,0,.3);transform:translateY(-10px);-webkit-transform:translateY(-10px);-ms-transform:translateY(-10px);-moz-transform:translateY(-10px);}
+.card.card-register:hover{box-shadow:0 6px 10px -4px rgba(0,0,0,.15);transform:none;-webkit-transform:none;-ms-transform:none;-moz-transform:none;}
+.card a:not(.btn){color:#444;}
+.card a:not(.btn):focus,.card a:not(.btn):hover{color:#333;}
+.card>.card-title{margin:0;padding:30px 0 0;}
+.card-register{background-color:#ff8f5e;border-radius:8px;color:#fff;min-width:450px;margin:20px 475px 70px;min-height:200px;padding:30px;}
+.card-register .card-title{color:#b33c12;text-align:center;}
+.register-page .card-register{background-color:#fff;}
+.register-page .card-register .card-title{color:#66615b;}
+.full-screen.register-page .card-register{background-color:#fff;max-width:360px;}
+.full-screen.register-page .card-register .division{float:none;margin:0 auto;overflow:hidden;margin:20px 0;position:relative;text-align:center;width:100%;color:#66615b;}
+.full-screen.register-page .card-register .division .line{border-top:1px solid rgba(0,0,0,.2);position:absolute;top:10px;width:40%;}
+.full-screen.register-page .card-register .division .line.l{left:0;}
+.full-screen.register-page .card-register .division .line.r{right:0;}
+.full-screen.register-page .card-register .login p{color:#66615b;}
+.full-screen.register-page .card-register .login p a{color:#51bcda;}
+.full-screen.register-page .login{margin-top:20px;text-align:center;}
+.full-screen.register-page .login p{font-size:.9em;}
+/*! CSS Used fontfaces */
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gTD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3g3D_vx3rCubqg.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gbD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gfD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gnD_vx3rCs.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WRhyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459W1hyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WZhyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WdhyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gTD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3g3D_vx3rCubqg.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gbD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gfD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gnD_vx3rCs.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+</style>
+
+</head>
+
+<body class="register-page full-screen sidebar-collapse" data-gr-c-s-loaded="true">
+
+  <div class="container">
+    <div class="row">
+
+        <div class="card card-register">
+          <h3 class="card-title text-center">Bookrest</h3>
+          <div class="division">
+            <div class="line l"></div>
+            <span style='font-family:"Comic Sans MS",cursive,sans-serif;'>Trade</span>
+            <div class="line r"></div>
+          </div>
+          <div class="login">
+            <p id='note'><%=msg1%></p>
+            <h4 style='color:black;font-family:"Comic Sans MS",cursive,sans-serif;'><%=msg%></h4>
+
+            <p>Go to Login
+              <a href="/users/login">Login</a>.</p>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+  <!--   Core JS Files   -->
+
+
+</body>
+</html>

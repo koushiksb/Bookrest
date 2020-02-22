@@ -65,9 +65,13 @@ Bookrest
                 <span>or</span>
                 <div class="line r"></div>
               </div>
-              <form class="register-form" id='loginform' method='post'>
-                <input type="email" class="form-control" id='useremail' name='email' placeholder="Email">
-                <a id='next' class="btn btn-block btn-round" onclick="check()" >Next</a>
+              <form class="register-form" id='login-form' method='post'>
+                <input type="email" id='useremail' class="form-control" name='username' placeholder="Email">
+                <p id='msgs' style="color:red"></p>
+                <a id='next'  class="btn btn-block btn-round" onclick="check()" >Next</a>
+                <input type="password" style='display:none' id='userpassword' class="form-control" name='password' placeholder="Password">
+
+                <button class="btn btn-block btn-round" id='log' style='display:none' >Login</button>
               </form>
               <div class="login">
                 <p>Doesn't have an account?
@@ -101,26 +105,22 @@ function check(){
         if(result=='0'){
 
           document.getElementById('next').style.display = 'none'
-          var k=document.getElementById('loginform').innerHTML +=  "<input type=hidden name='username'" + "value = "+ temp+">"
-          document.getElementById('loginform').innerHTML +='<input type="password"  class="form-control" id="userpassword" name="password" placeholder="Password">'
-
-          document.getElementById('loginform').innerHTML +="<button  id='log' style='display:none'  class='btn btn-block btn-round'>Login</button>"
-
-
+          document.getElementById('log').style.display = 'block'
+          document.getElementById('userpassword').style.display = 'block'
+          var k=document.getElementById('login-form').innerHTML +=  "<input type=hidden name='email'" + "value = "+ temp+">"
            document.getElementById('useremail').value = temp
            document.getElementById('useremail').disabled = true
-           document.getElementById('log').style.display = 'block'
 
         }
         else{
-          document.getElementById('msgs').innerHTML += '<p>Try google auth</p> '
+          document.getElementById('msgs').innerHTML += '<p>Try with google authentication</p> '
           console.log('Email already linked to another account')
         }
         return false
       }
     });
 }else{
-  document.getElementById('msgs').innerHTML += '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
+  document.getElementById('msgs').innerHTML += '<p style="font-size:10px"><b>Invalid username or password</b></p> '
 }
 }
 

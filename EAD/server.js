@@ -5,6 +5,7 @@ const expressValidator = require('express-validator');
 const session = require('express-session');
 const flash = require('connect-flash');
 var passport=require('passport');
+const cookieSession = require('cookie-session')
 
 const cors = require('cors');
 
@@ -22,12 +23,17 @@ app.use(express.static('./static'));
 // app.use(bodyparser.json())
 // app.use(cors())
 
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true,
+// app.use(session({
+//   secret: 'secret',
+//   resave: true,
+//   saveUninitialized: true,
+//
+// }));
+app.use(cookieSession({
+  maxAge:24*60*60*1000,
+  keys:['jhbjbjnjjhdsjdkaldoiwurfhd']
+}))
 
-}));
 var urlencodedparser=bodyparser.urlencoded({extended:true});
 app.use(urlencodedparser);
 
@@ -67,6 +73,7 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
 //Routes
 
  app.use('/users',require('./routes/user'));
+  app.use('/test',require('./routes/testing'));
 
 
 
