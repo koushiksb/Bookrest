@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Profile = require('./Profile')
 const UserSchema = new mongoose.Schema({
   email : {
     type:String,
@@ -18,7 +19,8 @@ const UserSchema = new mongoose.Schema({
   resetPasswordToken: {type:String},
   resetPasswordExpires: {type:Date},
   profile:{
-    type:mongoose.Schema.Types.ObjectId
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Profile'
   },
   isVerified:{
     type:Boolean,

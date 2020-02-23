@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
-const ProfileSchema = new mongoose.schema({
-  name:{
+const ProfileSchema = new mongoose.Schema({
+  fname:{
     type:String,
     lowercase:true
   },
+  lname:{
+    type:String,
+    lowercase:true
+  },
+
   location:{
     type:String,
     lowercase:true
@@ -17,3 +22,6 @@ const ProfileSchema = new mongoose.schema({
     type:String
   }
 })
+const Profile = mongoose.model('Profile',ProfileSchema);
+
+module.exports=Profile;

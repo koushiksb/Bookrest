@@ -6,7 +6,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 var passport=require('passport');
 const cookieSession = require('cookie-session')
-
+const expressLayouts = require('express-ejs-layouts')
 const cors = require('cors');
 
 
@@ -18,7 +18,7 @@ app.set('view engine','ejs');
 app.use(express.static('./static'));
 
 
-
+app.use(expressLayouts)
 //db congif
 // app.use(bodyparser.json())
 // app.use(cors())
@@ -78,7 +78,7 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
 
 
 app.get("*", function(req, res){
-  res.render('error');
+  res.render('404');
 });
 
  app.listen(3000, function(){

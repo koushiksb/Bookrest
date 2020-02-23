@@ -10,6 +10,7 @@ var nodemailer = require('nodemailer');
 
 const User=require('../models/User')
 const Token=require('../models/Token')
+const Profile=require('../models/Profile')
 var urlencodedparser=bodyparser.urlencoded({extended:true});
 bodyParser = require('body-parser').json();
 
@@ -159,7 +160,65 @@ router.get('/logout',(req,res)=>{
 
 router.get('/dashboard',(req,res)=>{
 
-  res.render('dashboard',{user:req.user.email})
+      if(req.user.profile==undefined){
+       return res.render('profile',{user:req.user.email})
+     }else{
+        return res.render('dashboard',{user:req.user.email,layout:'navbar2.ejs'})
+     }
+
+
+
+})
+
+router.get('/profile',(req,res)=>{
+
+  Profile.findById({_id:req.user.profile}).then(x=>{
+    console.log(x);
+      return res.render('profile1',{user:req.user.email,pro:x,layout:'navbar2'})
+  })
+
+
+})
+
+router.post('/profile',(req,res)=>{
+  var fname=req.body.fname;
+  var lname=req.body.lname;
+  var phone = req.body.phone
+  var location = req.body.location
+  var address = req.body.address
+
+console.log(req.body);
+
+
+if(req.user.profile==undefined){  new Profile({
+  fname:fname,
+  lname:lname,
+  phone:phone,
+  location:location,
+  address:address
+}).save().then(x=>{
+   User.findOne({_id:req.user.id}).then(u=>{
+     u.profile = x.id
+     u.save().then(a=>{
+       return res.redirect('/users/dashboard')
+     })
+   })
+
+})}
+else{
+  Profile.findById({_id:req.user.profile}).then(x=>
+  {
+    x.fname = fname
+    x.lname = lname
+    x.location = location
+    x.phone = phone
+    x.address = address
+    x.save().then(z=>{
+      return res.redirect('/users/dashboard')
+    })
+  })
+}
+
 })
 
 router.get('/confirmation/:token',function (req, res, next) {

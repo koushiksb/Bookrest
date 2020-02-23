@@ -228,9 +228,8 @@
   .dropdown-menu .dropdown-item:focus{outline:0!important;}
   .dropdown-menu .dropdown-item:first-child{border-top-left-radius:12px;border-top-right-radius:12px;}
   .dropdown-menu .dropdown-item:last-child{border-bottom-left-radius:12px;border-bottom-right-radius:12px;}
-  .dropdown-menu .dropdown-item:focus,.dropdown-menu .dropdown-item:hover{color:#fff!important;opacity:1;text-decoration:none;background-color:#66615b;}
-  .dropdown-menu.dropdown-danger .dropdown-item:focus,.dropdown-menu.dropdown-danger .dropdown-item:hover{background-color:black;}
-  .dropdown-menu-right{right:-2px;left:auto;}
+  .dropdown-menu .dropdown-item:focus,.dropdown-menu .dropdown-item:hover{color:#fff!important;opacity:1;text-decoration:none;background-color:#66615b !important;}
+    .dropdown-menu-right{right:-2px;left:auto;}
   .dropdown-menu.show{display:block;}
   .navbar-nav .dropdown-menu:before{border-bottom:11px solid #f1eae0;border-left:11px solid transparent;border-right:11px solid transparent;content:"";display:inline-block;position:absolute;right:12px;top:-11px;}
   .navbar-nav .dropdown-menu:after{border-bottom:11px solid #fff;border-left:11px solid transparent;border-right:11px solid transparent;content:"";display:inline-block;position:absolute;right:12px;top:-10px;}
@@ -462,7 +461,7 @@ a:active,a:focus{outline:0;}
       <div class="collapse navbar-collapse" data-nav-image="https://demos.creative-tim.com/paper-kit-2-pro/assets/img/blurred-image-1.jpg" data-color="orange">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="#" class=" nav-link">
+            <a href="/users/dashboard" class=" nav-link">
               Home</a>
           </li>
           <li class="nav-item">
@@ -472,17 +471,17 @@ a:active,a:focus{outline:0;}
           </li>
           <li class="dropdown nav-item">
             <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-expanded="false">
-              Login
+              Menu
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-danger" aria-labelledby="navbarDropdownMenuLink1">
-              <a class="dropdown-item" href="https://demos.creative-tim.com/paper-kit-2-pro/examples/about-us.html">
-                <i class="nc-icon nc-bank"></i> About-us
+              <a class="dropdown-item" href="/users/profile">
+                <i class="nc-icon nc-bank"></i> Profile
               </a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="btn btn-round bg-brand"   target="_blank">
-               Signup
+            <a class="btn btn-round bg-brand" href='/users/logout'   target="_blank">
+               logout
             </a>
           </li>
           <!-- <li class="nav-item">
@@ -508,24 +507,24 @@ a:active,a:focus{outline:0;}
     </div>
   </nav>
   <!-- End Navbar -->
-  <div class="row">
-    hey there
-  </div>
+  <%-body%>
   <br>
   <br>
-  <footer class="footer  footer-gray footer-white ">
+  <br>
+
+  <footer  class="footer  footer-gray footer-white ">
     <div class="container">
       <div class="row">
         <nav class="footer-nav">
           <ul>
             <li>
-              <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
+              <a href="/users/dashboard" target="_blank">Home</a>
             </li>
             <li>
-              <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
+              <a href="#" target="_blank">My shelf</a>
             </li>
             <li>
-              <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
+              <a href="/users/logout" target="_blank">Logout</a>
             </li>
           </ul>
         </nav>
@@ -534,7 +533,7 @@ a:active,a:focus{outline:0;}
             ©
             <script>
               document.write(new Date().getFullYear())
-            </script>2020, made with <i class="fa fa-heart heart"></i> by Creative Tim
+            </script>made with <i class="fa fa-heart heart"></i> by Bookrest
           </span>
         </div>
       </div>

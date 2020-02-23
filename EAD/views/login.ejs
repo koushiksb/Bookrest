@@ -21,42 +21,14 @@ Bookrest
 
 <body class="register-page full-screen sidebar-collapse" data-gr-c-s-loaded="true">
   <div class="wrapper">
-    <div class="page-header" style="background-image: url('https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260');">
+    <div class="page-header" style="background-image: url('https://images.pexels.com/photos/298660/pexels-photo-298660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');">
       <div class="filter"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-7 col-12 ml-auto">
-            <div class="info info-horizontal">
-              <div class="icon">
-                <i class="fa fa-umbrella"></i>
-              </div>
-              <div class="description">
-                <h3> We've got you covered </h3>
-                <p>Larger, yet dramatically thinner. More powerful, but remarkably power efficient. Everything you need in a single case.</p>
-              </div>
-            </div>
-            <div class="info info-horizontal">
-              <div class="icon">
-                <i class="fa fa-map-signs"></i>
-              </div>
-              <div class="description">
-                <h3> Clear Directions </h3>
-                <p>Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.</p>
-              </div>
-            </div>
-            <div class="info info-horizontal">
-              <div class="icon">
-                <i class="fa fa-user-secret"></i>
-              </div>
-              <div class="description">
-                <h3> We value your privacy </h3>
-                <p>Completely synergize resource taxing relationships via premier niche markets.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-5 col-12 mr-auto">
+      <div  class="container">
+        <div  class="row">
+          <div style='margin-left:35%'  class="col-md mr-auto">
             <div class="card card-register">
-              <h3 class="card-title text-center">Register</h3>
+              <h3 class="card-title text-center" style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;'>Bookrest</h3>
+              <p class='text-center' style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;color:#66615b">Find the hidden</p>
               <div class="social">
                 <a href="/users/google" class="btn btn-just-icon btn-google"><i class="fa fa-google"></i></a>
               </div>
@@ -67,6 +39,7 @@ Bookrest
               </div>
               <form class="register-form" id='loginform' method='post'>
                 <input type="email" class="form-control" id='useremail' name='email' placeholder="Email">
+                <p id='msgs' style='color:red'></p>
                 <a id='next' class="btn btn-block btn-round" onclick="check()" >Next</a>
               </form>
               <div class="login">
