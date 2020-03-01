@@ -4,26 +4,26 @@ const BookSchema = new mongoose.Schema({
   ISBN:{
     type:String
   },
-  Book-Title:{
+  Title:{
     type:String
   },
 
-  Book-Author:{
+  Author:{
     type:String
   },
-  Year-Of-Publication:{
+  YearOfPublication:{
     type:String
   },
   Publisher:{
     type:String
   },
-  Image-URL-S:{
+  ImageURLS:{
     type:String
   },
-  Image-URL-M:{
+  ImageURLM:{
     type:String
   },
-  Image-URL-L:{
+  ImageURLL:{
     type:String
   }
 })
