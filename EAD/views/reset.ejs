@@ -6,7 +6,6 @@
   <title>
 Bookrest
   </title>
-  <!-- <link rel="icon" href="https://image.flaticon.com/icons/svg/29/29302.svg"> -->
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
   <!-- Extra details for Live View on GitHub Pages -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
@@ -17,7 +16,6 @@ Bookrest
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/demo/demo.css" rel="stylesheet">
   <!-- Extra details for Live View on GitHub Pages -->
-
   <!-- Google Tag Manager -->
 </head>
 
@@ -32,23 +30,19 @@ Bookrest
               <h3 class="card-title text-center" style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;'>Bookrest</h3>
               <p class='text-center' style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;color:#66615b">Find the hidden</p>
               <div class="social">
-                <a href="/users/google" class="btn btn-just-icon btn-google"><i class="fa fa-google"></i></a>
+                <h4 style="color:#66615b">Enter new password</h4>
               </div>
-              <div class="division">
-                <div class="line l"></div>
-                <span>or</span>
-                <div class="line r"></div>
-              </div>
-              <form class="register-form" id='loginform' method='post'>
-                <input type="email" class="form-control" id='useremail' name='email' placeholder="Email">
+<br>
+              <form class="register-form" id='resetform' method='post'>
+                <input type="password" class="form-control" id='password' name='password' placeholder="Password">
+                <input type="password" class="form-control" id='password1' name='password1' placeholder="Confirm Password">
+
                 <p id='msgs' style='color:red'></p>
-                <a id='next' class="btn btn-block btn-round" onclick="check()" >Next</a>
+                <button id='next' class="btn btn-block btn-round" type=submit >Change</button>
               </form>
               <div class="login">
-                <p class='text-left'><a href="/users/signup"> Create account</a>
-                  <a style="margin-left:30%" href="/users/forgot">Forgot password?</a>
-
-                  </p>
+                <p>Doesn't have an account?
+                  <a href="/users/signup">Signup</a>.</p>
               </div>
             </div>
           </div>
@@ -62,47 +56,6 @@ Bookrest
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
   <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/validator/12.2.0/validator.min.js'></script>
-<script type="text/javascript">
-function check(){
-  var temp = document.getElementById('useremail').value
-  console.log(validator.isEmail(temp));
-  if(validator.isEmail(temp) == true){
-  $.ajax({
-      type:'POST',
-      url:'/users/checkemail',
-      data:{
-        email:document.getElementById('useremail').value,
-      },
-      success:function(result){
-        console.log(result);
-        if(result=='0'){
-
-          document.getElementById('next').style.display = 'none'
-          var k=document.getElementById('loginform').innerHTML +=  "<input type=hidden name='username'" + "value = "+ temp+">"
-          document.getElementById('loginform').innerHTML +='<input type="password"  class="form-control" id="userpassword" name="password" placeholder="Password">'
-
-          document.getElementById('loginform').innerHTML +="<button  id='log' style='display:none'  class='btn btn-block btn-round'>Login</button>"
-
-
-           document.getElementById('useremail').value = temp
-           document.getElementById('useremail').disabled = true
-           document.getElementById('log').style.display = 'block'
-
-        }
-        else{
-          document.getElementById('msgs').innerHTML = '<p style="font-size:10px"><b>Try google auth</b></p> ';
-          console.log('Email already linked to another account')
-        }
-        return false
-      }
-    });
-}else{
-  document.getElementById('msgs').innerHTML = '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
-}
-}
-
-</script>
-
 
 </body>
 </html>
