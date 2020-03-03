@@ -7,7 +7,8 @@
   <body>
     <%for(i=0;i<requests.length;i++){%>
     <h3><%=requests[i].book.Title%></h3>
-    <button type="button" name="button" onclick="Update('<%=requests[i].book.id%>',1)" id='<%=requests[i].book.Title%>'>Request</button>
+    <button type="button" name="button" onclick="Update('<%=requests[i].book.id%>',1)" id='<%=requests[i].book.Title%>'>Accept</button>
+    <button type="button" name="button" onclick="Update('<%=requests[i].book.id%>',-1)" id='<%=requests[i].book.Title%>'>Decline</button>
 
 
     <%}%>

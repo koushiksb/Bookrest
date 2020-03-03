@@ -8,27 +8,9 @@
 
     <% for(i=0;i<book.length;i++){%>
       <h3><%=book[i].book.Title%></h3>
-      <button type="button" name="button" onclick=Request('<%=book[i].book.id%>') id='<%=book[i].book.id%>'>Request</button>
-      <%}%>
+        <%}%>
       <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-function Request(id) {
-console.log(id);
-$.ajax({
-    type:'POST',
-    url:'/my/request',
-    data:{
-      bookid:id,
-    },
-    success:function(result){
-      alert('Request has been sent to Owner');
-      return false
-    }
-  });
-
-}
-</script>
   </body>
 
 </html>

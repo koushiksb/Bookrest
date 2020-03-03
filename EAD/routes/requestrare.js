@@ -4,13 +4,21 @@ const User=require('../models/User')
 const Shelf=require('../models/Shelf')
 const RareRequest=require('../models/RareRequest')
 
+router.get('/shelf',(req,res)=>{
+  console.log(req.user.email);
+  Shelf.find({user:req.user.id}).select('book -_id').populate('book','Title').then(x=>{
+    console.log(x[0]);
+    return res.render('dummyshelf',{book:x})
+  })
 
+
+})
 
 router.get('/request',(req,res)=>{
 
     Shelf.find({user:'5e5a9d624f4f426bfc199fb0'}).select('book -_id').populate('book','Title').then(x=>{
       console.log(x[0]);
-      return res.render('dummyshelf',{book:x})
+      return res.render('dummyviewshelf',{book:x})
     })
 
 
@@ -23,8 +31,8 @@ console.log(req.body.bookid);
 var k  = new RareRequest({
   recipient:'5e5a9d624f4f426bfc199fb0',
   book:req.body.bookid,
-
-  requester:'5e5a9d624f4f426bfc199fb1',
+// '5e5a9d624f4f426bfc199fb1'
+  requester:req.user.id,
   status:0
 
 })
