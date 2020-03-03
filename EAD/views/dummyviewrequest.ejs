@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <%for(i=0;i<requests.length;i++){%>
+    <h3><%=requests[i].book.Title%></h3>
+    <button type="button" name="button" onclick="Update('<%=requests[i].book.id%>',1)" id='<%=requests[i].book.Title%>'>Request</button>
+
+
+    <%}%>
+    <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      function Update(id,s){
+        $.ajax({
+            type:'POST',
+            url:'/my/viewrequest',
+            data:{
+              bookid:id,
+              status:s,
+            },
+            success:function(result){
+              alert('Request has been sent to Owner');
+              return false
+            }
+          });
+
+
+      }
+    </script>
+
+  </body>
+
+</html>

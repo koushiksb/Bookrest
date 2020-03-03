@@ -61,7 +61,7 @@ app.use(function (req, res, next) {
 
 //connect to mong
 mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
-                        useUnifiedTopology: true
+                        useUnifiedTopology: true,useFindAndModify:false
                       })
     .then(()=>console.log('connected to mongodb'))
     .catch(err=>console.log(err))
@@ -74,7 +74,7 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
 
  app.use('/users',require('./routes/user'));
   app.use('/test',require('./routes/testing'));
-
+app.use('/my',require('./routes/requestrare'))
 
 
 app.get("*", function(req, res){

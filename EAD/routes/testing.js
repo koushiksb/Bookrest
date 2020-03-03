@@ -1,27 +1,16 @@
 const express=require('express');
 const router = express.Router();
-const Book = require('../models/Book.js')
+const Shelf = require('../models/Shelf.js')
 
-router.get('/nav',function(req,res){
-  return res.render('navbar.ejs')
-})
+// router.get('/nav',function(req,res){
+//   return res.render('navbar.ejs')
+// })
 
-router.get('/get',function(req,res){
-	var nbook = new Book({
-		ISBN:'524512451',
-		Title:'sdfcgvhbjnkm',
-		Author:'sdfgh',
-		YearOfPublication:'ijuhygtf',
-		Publisher:'lkjhg',
-		ImageURLS:'sdrfgh',
-		ImageURLM:'jgfd',
-		ImageURLL:'dsfdgfgh'
-
-	}) 
-	nbook.save().then(x=>{
-		console.log('done')
-	})
-	
-  return res.sendStatus(200)
-})
+// router.get('/get',function(req,res){
+// Shelf.find({user:req.user.id}).then(x=>{
+//   return res.send(x)
+// })
+//
+//
+// })
 module.exports  = router
