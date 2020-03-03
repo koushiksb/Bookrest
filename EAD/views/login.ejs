@@ -6,7 +6,6 @@
   <title>
 Bookrest
   </title>
-  <!-- <link rel="icon" href="https://image.flaticon.com/icons/svg/29/29302.svg"> -->
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
   <!-- Extra details for Live View on GitHub Pages -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
@@ -17,7 +16,6 @@ Bookrest
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/demo/demo.css" rel="stylesheet">
   <!-- Extra details for Live View on GitHub Pages -->
-
   <!-- Google Tag Manager -->
 </head>
 
@@ -45,10 +43,8 @@ Bookrest
                 <a id='next' class="btn btn-block btn-round" onclick="check()" >Next</a>
               </form>
               <div class="login">
-                <p class='text-left'><a href="/users/signup"> Create account</a>
-                  <a style="margin-left:30%" href="/users/forgot">Forgot password?</a>
-
-                  </p>
+                <p>Doesn't have an account?
+                  <a href="/users/signup">Signup</a>.</p>
               </div>
             </div>
           </div>
@@ -90,14 +86,14 @@ function check(){
 
         }
         else{
-          document.getElementById('msgs').innerHTML = '<p style="font-size:10px"><b>Try google auth</b></p> ';
+          document.getElementById('msgs').innerHTML += '<p>Try google auth</p> '
           console.log('Email already linked to another account')
         }
         return false
       }
     });
 }else{
-  document.getElementById('msgs').innerHTML = '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
+  document.getElementById('msgs').innerHTML += '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
 }
 }
 

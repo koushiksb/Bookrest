@@ -57,7 +57,7 @@ Bookrest
           </div>
           <div class="col-lg-6 col-md-6 col-sm-5 col-12 mr-auto">
             <div class="card card-register">
-              <h3 class="card-title text-center" style='font-family:"Comic Sans MS",cursive,sans-serif;'>Register</h3>
+              <h3 class="card-title text-center">Register</h3>
               <div class="social">
                 <a href="/users/google" class="btn btn-just-icon btn-google"><i class="fa fa-google"></i></a>
               </div>
@@ -118,14 +118,14 @@ function check(){
 
         }
         else{
-          document.getElementById('msgs').innerHTML = '<p style="font-size:10px"><b>Email already linked to another account</b></p> '
+          document.getElementById('msgs').innerHTML += '<p>Email already linked to another account</p> '
           console.log('Email already linked to another account')
         }
         return false
       }
     });
 }else{
-  document.getElementById('msgs').innerHTML = '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
+  document.getElementById('msgs').innerHTML += '<p style="font-size:10px"><b>Enter a Valid Email</b></p> '
 }
 }
 </script>

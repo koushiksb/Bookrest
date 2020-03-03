@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Book = require('./Book')
 const User = require('./User')
-const ShelfSchema = new mongoose.Schema({
+const ReviewSchema = new mongoose.Schema({
   book : {
     type:mongoose.Schema.Types.ObjectId,
     ref:'Book'
@@ -9,13 +9,16 @@ const ShelfSchema = new mongoose.Schema({
   user:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
+  },
+  rating:{
+    type:String
+  },
+  review:{
+    type:String
   }
-  // ra:{
-  //   type: mongoose.Schema.Types.mixed
-  // }
 
 })
 
-const Shelf = mongoose.model('Shelf',ShelfSchema);
+const Review = mongoose.model('Review',ReviewSchema);
 
-module.exports=Shelf;
+module.exports=Review;

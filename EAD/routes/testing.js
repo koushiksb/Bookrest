@@ -1,20 +1,16 @@
 const express=require('express');
 const router = express.Router();
-const Book=require('../models/Book')
-const User=require('../models/User')
+const Shelf = require('../models/Shelf.js')
 
-router.get('/nav',function(req,res){
-  return res.render('navbar.ejs')
-})
+// router.get('/nav',function(req,res){
+//   return res.render('navbar.ejs')
+// })
 
-router.get('/get',function(req,res){
-
-
-Book.find({}).then(x=>{
-  console.log(x[0]);
-})
-return res.sendStatus(200)
-})
-
-
+// router.get('/get',function(req,res){
+// Shelf.find({user:req.user.id}).then(x=>{
+//   return res.send(x)
+// })
+//
+//
+// })
 module.exports  = router
