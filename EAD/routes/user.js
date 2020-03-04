@@ -160,7 +160,7 @@ router.get('/logout',(req,res)=>{
 })
 
 router.get('/dashboard',(req,res)=>{
-
+console.log(req.isAuthenticated());
       if(req.user.profile==undefined){
        return res.render('profile',{user:req.user.email})
      }else{
