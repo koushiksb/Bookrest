@@ -9,11 +9,22 @@ const ShelfSchema = new mongoose.Schema({
   user:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
-  }
+  },
+  softcopy:{
+    type:[{type:String}]
+  },
+  owner:{
+    type:String
+  },
+  period:{
+    type:Date
+  },
+  // ra:{
+  //   type: mongoose.Schema.Types.mixed
+  // }
 
 })
 
 const Shelf = mongoose.model('Shelf',ShelfSchema);
 
 module.exports=Shelf;
-

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <h1>Book Shelf</h1>
+
+    <% for(i=0;i<book.length;i++){%>
+      <h3><%=book[i].book.Title%></h3>
+      <!-- <img src="<%=book[i].book.ImageURLS%>" alt=""> -->
+    <%}%>
+
+    <button type="button" name="button"><a href="/shelf/addbook">Add Book</a></button>
+
+
+  </body>
+</html>

@@ -21,12 +21,13 @@ function isLoggedIn(req, res, next) {
     res.redirect('/users/login');
 }
 function IsAuth(req,res,next){
-  if(!req.isAuthenticated())
+  if(!req.isAuthenticated()){
     return next()
+    }
   res.redirect('/users/dashboard')
 }
 
-router.get('/login',(req,res)=>res.render('login'));
+router.get('/login',IsAuth,(req,res)=>res.render('login'));
 router.get('/signup',(req,res)=>res.render('signup',{errors:[],check:0}));
 
 router.post('/checkemail',function (req,res){
@@ -159,7 +160,7 @@ router.get('/logout',(req,res)=>{
 })
 
 router.get('/dashboard',(req,res)=>{
-
+console.log(req.isAuthenticated());
       if(req.user.profile==undefined){
        return res.render('profile',{user:req.user.email})
      }else{
@@ -293,6 +294,151 @@ router.get('/google/redirect',passport.authenticate('google'),(req,res)=>{
   console.log('im here');
   return res.redirect('/users/dashboard')
 })
+
+
+router.get('/forgot', function(req, res) {
+
+  res.render('forgot');
+});
+router.post('/forgot', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      console.log(req.body);
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('./forgot');
+        }
+console.log('sfa');
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          console.log('saved');
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+        user: 'bookrest.com@gmail.com',
+        pass: 'ead@0139'
+    }
+});
+
+      var mailOptions = {
+        to: user.email,
+        from: 'Bookrest@noreply.com',
+        subject: 'Bookrest Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host +'/users/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        console.log('sagdf');
+        done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.render('msg',{msg1:'Reset Password',msg:'Reset link has been sent to your email '});
+    console.log('mailsent');
+  });
+});
+router.get('/reset/:token', function(req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('./forgot');
+    }
+    res.render('reset');
+  });
+});
+
+router.post('/reset/:token',urlencodedparser,[check('password').not().isEmpty().withMessage('password is required'),
+                                          check('password').isLength({min:6}).withMessage('Please enter a password at least 6 character.'),
+                                          check('password').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/,).withMessage('Passwordmust contain one uppercase letter one lower case letter and one special character  '),
+                                          check('password1').not().equals('password').withMessage('Passwords do not match'),
+], function(req, res) {
+    let errors =validationResult(req);
+    if (errors.errors.lenght>0){
+      console.log('im here')
+      res.render('reset',{
+        errors:errors
+
+      });
+    }else{
+console.log(req.body)
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'Password reset token is invalid or has expired.');
+          console.log('Password reset token is invalid or has expired.')
+          return res.redirect('./forgot');
+        }
+
+        bcrypt.genSalt(10,(err,salt)=>bcrypt.hash(req.body.password,salt,(err,hash)=>
+        {
+          if (err){
+            console.log(err)
+          } ;
+          console.log(user.password)
+          user.password=hash;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+          console.log(user.password)
+          console.log('created')
+          user.save(function(err) {
+                    req.logIn(user, function(err) {
+                      console.log('done')
+                      done(err, user);
+                    });
+                  });
+        }))
+      });
+    },
+    function(user, done) {
+      console.log('mail')
+      var smtpTransport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: 'bookrest.com@gmail.com',
+      pass: 'ead@0139'
+    }
+});
+      var mailOptions = {
+        to: user.email,
+        from: 'koushiks666@gmail.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('success', 'Success! Your password has been changed.');
+        done(err);
+      });
+    }
+  ], function(err) {
+    console.log('im1')
+     res.redirect('/users/login');
+  });
+};
+});
 
 
 module.exports = router;
