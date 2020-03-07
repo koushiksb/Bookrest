@@ -67,11 +67,7 @@ app.get('/static/*/:k',isLoggedIn, function(req, res, next){
 
     // console.log('about to send restricted file '+ req.params.file);
     req.url = req.url.replace(/^\/static/, '')
-if(req.query.k==123){
     staticMiddleware(req, res, next);
-  }else{
-    return res.render('404')
-  }
 });
 
 
@@ -97,17 +93,17 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
     .catch(err=>console.log(err))
 
 
-    var storage = multer.diskStorage({
-      destination: function (req, file, cb) {
-        cb(null, __dirname+'/uploads/books/')
-      },
-      filename: function (req, file, cb) {
-        console.log(req.user);
-        cb(null, file.originalname + req.user.id+ '.'+file.fieldname )
-      }
-    })
-    app.use(multer({ storage: storage }).any());
-
+    // var storage = multer.diskStorage({
+    //   destination: function (req, file, cb) {
+    //     cb(null, __dirname+'/uploads/books/')
+    //   },
+    //   filename: function (req, file, cb) {
+    //     console.log(req.user);
+    //     cb(null, file.originalname + req.user.id+ '.'+file.fieldname )
+    //   }
+    // })
+    // app.use(multer({ storage: storage }).any());
+    //
 
 //Routes
 

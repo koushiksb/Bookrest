@@ -45,10 +45,10 @@ router.get('/addbook',(req,res)=>{
 
 function path(req){
   if(req.file){
-    return '/coverimages/'+req.file.filename;
+    return '../static/coverimages/'+req.file.filename;
   }
   else{
-    return '/pics/image_placeholder.jpg';
+    return '../static/pics/image_placeholder.jpg';
   }
 }
 

@@ -1,8 +1,11 @@
 const express=require('express');
 const router = express.Router();
 const User=require('../models/User')
+const Profile=require('../models/Profile')
+
 const Shelf=require('../models/Shelf')
 const RareRequest=require('../models/RareRequest')
+const async = require('async')
 
 router.get('/shelf',(req,res)=>{
   console.log(req.user.email);
@@ -53,15 +56,38 @@ k.save()
 router.get('/viewrequest',(req,res)=>{
 
 console.log('found');
-RareRequest.find({recipient:'5e5a9d624f4f426bfc199fb0',status:0}).populate('book','Title').then(x=>{
-  return res.render('dummyviewrequest',{requests:x})
+RareRequest.find({recipient:req.user.id,status:'0'}).populate({path:'requester',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(x=>{
+// RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
+
+  return res.render('dummyviewrequest',{requests:x,layout:'navbar2'})
 })
 })
 
 router.post('/viewrequest',(req,res)=>{
+  console.log('posted');
+
   console.log(req.body);
-  RareRequest.findOneAndUpdate({book:req.body.bookid,recipient:'5e5a9d624f4f426bfc199fb0'},{status:req.body.status}).then(x=>{
-    return res.sendStatus(200)
+
+  RareRequest.findOne({book:req.body.bookid,recipient:req.user.id}).then(x=>{
+    console.log(x);
+    console.log(req.body.status);
+    x.status=req.body.status
+    x.save()
+    if(req.body.status == 1){
+      var add  = new Shelf({
+        book:req.body.bookid,
+        user:req.body.requester,
+        owner:'1',
+
+      });
+      add.save().then(a=>{
+        return res.sendStatus(200)
+
+      })
+    }else{
+      return res.sendStatus(200)
+
+    }
   })
   .catch(err=>{
     console.log(err);
