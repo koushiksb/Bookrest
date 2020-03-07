@@ -25,9 +25,9 @@ const multerconf = {
 
 router.get('/view',(req,res)=>{
 
-  Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLS').then(x=>{
-    console.log(x[0]);
-    return res.render('shelf',{book:x});
+  Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
+    // console.log(x[0]);
+    return res.render('shelf1',{book:x});
   })
 
 });
@@ -101,6 +101,14 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 
 
     }
+  });
+
+});
+
+router.get('/viewbook/:title',(req,res)=>{
+
+  Book.findOne({Title:req.params.title}).then(x=>{
+    res.render('viewbook',{image:x.ImageURLS,title:x.Title,author:x.Author});
   });
 
 });
