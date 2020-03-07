@@ -39,9 +39,9 @@
       .af-explame-demo > div:hover .af-explames-demo-mask{opacity:0.4;}
     </style>
   </head>
-  <body>
+  <body style="margin-top:10%">
 
-      <center><h1>Book Shelf</h1></center>
+      <center><h1 style='font-family:"Comic Sans MS",cursive,sans-serif;'>Book Shelf</h1></center>
 
     <div class="af-example-container">
             <div class="af-example-demos-outer">
@@ -56,7 +56,7 @@
                               <!-- <canvas width="140" height="185" style="position: absolute; width: 280px; height: 370px; left: -65px; top: -92.5px; z-index: 5;"></canvas> -->
                               <a href="/shelf/viewbook/<%=book[i].book.Title%>"><img class="af-explames-demo-img" src="<%=book[i].book.ImageURLM%>" alt="/pics/image_placeholder.jpg"></a>
                           </div>
-                          <p><%= book[i].book.Title %></p>
+                          <p style='font-family:"Comic Sans MS",cursive,sans-serif;'><%= book[i].book.Title %></p>
                       </li>
                     <%}%>
                   </ul>
