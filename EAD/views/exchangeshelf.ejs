@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
+    <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
+
+    <style type="text/css">
+      canvas{display:inline-block;vertical-align:baseline;}
+      @media print{
+      *{color:#000!important;text-shadow:none!important;background:0 0!important;-webkit-box-shadow:none!important;box-shadow:none!important;}
+      img{page-break-inside:avoid;}
+      img{max-width:100%!important;}
+      p{orphans:3;widows:3;}
+      }
+      *,:after,:before{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+      img{vertical-align:middle;}
+      li,p,ul{padding:0;margin:0;list-style:none;}
+      img{padding:0;margin:0;border:none;}
+      /*! CSS Used from: http://anyflip.com/example/css/example.css?e0db6083810974d8e96c3c6cf0b90f11 */
+      .af-example-container{position:relative;margin:0px auto;max-width:1100px;min-height:100px;padding:0px 0px 100px 0px;}
+      .af-example-demos-outer{position:relative;text-align:center;width:100%;margin:0px auto;}
+      .af-example-demos-panel{position:relative;display:inline-block;text-align:center;width:100%;}
+      .af-example-demos-panel > .example-self{position:absolute;height:100%;}
+      .af-example-demos-panel > .shelf-left{width:200px;background:url("http://anyflip.com/example/img/shelf1.png");}
+      .af-example-demos-panel > .shelf-mid{left:200px;right:200px;background:url("http://anyflip.com/example/img/shelf2.png");}
+      .af-example-demos-panel > .shelf-right{width:200px;right:0;background:url("http://anyflip.com/example/img/shelf3.png");}
+      .af-explame-demo{width:150px;height:185px;position:relative;margin:0px 17px;display:inline-block;text-align:center;margin-top:56px;margin-bottom:34px;}
+      .af-explame-demo > div{-webkit-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;display:block;position:absolute;width:100%;bottom:0;max-height:100%;cursor:pointer;overflow:hidden;}
+      .af-explame-demo > div:hover{bottom:10px;}
+      .af-explame-demo > p{position:absolute;width:100%;text-align:center;top:214px;font-size:12px;font-size:1.2rem;color:#777;}
+      .af-explames-demo-img{max-height:185px;max-width:150px;position:relative;}
+      .af-explames-demo-mask{position:absolute;width:100%;height:100%;background:#fff;z-index:1;opacity:0;left:0%;-webkit-transition:all .5s;-o-transition:all .5s;transition:all .5s;}
+      .af-explame-demo > div:hover .af-explames-demo-mask{opacity:0.4;}
+    </style>
+  </head>
+  <body>
+
+      <center><h1>Book Shelf</h1></center>
+
+    <div class="af-example-container">
+            <div class="af-example-demos-outer">
+                <ul class="af-example-demos-panel">
+                    <div class="example-self shelf-left"></div>
+                    <div class="example-self shelf-mid"></div>
+                    <div class="example-self shelf-right"></div>
+                    <% for(i=0;i<bookSen.length ;i++){%>
+                      <li class="af-explame-demo">
+                          <div>
+                              <!-- <div class="af-explames-demo-mask"></div> -->
+                              <!-- <canvas width="140" height="185" style="position: absolute; width: 280px; height: 370px; left: -65px; top: -92.5px; z-index: 5;"></canvas> -->
+                              <a href="/exchange/confirm/<%=bookReq.Title%>/<%=bookSen[i].book.Title%>"><img class="af-explames-demo-img" src="<%=bookSen[i].book.ImageURLM%>" alt="/pics/image_placeholder.jpg"></a>
+                          </div>
+                          <p><%= bookSen[i].book.Title %></p>
+                      </li>
+                    <%}%>
+                  </ul>
+              </div>
+      </div>
+
+      <!-- <center>
+        <div class="col-md- col-sm-4">
+          <a href="/shelf/addbook"><button class="btn btn-outline-primary btn-block btn-round" type="button" name="button">Add Book</button></a>
+        </div>
+      </center>
+ -->
+    <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/validator/12.2.0/validator.min.js'></script>
+
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/js/jasny-bootstrap.min.js'></script>
+
+
+  </body>
+</html>

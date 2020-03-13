@@ -7,38 +7,52 @@ const Profile = require('../models/Profile.js');
 const Shelf = require('../models/Shelf.js');
 
 
-router.post('/addexchange',(req,res)=>{
-Book.find({ISBN:'3442353866'}).then(x=>{
-      console.log(x);
-      var k  = new Exchange({
-        bookReq:req.bookid1,
-// '5e5a9d624f4f426bfc199fb1'
-        bookSen:x[0]._id,
-        userReq:req.user.id,
-        status:false
-      })
-      k.save()
-            .then(x=>{
-              console.log('k');
-              return res.sendStatus(200)
-            })
-            .catch(err=>{
-              console.log(err);
-              return res.sendStatus(500)
-            })
-})
-})
+router.get('/confirm/:bookReq/:bookSen',(req,res)=>{
+Book.find({Title:req.params.bookReq}).then(x=>{
+   Book.find({Title:req.params.bookSen}).then(y=>{
+    userReq = req.user._id
+    // console.log(y)
+     return res.render('confirmexchange',{bookSen:y[0],bookReq:x[0],userReq:userReq});
+   });
+});
+});
 
-router.get('/require',(req,res)=>{
-    user:req.user
-    Book.find({ISBN:'3442353866'}).then(x=>{
-      console.log(x);
-      // return res.render('booktrade2',{bookid1:x._id})
-      return res.send(x[0].id)
+router.get('/require/:title',(req,res)=>{
+    Book.findOne({Title:req.params.title}).then(x=>{
+      userReq = req.user._id
+      Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLM').then(y=>{
+    // console.log(x[0]);
+    return res.render('exchangeshelf',{bookSen:y,bookReq:x});
+    });
+  });
+});
+
+router.get('/done/:bookReq/:bookSen',(req,res)=>{
+   console.log("entered")
+  Book.find({Title:req.params.bookReq}).then(x=>{
+   Book.find({Title:req.params.bookSen}).then(y=>{
+      console.log(x[0])
+      console.log(y[0])
+    userReq = req.user._id
+    console.log(userReq)
+     var n = new Exchange({
+        bookSen:y[0]._id,
+        bookReq:x[0]._id,
+        userReq:userReq
+      });
+     n.save()
+    .then(z=>{
+        console.log(z)
+        return res.sendStatus(200)
+        // console.log(y);
     })
-})
+    .catch(err=>{
+      console.log(err);
+      return res.sendStatus(500)
+    })
 
-
-
+   });
+});
+});
 module.exports  = router
 
