@@ -88,7 +88,6 @@
   			<article id="post-1059" class="entry page publish author-admin post-1059" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
   				<div class="entry-wrap">
   					<header class="entry-header">
-  						<h1 class="entry-title" itemprop="headline">Bookshelf</h1>
   					</header><!-- .entry-header -->
 
   					<div class="entry-content" itemprop="text">
@@ -132,13 +131,16 @@
             <!-- end BookShelf html -->
 
 
+    <% for(i=0;i<book.length;i++){%>
+      <h3><%=book[i].book.Title%></h3>
+      <img src="<%=book[i].book.ImageURLS%>" alt="">
+    <%}%>
 
     	</div>
     		</div></article>
     	</main><!-- .content -->
     		</div>	</div>
 
-        <button type="button" name="button"><a href="/shelf/addbook">Add Book</a></button>
 
   </body>
 </html>

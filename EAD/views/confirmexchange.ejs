@@ -39,9 +39,10 @@
       .af-explame-demo > div:hover .af-explames-demo-mask{opacity:0.4;}
     </style>
   </head>
-  <body style="margin-top:10%">
 
-      <center><h1 style='font-family:"Comic Sans MS",cursive,sans-serif;'>Book Shelf</h1></center>
+  <body>
+
+      <center><h1>Book Shelf</h1></center>
 
     <div class="af-example-container">
             <div class="af-example-demos-outer">
@@ -49,23 +50,29 @@
                     <div class="example-self shelf-left"></div>
                     <div class="example-self shelf-mid"></div>
                     <div class="example-self shelf-right"></div>
-                    <% for(i=0;i<book.length ;i++){%>
                       <li class="af-explame-demo">
                           <div>
                               <!-- <div class="af-explames-demo-mask"></div> -->
                               <!-- <canvas width="140" height="185" style="position: absolute; width: 280px; height: 370px; left: -65px; top: -92.5px; z-index: 5;"></canvas> -->
-                              <a href="/shelf/viewbook/<%=book[i].book.Title%>"><img class="af-explames-demo-img" src="<%=book[i].book.ImageURLM%>" alt="/pics/image_placeholder.jpg"></a>
+                              <img class="af-explames-demo-img" src="<%=bookSen.ImageURLM%>" alt="/pics/image_placeholder.jpg">
                           </div>
-                          <p style='font-family:"Comic Sans MS",cursive,sans-serif;'><%= book[i].book.Title %></p>
+                          <p><%= bookSen.Title %></p>
                       </li>
-                    <%}%>
+                      <li class="af-explame-demo">
+                          <div>
+                              <!-- <div class="af-explames-demo-mask"></div> -->
+                              <!-- <canvas width="140" height="185" style="position: absolute; width: 280px; height: 370px; left: -65px; top: -92.5px; z-index: 5;"></canvas> -->
+                              <img class="af-explames-demo-img" src="<%=bookReq.ImageURLM%>" alt="/pics/image_placeholder.jpg">
+                          </div>
+                          <p><%= bookReq.Title %></p>
+                      </li>
                   </ul>
               </div>
       </div>
 
       <center>
         <div class="col-md- col-sm-4">
-          <a href="/shelf/addbook"><button class="btn btn-outline-primary btn-block btn-round" type="button" name="button">Add Book</button></a>
+          <a href="/exchange/done/<%=bookReq.Title%>/<%=bookSen.Title%>"><button class="btn btn-outline-primary btn-block btn-round" type="button" name="button">Confirm</button></a>
         </div>
       </center>
 
