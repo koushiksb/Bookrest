@@ -3,14 +3,165 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-  </head>
-  <body  >
+    <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
+<!--  Social tags      -->
+<!--     Fonts and icons     -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+<!-- CSS Files -->
+<link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<!-- <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/demo/demo.css" rel="stylesheet"> -->
+<!-- Extra details for Live View on GitHub Pages -->
+<!-- Google Tag Manager -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+</style>
 
-<div style='margin-top:10%;margin-left:5%'>
-  Hello , <%=user%>
-<br>
-  <a href="/users/logout">logout</a>
-  
+  </head>
+  <body style="background-color:black"  >
+  <div class="page-header" style="background-image: url('https://miro.medium.com/max/1719/1*Gql-Vlc4BQJz_x8GhJXX2A.jpeg');">
 </div>
-  </body>
+ <div class="wrapper">
+   <div class="section latest-offers" style="background-color: #2A2A2A">
+     <h3 class="section-title" style="margin-left:23%;color:white;display:inline"><b>Search</b></h3>
+     <div class="md-form mt-0" style="margin-left:23%;width:50%">
+       <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
+       <button  class="btn primary" style="margin-left:10px">Search</button>
+     </div>
+
+     <div class="container">
+       <h3 class="section-title" style="color:white;margin-bottom:10px"><b>Top Trending Books</b></h3>
+       <div class="row">
+         <div class="col-md-4">
+           <div class="card card-product card-plain">
+             <div class="card-image">
+               <a href="#paper-kit">
+                 <img src="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" alt="Rounded Image" class="img-rounded img-responsive">
+               </a>
+               <div class="card-body">
+                 <div class="card-description">
+                   <h5 class="card-title" style="color:white"><b>Green Velvet Dress</b></h5>
+                   <p class="card-description" style="color:white">This is a limited edition dress for the fall collection. Comes in 3 colours.</p>
+                 </div>
+
+               </div>
+             </div>
+           </div>
+         </div>
+                   <div class="col-md-4">
+           <div class="card card-product card-plain">
+             <div class="card-image">
+               <a href="#paper-kit">
+                 <img src="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" alt="Rounded Image" class="img-rounded img-responsive">
+               </a>
+               <div class="card-body">
+                 <div class="card-description">
+                   <h5 class="card-title" style="color:white"><b>Green Velvet Dress</b></h5>
+                   <p class="card-description" style="color:white">This is a limited edition dress for the fall collection. Comes in 3 colours.</p>
+                 </div>
+
+               </div>
+             </div>
+           </div>
+         </div>
+                   <div class="col-md-4">
+           <div class="card card-product card-plain">
+             <div class="card-image">
+               <a href="#paper-kit">
+                 <img src="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" alt="Rounded Image" class="img-rounded img-responsive">
+               </a>
+               <div class="card-body">
+                 <div class="card-description">
+                   <h5 class="card-title" style="color:white"><b>Green Velvet Dress</b></h5>
+                   <p class="card-description" style="color:white">This is a limited edition dress for the fall collection. Comes in 3 colours.</p>
+                 </div>
+
+               </div>
+             </div>
+           </div>
+         </div>
+               <div class="col-md-3 offset-md-4">
+                 <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+               </div>
+       </div>
+     </div>
+   </div>
+   <!-- section -->
+   <div class="section" style="background-color: #161616">
+     <div class="container">
+       <h3 class="section-title" style="color:white;margin-bottom: 20px"><b>All Genres</b></h3>
+       <% for(i=0;i<genre.length ;i++){%>
+       			<button rel="tooltip" title="This is a morphing button" class="btn btn-round "   style="color:white;font-weight: bold;background-ccolor:white; margin-right: 20px;margin-bottom:15px" onclick="location.href='#'i+"><%= genre[i]["Genre"]%>
+       			</button>
+       <%}%>
+       <% for(var i in books){%>
+       		<!-- <div id=> -->
+       		<h3><%= i %></h3><!-- </div> --><br>
+       		<div class="col-md-9">
+           <div class="products">
+             <div class="row">
+             	<% for (j=0;j<books[i].length ;j++){%>
+               <div class="col-md-3 col-sm-3" >
+                 <div class="card card-product card-plain">
+                   <div class="card-image">
+                     <a href="/shelf/viewbook/<%=books[i][j].Title%>"><img class="af-explames-demo-img" src="<%=books[i][j].ImageURLL%>"
+                  alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
+                     <div class="card-body">
+                       <div class="card-description">
+                         <h5 class="card-title" style="color:white;font-weight: normal"><%= books[i][j].Tilte%></h5>
+                         <p class="card-description" style="color:white;font-weight: normal"><%= books[i][j].Author%></p>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                       </div>
+
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               	<%} %>
+               <br>
+               </div>
+             <div class="col-md-3 offset-md-4">
+                <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+              </div>
+           </div>
+         </div>
+         <%}%>
+     </div>
+   </div>
+
+   <!-- section -->
+
+   <!-- section -->
+   <footer class="footer footer-big" style="background-color: black">
+
+         <div class="col-md-4 ml-auto ">
+           <div class="social-area">
+             <a href="#facebook" class="btn btn-neutral btn-round btn-just-icon btn-facebook" style="margin-left: 15px;">
+               <i class="fa fa-facebook" aria-hidden="true"></i>
+             </a>
+             <a href="#twitter" class="btn btn-neutral btn-just-icon btn-round btn-twitter" style="margin-left: 15px;">
+               <i class="fa fa-twitter" aria-hidden="true"></i>
+             </a>
+             <a href="#google" class="btn btn-neutral btn-just-icon btn-round btn-google" style="margin-left: 15px;">
+               <i class="fa fa-google-plus" aria-hidden="true"></i>
+             </a>
+             <a href="#pin" class="btn btn-neutral btn-just-icon btn-round btn-pinterest" style="margin-left: 15px;">
+               <i class="fa fa-pinterest-p" aria-hidden="true"></i>
+             </a>
+           </div>
+         </div>
+   </footer>
+</body>
+
+
 </html>
