@@ -18,7 +18,7 @@ router.get('/shelf',(req,res)=>{
 })
 
 router.get('/request',(req,res)=>{
-
+    req.session.name = 'asdfgb'
     Shelf.find({user:'5e5a9d624f4f426bfc199fb0'}).select('book -_id').populate('book','Title').then(x=>{
       console.log(x[0]);
       return res.render('dummyviewshelf',{book:x})
@@ -28,28 +28,27 @@ router.get('/request',(req,res)=>{
 })
 
 router.post('/request',(req,res)=>{
-
-console.log('posted');
-console.log(req.body.bookid);
-var k  = new RareRequest({
-  recipient:'5e5a9d624f4f426bfc199fb0',
-  book:req.body.bookid,
-// '5e5a9d624f4f426bfc199fb1'
-  requester:req.user.id,
-  status:0
-
-})
-k.save()
-.then(x=>{
-  console.log('saved');
-  return res.sendStatus(200)
-})
-.catch(err=>{
-  console.log(err);
-  return res.sendStatus(500)
-
-})
-
+console.log(req.session.name);
+// console.log('posted');
+// console.log(req.body.bookid);
+// var k  = new RareRequest({
+//   recipient:'5e5a9d624f4f426bfc199fb0',
+//   book:req.body.bookid,
+// // '5e5a9d624f4f426bfc199fb1'
+//   requester:req.user.id,
+//   status:0
+//
+// })
+// k.save()
+// .then(x=>{
+//   console.log('saved');
+//   return res.sendStatus(200)
+// })
+// .catch(err=>{
+//   console.log(err);
+//   return res.sendStatus(500)
+//
+// })
 
 })
 

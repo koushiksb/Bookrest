@@ -3,29 +3,383 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <!-- <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet"> -->
+<style media="screen">
+
+.modal-open{overflow:hidden}
+.modal-open .modal{overflow-x:hidden;overflow-y:auto}
+.modal{position:fixed;top:0;left:0;z-index:1050;display:none;width:100%;height:100%;overflow:hidden;outline:0}
+.modal-dialog{position:relative;width:auto;margin:.5rem;pointer-events:none}
+.modal.fade .modal-dialog{transition:-webkit-transform .3s ease-out;transition:transform .3s ease-out;transition:transform .3s ease-out,-webkit-transform .3s ease-out;-webkit-transform:translate(0,-50px);transform:translate(0,-50px)}
+@media (prefers-reduced-motion:reduce){
+  .modal.fade .modal-dialog{transition:none}}
+  .modal.show .modal-dialog{-webkit-transform:none;transform:none}
+  .modal-dialog-scrollable{display:-ms-flexbox;display:flex;max-height:calc(100% - 1rem)}
+.modal-dialog-scrollable .modal-content{max-height:calc(100vh - 1rem);overflow:hidden}
+.modal-dialog-scrollable .modal-footer,.modal-dialog-scrollable .modal-header{-ms-flex-negative:0;flex-shrink:0}
+.modal-dialog-scrollable .modal-body{overflow-y:auto}
+.modal-dialog-centered{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;min-height:calc(100% - 1rem)}
+.modal-dialog-centered::before{display:block;height:calc(100vh - 1rem);content:""}
+.modal-dialog-centered.modal-dialog-scrollable{-ms-flex-direction:column;flex-direction:column;-ms-flex-pack:center;justify-content:center;height:100%}
+.modal-dialog-centered.modal-dialog-scrollable .modal-content{max-height:none}.modal-dialog-centered.modal-dialog-scrollable::before{content:none}
+.modal-content{position:relative;display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;width:100%;pointer-events:auto;background-color:#fff;background-clip:padding-box;border:1px solid rgba(0,0,0,.2);border-radius:.3rem;outline:0}
+.modal-backdrop{position:fixed;top:0;left:0;z-index:1040;width:100vw;height:100vh;background-color:#000}
+.modal-backdrop.fade{opacity:0}
+.modal-backdrop.show{opacity:.5}
+.modal-header{display:-ms-flexbox;-ms-flex-align:start;align-items:flex-start;-ms-flex-pack:justify;justify-content:space-between;padding:1rem 1rem;border-top-left-radius:.3rem;border-top-right-radius:.3rem}
+.modal-header .close{padding:1rem 1rem;margin:-1rem -1rem -1rem auto}
+
+.modal-body{position:relative;-ms-flex:1 1 auto;flex:1 1 auto;padding:2rem}
+.modal-footer{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:end;justify-content:flex-end;padding:1rem;border-bottom-right-radius:.3rem;border-bottom-left-radius:.3rem}.modal-footer>:not(:first-child){margin-left:.25rem}.modal-footer>:not(:last-child){margin-right:.25rem}.modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}@media (min-width:576px){.modal-dialog{max-width:500px;margin:1.75rem auto}.modal-dialog-scrollable{max-height:calc(100% - 3.5rem)}
+.modal-dialog-scrollable .modal-content{max-height:calc(100vh - 3.5rem)}
+.modal-dialog-centered{min-height:calc(100% - 3.5rem)}
+.modal-dialog-centered::before{height:calc(100vh - 3.5rem)}
+.modal-sm{max-width:300px}}
+@media (min-width:992px){
+  .modal-lg,.modal-xl{max-width:800px}}
+@media (min-width:1200px){.modal-xl{max-width:1140px}}
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css */
+*,::after,::before{box-sizing:border-box;}
+h5{margin-top:0;margin-bottom:.5rem;}
+button{border-radius:0;}
+button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color;}
+button{margin:0;font-family:inherit;font-size:inherit;line-height:inherit;}
+button{overflow:visible;}
+button{text-transform:none;}
+[type=button],button{-webkit-appearance:button;}
+[type=button]::-moz-focus-inner,button::-moz-focus-inner{padding:0;border-style:none;}
+h5{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
+h5{font-size:1.25rem;}
+.btn{display:inline-block;font-weight:400;color:#212529;text-align:center;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:transparent;border:1px solid transparent;padding:.375rem .75rem;font-size:1rem;line-height:1.5;border-radius:.25rem;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+@media (prefers-reduced-motion:reduce){
+.btn{transition:none;}
+}
+.btn:hover{color:#212529;text-decoration:none;}
+.btn:focus{outline:0;box-shadow:0 0 0 .2rem rgba(0,123,255,.25);}
+.btn:disabled{opacity:.65;}
+.btn-primary{color:#fff;background-color:#007bff;border-color:#007bff;}
+.btn-primary:hover{color:#fff;background-color:#0069d9;border-color:#0062cc;}
+.btn-primary:focus{box-shadow:0 0 0 .2rem rgba(38,143,255,.5);}
+.btn-primary:disabled{color:#fff;background-color:#007bff;border-color:#007bff;}
+.btn-secondary{color:#fff;background-color:#6c757d;border-color:#6c757d;}
+.btn-secondary:hover{color:#fff;background-color:#5a6268;border-color:#545b62;}
+.btn-secondary:focus{box-shadow:0 0 0 .2rem rgba(130,138,145,.5);}
+.btn-secondary:disabled{color:#fff;background-color:#6c757d;border-color:#6c757d;}
+.close{float:right;font-size:1.5rem;font-weight:700;line-height:1;color:#000;text-shadow:0 1px 0 #fff;opacity:.5;}
+.close:hover{color:#000;text-decoration:none;}
+button.close{padding:0;background-color:transparent;border:0;-webkit-appearance:none;-moz-appearance:none;appearance:none;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+}
+
+
+/*! CSS Used from: https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css */
+.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.pull-right{float:right;}
+.fa-euro:before{content:"\f153";}
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css */
+*,::after,::before{box-sizing:border-box;}
+h5,h6{margin-top:0;margin-bottom:.5rem;}
+small{font-size:80%;}
+label{display:inline-block;margin-bottom:.5rem;}
+input,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit;}
+input{overflow:visible;}
+input[type=checkbox]{box-sizing:border-box;padding:0;}
+textarea{overflow:auto;resize:vertical;}
+h5,h6{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
+h5{font-size:1.25rem;}
+h6{font-size:1rem;}
+small{font-size:80%;font-weight:400;}
+.row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px;}
+.col-md-6,.col-md-7,.col-sm-7{position:relative;width:100%;padding-right:15px;padding-left:15px;}
+@media (min-width:576px){
+.col-sm-7{-ms-flex:0 0 58.333333%;flex:0 0 58.333333%;max-width:58.333333%;}
+}
+@media (min-width:768px){
+.col-md-6{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;}
+.col-md-7{-ms-flex:0 0 58.333333%;flex:0 0 58.333333%;max-width:58.333333%;}
+}
+.form-control{display:block;width:100%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:1rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+@media (prefers-reduced-motion:reduce){
+.form-control{transition:none;}
+}
+.form-control::-ms-expand{background-color:transparent;border:0;}
+.form-control:focus{color:#495057;background-color:#fff;border-color:#80bdff;outline:0;box-shadow:0 0 0 .2rem rgba(0,123,255,.25);}
+.form-control::-webkit-input-placeholder{color:#6c757d;opacity:1;}
+.form-control::-moz-placeholder{color:#6c757d;opacity:1;}
+.form-control:-ms-input-placeholder{color:#6c757d;opacity:1;}
+.form-control::-ms-input-placeholder{color:#6c757d;opacity:1;}
+.form-control::placeholder{color:#6c757d;opacity:1;}
+.form-control:disabled{background-color:#e9ecef;opacity:1;}
+textarea.form-control{height:auto;}
+.form-group{margin-bottom:1rem;}
+.form-check{position:relative;display:block;padding-left:1.25rem;}
+.form-check-input{position:absolute;margin-top:.3rem;margin-left:-1.25rem;}
+.form-check-label{margin-bottom:0;}
+.input-group{position:relative;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-ms-flex-align:stretch;align-items:stretch;width:100%;}
+.input-group>.form-control{position:relative;-ms-flex:1 1 auto;flex:1 1 auto;width:1%;margin-bottom:0;}
+.input-group>.form-control:focus{z-index:3;}
+.input-group>.form-control:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;}
+.input-group-append{display:-ms-flexbox;display:flex;}
+.input-group-append{margin-left:-1px;}
+.input-group-text{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;padding:.375rem .75rem;margin-bottom:0;font-size:1rem;font-weight:400;line-height:1.5;color:#495057;text-align:center;white-space:nowrap;background-color:#e9ecef;border:1px solid #ced4da;border-radius:.25rem;}
+.input-group>.input-group-append>.input-group-text{border-top-left-radius:0;border-bottom-left-radius:0;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+}
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0 */
+.form-check{padding-left:0;margin-bottom:.5rem;}
+.form-check .form-check-label{display:inline-block;position:relative;cursor:pointer;padding-left:35px;line-height:26px;margin-bottom:0;}
+.form-check .form-check-sign:after,.form-check .form-check-sign:before{content:" ";display:inline-block;position:absolute;width:24px;height:24px;left:0;cursor:pointer;border-radius:6px;top:0;background-color:#aaa7a4;transition:opacity .3s linear;}
+.form-check .form-check-sign:after{font-family:FontAwesome;content:"\f00c";top:-1px;text-align:center;font-size:15px;opacity:0;color:#fff;border:0;background-color:inherit;}
+.form-check input[type=checkbox]{opacity:0;position:absolute;visibility:hidden;}
+.form-check input[type=checkbox]:checked+.form-check-sign:after{opacity:1;}
+.form-check .form-check-label input[type=checkbox]:disabled+.form-check-sign{pointer-events:none!important;}
+.form-check-label input[type=checkbox]:checked+.form-check-sign:before{background-color:#66615b;}
+h5,h6,input,textarea{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+h5{font-size:1.35em;line-height:1.4em;}
+h6{font-size:.9em;font-weight:600;text-transform:uppercase;}
+h6{line-height:1.5em;}
+h5 small{color:#9a9a9a;line-height:1.5em;}
+.form-control{transition:all .3s linear;}
+.fa{width:18px;text-align:center;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+.form-control{border:1px solid #ddd;border-radius:4px;color:#66615b;font-size:14px;transition:background-color .3s ease 0s;padding-right:0!important;padding:7px 12px;height:40px;}
+.form-control,.form-control:focus{background-color:#fff;box-shadow:none;}
+.form-control:focus{border:1px solid #ccc;outline:0!important;}
+.form-control:focus+.input-group-append .input-group-text{border:1px solid #ccc;border-left:none;}
+.input-group-text{border-radius:4px;border:1px solid #ddd;}
+.input-group-text{background-color:#fff;}
+.input-group .form-control:first-child{border-right:0 none;}
+.input-group-text:last-child{border-left:0 none;}
+textarea.form-control{padding:10px 18px;height:auto;}
+.form-group{position:relative;}
+.icon-danger{color:#f5593d;}
+.add-product h6{color:#9a9a9a;margin-top:20px;}
+.add-product .price-row{margin-bottom:30px;}
+@media (max-width:767px){
+h6{font-size:1em;}
+}
+
+
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css */
+*,::after,::before{box-sizing:border-box;}
+h3{margin-top:0;margin-bottom:.5rem;}
+h3{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
+h3{font-size:1.75rem;}
+.card-title{margin-bottom:.75rem;}
+.text-center{text-align:center!important;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+h3{orphans:3;widows:3;}
+h3{page-break-after:avoid;}
+}
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0 */
+h3{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+h3{margin:30px 0 0;}
+h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
+.card-title{font-family:Montserrat,Helvetica,Arial,sans-serif;}
+.card-title{color:#333;text-decoration:none;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+.card>.card-title{margin:0;padding:30px 0 0;}
+.card-register .card-title{color:#b33c12;text-align:center;}
+.register-page .card-register .card-title{color:#66615b;}
+
+
+
+
+*,::after,::before{box-sizing:border-box;}
+a{color:#007bff;text-decoration:none;background-color:transparent;}
+a:hover{color:#0056b3;text-decoration:underline;}
+a:not([href]):not([tabindex]){color:inherit;text-decoration:none;}
+a:not([href]):not([tabindex]):focus,a:not([href]):not([tabindex]):hover{color:inherit;text-decoration:none;}
+a:not([href]):not([tabindex]):focus{outline:0;}
+.btn{display:inline-block;font-weight:400;color:#212529;text-align:center;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:transparent;border:1px solid transparent;padding:.375rem .75rem;font-size:1rem;line-height:1.5;border-radius:.25rem;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+@media (prefers-reduced-motion:reduce){
+.btn{transition:none;}
+}
+.btn:hover{color:#212529;text-decoration:none;}
+.btn:focus{outline:0;box-shadow:0 0 0 .2rem rgba(0,123,255,.25);}
+.btn:disabled{opacity:.65;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+}
+a{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+a{color:#51bcda;}
+a:focus,a:hover{color:#2ba9cd;text-decoration:none;}
+a:active,a:focus{outline:0;}
+.btn{box-sizing:border-box;border-width:2px;font-size:12px;font-weight:600;padding:.5rem 18px;line-height:1.75;cursor:pointer;text-transform:uppercase;background-color:#66615b;border-color:#66615b;color:#fff;opacity:1;filter:alpha(opacity=100);transition:all .15s linear;}
+.btn:active,.btn:active:focus,.btn:active:hover,.btn:focus,.btn:hover{background-color:#403d39;color:#fff;border-color:#403d39;box-shadow:none;}
+.btn:disabled,.btn:disabled:active,.btn:disabled:focus,.btn:disabled:hover{background-color:#403d39;border-color:#403d39;}
+.btn:active,.btn:focus,.btn:hover{outline:0!important;box-shadow:none;}
+.btn:disabled{opacity:.5;filter:alpha(opacity=50);}
+.btn-round{border-radius:30px;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+*,::after,::before{box-sizing:border-box;}
+a{color:#007bff;text-decoration:none;background-color:transparent;}
+a:hover{color:#0056b3;text-decoration:underline;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+}
+a{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+a{color:#51bcda;}
+a:focus,a:hover{color:#2ba9cd;text-decoration:none;}
+a:active,a:focus{outline:0;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+*,::after,::before{box-sizing:border-box;}
+a{color:#007bff;text-decoration:none;background-color:transparent;}
+a:hover{color:#0056b3;text-decoration:underline;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+}
+a{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+a{color:#51bcda;}
+a:focus,a:hover{color:#2ba9cd;text-decoration:none;}
+a:active,a:focus{outline:0;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+}
+/*! CSS Used from: Embedded ; media=screen */
+@media screen{
+*,::after,::before{box-sizing:border-box;}
+a{color:#007bff;text-decoration:none;background-color:transparent;}
+a:hover{color:#0056b3;text-decoration:underline;}
+.btn{display:inline-block;font-weight:400;color:#212529;text-align:center;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:transparent;border:1px solid transparent;padding:.375rem .75rem;font-size:1rem;line-height:1.5;border-radius:.25rem;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+@media (prefers-reduced-motion:reduce){
+.btn{transition:none;}
+}
+.btn:hover{color:#212529;text-decoration:none;}
+.btn:focus{outline:0;box-shadow:0 0 0 .2rem rgba(0,123,255,.25);}
+.btn:disabled{opacity:.65;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+}
+a{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:'Comic Sans MS',cursive,sans-serif;font-weight:300;}
+a{color:#51bcda;}
+a:focus,a:hover{color:#2ba9cd;text-decoration:none;}
+a:active,a:focus{outline:0;}
+.btn{box-sizing:border-box;border-width:2px;font-size:12px;font-weight:600;padding:.5rem 18px;line-height:1.75;cursor:pointer;background-color:#9a9a9a;border-color:#9a9a9a;color:#fff;opacity:1;filter:alpha(opacity=100);transition:all .15s linear;}
+.btn:active,.btn:active:focus,.btn:active:hover,.btn:focus,.btn:hover{background-color:#403d39;color:#fff;border-color:#403d39;box-shadow:none;}
+.btn:disabled,.btn:disabled:active,.btn:disabled:focus,.btn:disabled:hover{background-color:#403d39;border-color:#403d39;}
+.btn:active,.btn:focus,.btn:hover{outline:0!important;box-shadow:none;}
+.btn:disabled{opacity:.5;filter:alpha(opacity=50);}
+.btn-round{border-radius:30px;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+.card.card-blog .btn{margin:0 auto;}
+.b:active,.b:active:focus,.b:active:hover,.b:focus,.b:hover{background-color:red!important;color:#fff!important;border-color:red!important;box-shadow:none;}
+}
+
+
+/*! CSS Used fontfaces */
+</style>
+    <!-- <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
+    <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" /> --> -->
+
+
   </head>
   <body>
 
     <% for(i=0;i<book.length;i++){%>
       <h3><%=book[i].book.Title%></h3>
-      <button type="button" name="button" onclick=Request('<%=book[i].book.id%>') id='<%=book[i].book.id%>'>Request</button>
+      <button data-toggle="modal" data-target="#exampleModal" type="button" name="button" onclick=Request('<%=book[i].book.id%>') id='<%=book[i].book.id%>'>Request</button>
       <%}%>
+
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div  class="modal-content">
+            <div class="modal-header">
+              <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;margin-left:35%;color:#66615b'>Bookrest</h3><br>
+              <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-left:39%;margin-top:-5% ;color:#66615b">Find the hidden</p>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <h6>No days
+                  <span class="icon-danger">*</span>
+                </h6>
+                <input type="number" name="year" class="form-control border-input" placeholder="Enter the Year of Publication...">
+              </div>
+              <div class="form-group">
+                <h6>Leave a note to the owner</h6>
+                <textarea name="description" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
+                <h5>
+                  <small>
+                    <span id="textarea-limited-message" class="pull-right">150 characters only</span>
+                  </small>
+                </h5>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
+              <button type="button" style="color:white"class="btn btn-round">Request</button>
+            </div>
+
+
+            <!-- <form method="post">
+
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                  <input type="hidden" name='bookid'>
+                  <input type="number" name='days' >
+                  <textarea name="description" rows="8" cols="80"></textarea>
+
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Request</button>
+            </div>
+                </form> -->
+          </div>
+        </div>
+      </div>
+
+
+
+
       <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
+
+<script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 function Request(id) {
 console.log(id);
-$.ajax({
-    type:'POST',
-    url:'/my/request',
-    data:{
-      bookid:id,
-    },
-    success:function(result){
-      alert('Request has been sent to Owner');
-      return false
-    }
-  });
+// $.ajax({
+//     type:'POST',
+//     url:'/my/request',
+//     data:{
+//       bookid:id,
+//     },
+//     success:function(result){
+//       alert('Request has been sent to Owner');
+//       console.log(result);
+//       return true
+//     }
+//   });
 
 }
 </script>

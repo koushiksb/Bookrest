@@ -159,11 +159,18 @@ router.get('/logout',(req,res)=>{
   res.redirect('/users/signup')
 })
 
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',async (req,res)=>{
 console.log(req.isAuthenticated());
       if(req.user.profile==undefined){
        return res.render('profile',{user:req.user.email})
      }else{
+      await Profile.findOne({_id:req.user.profile})
+       .then(a=>{
+         req.session.username = a.fname + ' ' + a.lname
+       })
+       .catch(err=>{
+         return res.sendStatus(500)
+       })
         return res.render('dashboard',{user:req.user.email,layout:'navbar2.ejs'})
      }
 
