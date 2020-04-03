@@ -21,52 +21,14 @@
   color: orange;
 }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="load-more-button.js"></script>
 </head>
 
 <body class="product-page sidebar-collapse">
   
- <nav class="navbar navbar-expand-lg fixed-top " style="background-color:black" >
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" href="../index.html" rel="tooltip" title="Paper Kit 2 PRO" data-placement="bottom" target="_blank" style="color:white;font-size: 15px">
-          <i class="nc-icon nc-cart-simple" style="margin-right: 5px;"></i>Book Shelves
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-bar bar1"></span>
-          <span class="navbar-toggler-bar bar2"></span>
-          <span class="navbar-toggler-bar bar3"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
-        <ul class="navbar-nav ml-auto">
-          <li class=" nav-item">
-            <a href="#" class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" style="color:white;font-size: 15px">
-              <i class="nc-icon nc-bank" style="margin-right: 5px;"></i>Home
-            </a>
-          </li>
-
-          <li class=" nav-item">
-            <a href="#" class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" style="color:white;font-size: 15px">
-              <i class="nc-icon nc-single-02" style="margin-right: 5px;"></i>My Profile
-            </a>
-            
-          </li>
-          <li class=" nav-item">
-            <a href="#" class=" nav-link" id="" data-toggle="dropdown" style="color:white;font-size:15px">
-              <i class="nc-icon nc-single-copy-04" style="margin-right: 5px"></i><b>My Shelf</b>
-            </a>
-          </li>
-          <li class="nav-item" >
-            <a class="btn btn-round"   style="color:white;background-color: black" >
-               <i class="nc-icon nc-button-power" style="margin-right: 5px;"></i>Logout
-            </a>
-          </li>
-
-        </ul>
-      </div>
-    </div>
-  </nav>
+ 
   <!-- End Navbar -->
   <div class="page-header page-header-xs" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1153&q=80');">
   </div>
@@ -80,7 +42,7 @@
             <br/>
           </div>
           <% for(i=0;i<books.length; i++){%>
-          <div class="col-md-3 col-sm-3">
+          <div class="col-md-3 col-sm-3 moreBox" style="display:none">
             <div class="card card-product card-plain">
               <div class="card-image">
                 <a href="/shelf/viewbook/<%=books[i].Title%>">
@@ -106,6 +68,26 @@
         </div>
       </div>
     </div>
+<br>
+<div style="margin-left:45%" id="loadMore">
+              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See More...</button>
+          </div>
+          <script>
+   $( document ).ready(function () {
+  $(".moreBox").slice(0, 16).show();
+    if ($(".blogBox:hidden").length != 0) {
+      $("#loadMore").show();
+    }   
+    $("#loadMore").on('click', function (e) {
+      e.preventDefault();
+      $(".moreBox:hidden").slice(0, 16).slideDown();
+      if ($(".moreBox:hidden").length == 0) {
+        $("#loadMore").fadeOut('slow');
+      }
+    });
+  });
+</script>
+
   <!--   Core JS Files   -->
     <footer class="footer footer-big" style="background-color: black;width: 100%">
         
