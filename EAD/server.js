@@ -29,7 +29,6 @@ function isLoggedIn(req, res, next) {
 app.use('/uploads',express.static(__dirname + '/uploads'))
 
 app.set('view engine','ejs');
-app.use('/static',express.static('./static'));
 // app.use('/static',express.static('./static'));
 
 
