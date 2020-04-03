@@ -112,7 +112,11 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
   app.use('/test',require('./routes/testing'));
 app.use('/my',require('./routes/requestrare'));
 app.use('/shelf',require('./routes/shelf'));
+
 app.use('/book',require('./routes/bidding'));
+
+app.use('/exchange',require('./routes/exchange'));
+
 
 
 app.get("*", function(req, res){

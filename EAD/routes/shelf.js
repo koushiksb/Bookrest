@@ -25,7 +25,7 @@ const multerconf = {
 
 router.get('/view',(req,res)=>{
 
-  Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
+  Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLL').then(x=>{
     // console.log(x[0]);
     return res.render('shelf1',{book:x,layout:'navbar2'});
   })

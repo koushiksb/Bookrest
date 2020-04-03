@@ -25,6 +25,9 @@ const BookSchema = new mongoose.Schema({
   },
   ImageURLL:{
     type:String
+  },
+  Genre:{
+    type:String
   }
 })
 const Book = mongoose.model('Book',BookSchema);

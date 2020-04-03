@@ -7,7 +7,8 @@ const bcrypt=require('bcryptjs');
 const passport=require('passport');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
-
+const Genre = require('../models/Genre.js');
+const Book = require('../models/Book.js');
 const User=require('../models/User')
 const Token=require('../models/Token')
 const Profile=require('../models/Profile')
@@ -164,17 +165,27 @@ console.log(req.isAuthenticated());
       if(req.user.profile==undefined){
        return res.render('profile',{user:req.user.email})
      }else{
-      await Profile.findOne({_id:req.user.profile})
-       .then(a=>{
-         req.session.username = a.fname + ' ' + a.lname
-       })
-       .catch(err=>{
-         return res.sendStatus(500)
-       })
-        return res.render('dashboard',{user:req.user.email,layout:'navbar2.ejs'})
+        Genre.find({}).then(async(x)=>{
+          // console.log(x[0])
+          var lis_genre = x;
+          var arrayLength = x.length;
+          var gen = {};
+          for (var i = 0; i < arrayLength; i++) {
+            var g = x[i]['Genre'];
+            // console.log(g);
+            await Book.find({Genre:g}).then(y=>{
+              // console.log(y[0])
+              gen[g]=y.slice(0,12);
+              // console.log(gen)
+              // console.log(dic)
+            })
+          }
+          // console.log(gen)
+          return res.render('dashboard',{user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
+
+        })
+        // return res.sendStatus(200)
      }
-
-
 
 })
 
@@ -446,6 +457,17 @@ console.log(req.body)
   });
 };
 });
+
+router.get('/addgenre',(req,res)=>{
+  var n=new Genre({
+    Genre: 'Romance',
+  });
+  n.save()
+  .then(x=>{
+    console.log(x)
+    return res.sendStatus(200)
+  })
+})
 
 
 module.exports = router;
