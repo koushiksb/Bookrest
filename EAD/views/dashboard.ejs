@@ -103,14 +103,14 @@
        <% for(var i in books){%>
        		<!-- <div id=> -->
        		<h3><%= i %></h3><!-- </div> --><br>
-       		<div class="col-md-9">
+       		<div class="col-md-12">
            <div class="products">
              <div class="row">
              	<% for (j=0;j<books[i].length ;j++){%>
                <div class="col-md-3 col-sm-3" >
                  <div class="card card-product card-plain">
                    <div class="card-image">
-                     <a href="/shelf/viewbook/<%=books[i][j].Title%>"><img class="af-explames-demo-img" src="<%=books[i][j].ImageURLL%>"
+                     <a href="/shelf/viewbook/<%=books[i][j].Title%>"><img class="af-explames-demo-img" src="<%=books[i][j].ImageURLM%>"
                   alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
                      <div class="card-body">
                        <div class="card-description">
@@ -131,7 +131,9 @@
                <br>
                </div>
              <div class="col-md-3 offset-md-4">
-                <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+              <a href="/users/seebooks/<%= i %>">
+                <button rel="tooltip" class="btn btn-round btn-outline-default" id="successBtn" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+              </a>
               </div>
            </div>
          </div>
