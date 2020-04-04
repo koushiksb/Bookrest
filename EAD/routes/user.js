@@ -160,7 +160,7 @@ router.get('/logout',(req,res)=>{
   res.redirect('/users/signup')
 })
 
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',async (req,res)=>{
 console.log(req.isAuthenticated());
       if(req.user.profile==undefined){
        return res.render('profile',{user:req.user.email})
@@ -182,12 +182,17 @@ console.log(req.isAuthenticated());
           }
           // console.log(gen)
           return res.render('dashboard',{user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
-
-        })
-        // return res.sendStatus(200)
+        })  // return res.sendStatus(200)
      }
-
 })
+
+router.get('/seebooks/:genre',(req,res)=>{
+  Book.find({Genre:req.params.genre}).then(x=>{
+    // console.log(x[0])
+    return res.render('genrebooks',{books:x,layout:'navbar2.ejs'})
+  })
+})
+
 
 router.get('/profile',(req,res)=>{
 

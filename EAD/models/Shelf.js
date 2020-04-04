@@ -19,6 +19,9 @@ const ShelfSchema = new mongoose.Schema({
   period:{
     type:Date
   },
+  paid:{
+    type:Number   // 0 not paid, 1 paid
+  }
   // ra:{
   //   type: mongoose.Schema.Types.mixed
   // }

@@ -9,7 +9,8 @@ const cookieSession = require('cookie-session')
 const expressLayouts = require('express-ejs-layouts')
 const cors = require('cors');
 const router = express.Router();
-const multer = require('multer')
+const multer = require('multer');
+const Bidding = require('./models/Bidding.js')
 var app=express()
 //EJS
 //
@@ -111,14 +112,61 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
   app.use('/test',require('./routes/testing'));
 app.use('/my',require('./routes/requestrare'));
 app.use('/shelf',require('./routes/shelf'));
+
+app.use('/book',require('./routes/bidding'));
+
 app.use('/exchange',require('./routes/exchange'));
+
 
 
 app.get("*", function(req, res){
   res.render('404');
 });
 
- app.listen(3000, function(){
+ var server = app.listen(3000, function(){
    console.log("Connected to server")
  });
+
+ const io = require('socket.io')(server)
+ io.on('connect',(socket)=>{
+   console.log('new user connected');
+   socket.username = 'Anonymous'
+   socket.on('join', function(data){
+     console.log(data);
+     if(socket.room)
+         socket.leave(socket.room);
+
+     socket.room = data.room;
+     var room = data.room
+     socket.join(data.room);
+     console.log(socket.room);
+ });
+
+    socket.on('change_username',(data)=>{
+     socket.username = data.username
+   })
+   socket.on('new_message',(data)=>{
+     var bid = new Bidding({
+       room:data.room,
+       username:data.username,
+       userid:data.userid,
+       amount:data.message,
+       bidid:data.bidid
+
+     })
+
+     bid.save()
+     .then(x=>{
+       io.sockets.in(data.room).emit('new_message',{message:data.message,username:data.username})
+
+     })
+     .catch(err=>{
+       console.log(err);
+     })
+   })
+   socket.on('typing',(data)=>{
+      socket.broadcast.in(data.room).emit('typing',{username:socket.username})
+   })
+ })
+
 console.log('you are listening to port 3000');

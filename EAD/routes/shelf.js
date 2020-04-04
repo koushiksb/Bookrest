@@ -113,7 +113,7 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 router.get('/viewbook/:title',(req,res)=>{
 
   Book.findOne({Title:req.params.title}).then(x=>{
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,id:x._id});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,id:x._id,layout:'navbar2.ejs'});
   });
 
 });
@@ -123,8 +123,7 @@ router.get('/deletebook/:title',(req,res)=>{
     Shelf.findOneAndRemove({user:req.user._id,book:x._id}).then(y=>{
       res.redirect('/shelf/view');
     });
-  });
-});
+
 
 router.post('/charge',(req,res)=>{
   var token = req.body.stripeToken;

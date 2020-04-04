@@ -18,7 +18,7 @@ router.get('/shelf',(req,res)=>{
 })
 
 router.get('/request',(req,res)=>{
-
+    req.session.name = 'asdfgb'
     Shelf.find({user:'5e5a9d624f4f426bfc199fb0'}).select('book -_id').populate('book','Title').then(x=>{
       console.log(x[0]);
       return res.render('dummyviewshelf',{book:x})
