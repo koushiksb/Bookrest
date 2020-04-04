@@ -4,6 +4,8 @@ const User=require('../models/User');
 const Shelf=require('../models/Shelf');
 const Book=require('../models/Book');
 const multer = require('multer');
+var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
+
 // store and validation
 const multerconf = {
   storage:multer.diskStorage({
@@ -26,8 +28,11 @@ const multerconf = {
 router.get('/view',(req,res)=>{
 
   Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLL').then(x=>{
-    // console.log(x[0]);
-    return res.render('shelf1',{book:x,layout:'navbar2'});
+    // console.log(x);
+    Shelf.find({user:req.user._id}).then(y=>{
+      // console.log(y);
+      return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
+    });
   })
 
 });
@@ -108,9 +113,38 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 router.get('/viewbook/:title',(req,res)=>{
 
   Book.findOne({Title:req.params.title}).then(x=>{
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,id:x._id});
   });
 
+});
+
+router.get('/deletebook/:title',(req,res)=>{
+  Book.findOne({Title:req.params.title}).then(x=>{
+    Shelf.findOneAndRemove({user:req.user._id,book:x._id}).then(y=>{
+      res.redirect('/shelf/view');
+    });
+  });
+});
+
+router.post('/charge',(req,res)=>{
+  var token = req.body.stripeToken;
+  var chargeAmount = req.body.chargeAmount;
+  var bookid = req.body.id;
+  var charge = stripe.charges.create({
+    amount : chargeAmount,
+    currency : "inr",
+    source : token,
+  }, function(err,charge){
+    if(err){
+      console.log("Your card was declined");
+    }
+}).then((hh)=>{
+  // add bookid to the users subscription list
+  // console.log(bookid);
+  Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{owner:0}).then(z=>{
+    res.redirect('/shelf/view');
+  });
+});
 });
 
 module.exports = router;
