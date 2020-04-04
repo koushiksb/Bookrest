@@ -39,7 +39,7 @@ Profile.findOne({_id:req.user.profile})
     //   y[i] = y[i].toJSON()
     // }
     // console.log(y);
-    var info = {username  : x.fname + ' ' + x.lname,userid:req.user.id,room:bidfor,bidid:req.params.bidid,prevbids:y,baseamount:baseamount,details:details,user:user }
+    var info = {username  : x.fname + ' ' + x.lname,userid:req.user.id,room:bidfor,bidid:req.params.bidid,prevbids:y,baseamount:baseamount,details:details,user:user,layout:"navbar2.ejs" }
     return res.render('bidding.ejs',info)
 
   })
@@ -106,5 +106,15 @@ router.post('/openbid',(req,res)=>{
     console.log(err);
   })
 
+})
+
+router.post('/mystuff',(req,res)=>{
+  Openbid.find({userid:req.user.id})
+  .then(x=>{
+    return res.render('mystuff',{mybids:x})
+  })
+  .catch(err=>{
+    console.log(err);
+  })
 })
 module.exports = router;
