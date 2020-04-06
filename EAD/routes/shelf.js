@@ -123,6 +123,8 @@ router.get('/deletebook/:title',(req,res)=>{
     Shelf.findOneAndRemove({user:req.user._id,book:x._id}).then(y=>{
       res.redirect('/shelf/view');
     });
+  })
+});
 
 
 router.post('/charge',(req,res)=>{
