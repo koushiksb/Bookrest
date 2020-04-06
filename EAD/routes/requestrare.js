@@ -57,7 +57,7 @@ router.get('/viewrequest',(req,res)=>{
 console.log('found');
 RareRequest.find({recipient:req.user.id,status:'0'}).populate({path:'requester',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(x=>{
 // RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
-
+console.log(x);
   return res.render('dummyviewrequest',{requests:x,layout:'navbar2'})
 })
 })
@@ -84,6 +84,7 @@ router.post('/viewrequest',(req,res)=>{
 
       })
     }else{
+      console.log('jhgfdsa');
       return res.sendStatus(200)
 
     }

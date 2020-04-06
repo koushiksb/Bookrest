@@ -66,7 +66,7 @@ router.get('/allbidding',(req,res)=>{
   .then(x=>{
     console.log(x);
 
-    res.render('allbiddings',{bids:x})
+    res.render('allbiddings',{bids:x,layout:"navbar2.ejs"})
 
   })
   .catch(err=>{
