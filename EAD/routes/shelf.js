@@ -3,6 +3,7 @@ const router = express.Router();
 const User=require('../models/User');
 const Shelf=require('../models/Shelf');
 const Book=require('../models/Book');
+const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
 
@@ -112,8 +113,14 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 });
 
 router.get('/viewbook/:title',(req,res)=>{
-
+  var inbidding=0
   Book.findOne({Title:req.params.title}).then(async (x)=>{
+  Openbid.findOne({bookid:x.id,userid:req.user.id}).then(a=>{
+      if(a!=null){
+        inbidding =1
+      }
+    })
+
     var owner = '0'
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);
@@ -121,7 +128,7 @@ router.get('/viewbook/:title',(req,res)=>{
 console.log(y.owner);
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,id:x._id,owner:owner,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,layout:'navbar2.ejs'});
   });
 
 });

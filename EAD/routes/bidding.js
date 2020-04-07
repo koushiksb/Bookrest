@@ -121,7 +121,7 @@ router.post('/openbid',(req,res)=>{
 router.get('/mystuff',(req,res)=>{
   Openbid.find({userid:req.user.id}).populate('bookid')
   .then(x=>{
-    return res.render('mystuff',{mybids:x})
+    return res.render('mystuff',{mybids:x,layout:'navbar2'})
   })
   .catch(err=>{
     console.log(err);

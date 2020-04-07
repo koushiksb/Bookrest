@@ -33,7 +33,6 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
       <div class="container">
         <div class="row title-row">
           <div class="col-md-3">
-            <h4 class="shop"><%= title %></h4>
           </div>
           <div class="col-md-4 ml-auto">
             <div class="pull-right">
@@ -49,7 +48,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
-                      <img class="" src="<%=image%>" alt="/pics/image_placeholder.jpg">
+                      <img style="width:100%" src="<%=image%>" alt="/pics/image_placeholder.jpg">
                     </div>
                   </div>
                 </div>
@@ -71,11 +70,13 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
               <div class="col-md-4  col-sm-8">
                 <a href="#"><button class="btn btn-danger btn-block btn-round">Read book &nbsp;<i class="fa fa-chevron-right"></i></button></a>
               </div>
+
             <%if(owner!='1'){%>
+              <%if(inbidding!=0){%>
               <div class="col-md-4  col-sm-8">
                 <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#exampleModal">Open Bid &nbsp;<i class="fa fa-chevron-right"></i></button>
               </div>
-
+<%}%>
               <div class="col-md-4  col-sm-8">
                 <a href="/exchange/require/<%=title%>"><button class="btn btn-danger btn-block btn-round">Request &nbsp;<i class="fa fa-chevron-right"></i></button></a>
               </div>
