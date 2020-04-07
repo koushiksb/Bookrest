@@ -98,8 +98,55 @@ a:active,a:focus{outline:0;}
                 text-align:justify;
             }
     </style>
+
+    <script>
+       var mins = 0.1;
+       var secs = mins * 60;
+       function countdown() {
+           setTimeout('Decrement()', 60);
+       }
+
+       function Decrement() {
+           if (document.getElementById) {
+               minutes = document.getElementById("minutes");
+               seconds = document.getElementById("seconds");
+               if (seconds < 59) {
+                   seconds.value = secs;
+               }
+               else {
+                   minutes.value = getminutes();
+                   seconds.value = getseconds();
+               }
+               if (mins < 1) {
+                   minutes.style.color = "red";
+                   seconds.style.color = "red";
+               }
+               if (mins < 0) {
+                   alert('time up');
+                   document.getElementById('sold').innerHTML = 'sold'
+                   // socket.emit('sold',{room:'<%=room%>',username:'<%=username%>'})
+                   minutes.value = 0;
+                   seconds.value = 0;
+               }
+               else {
+                   secs--;
+                   setTimeout('Decrement()', 1000);
+               }
+           }
+       }
+
+       function getminutes() {
+           mins = Math.floor(secs / 60);
+           return mins;
+       }
+
+       function getseconds() {
+           return secs - Math.round(mins * 60);
+       }
+   </script>
+
   </head>
-  <body>
+  <body onload="countdown();">
 
 <h1 style="margin-top:10%">Bidding page</h1>
 <div class="row" >
@@ -145,8 +192,21 @@ a:active,a:focus{outline:0;}
         Highest bid : <%=baseamount%>
 <br>
         By <%=user%>
+        <br>
+        Time Left ::
+      <input id="minutes" type="text" style="width: 25px;
+           border: none; font-size: 16px;
+          font-weight: bold; color: black;"><font size="5"> :
+                      </font>
+      <input id="seconds" type="text" style="width: 25px;
+                      border: none; font-size: 16px;
+                      font-weight: bold; color: black;">
+
+      <br>
+      <i id='sold'></i>
       <br><br>
       </p>
+
       <%}else{%>
         <p class="card-description desc" >Be the first person to bid</p>
         <%}%>

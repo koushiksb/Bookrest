@@ -145,6 +145,17 @@ app.get("*", function(req, res){
     socket.on('change_username',(data)=>{
      socket.username = data.username
    })
+   socket.on('sold',(data)=>{
+    var soldto = data.username;
+    var users = this.manager.rooms[data.room];
+    for(var i = 0; i < users.length; i++) {
+     io.sockets.socket(users[i]).disconnect();
+ }
+
+
+  })
+
+
    socket.on('new_message',(data)=>{
      var bid = new Bidding({
        room:data.room,
