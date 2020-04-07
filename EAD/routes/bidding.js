@@ -13,18 +13,24 @@ Profile.findOne({_id:req.user.profile})
   var baseamount = 0
   var details = ' '
   var user = ''
+  var id=' '
+  var m = 0
   await Openbid.findOne({_id:req.params.bidid}).populate('bookid')
   .then(z=>{
     console.log('this is z');
       console.log(z);
       baseamount = z.baseamount
       details = z
+      id = z._id
+      if(req.user.id == z.userid){
+        m=1
+      }
   })
   .catch(err=>{
     console.log(err);
     return res.sendStatus(500)
   })
-  Bidding.find({})
+  Bidding.find({bidid:id})
   .then(y=>{
     console.log(y);
     if (y.length >0){
@@ -40,8 +46,12 @@ Profile.findOne({_id:req.user.profile})
     // }
     // console.log(y);
     var info = {username  : x.fname + ' ' + x.lname,userid:req.user.id,room:bidfor,bidid:req.params.bidid,prevbids:y,baseamount:baseamount,details:details,user:user,layout:"navbar2.ejs" }
-    return res.render('bidding.ejs',info)
+    if(m==1){
+      return res.render('viewbidding.ejs',info)
 
+    }else{
+    return res.render('bidding.ejs',info)
+}
   })
   .catch(err=>{
     console.log(err);
@@ -77,21 +87,21 @@ router.get('/allbidding',(req,res)=>{
 router.post('/openbid',(req,res)=>{
   var username='Anonymous'
 
-  // Profile.findOne({_id:req.user.profile})
-  // .then(x=>{
-  //   console.log('here');
-  //   console.log(x);
-  //   var username = x.fname +' ' +x.lname
-  //   console.log(username);
-  // })
-  // .catch(err=>{
-  //   console.log(err);
-  // })
-  // console.log('ssd');
-  // console.log(username);
+  Profile.findOne({_id:req.user.profile})
+  .then(x=>{
+    console.log('here');
+    console.log(x);
+    var username = x.fname +' ' +x.lname
+    console.log(username);
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+  console.log('ssd');
+  console.log(username);
   var bid = new Openbid({
     userid:req.user.id,
-    username:req.session.username,
+    username:username,
    bookid:req.body.bookid ,
    baseamount:req.body.baseamount ,
    date:Date.now() ,
@@ -108,8 +118,8 @@ router.post('/openbid',(req,res)=>{
 
 })
 
-router.post('/mystuff',(req,res)=>{
-  Openbid.find({userid:req.user.id})
+router.get('/mystuff',(req,res)=>{
+  Openbid.find({userid:req.user.id}).populate('bookid')
   .then(x=>{
     return res.render('mystuff',{mybids:x})
   })
@@ -117,4 +127,14 @@ router.post('/mystuff',(req,res)=>{
     console.log(err);
   })
 })
+// router.get('/viewbidding',(req,res)=>{
+//   Openbid.find({userid:req.user.id}).populate('bookid')
+//   .then(x=>{
+//     return res.render('viewbidding',{mybids:x})
+//   })
+//   .catch(err=>{
+//     console.log(err);
+//   })
+// })
+
 module.exports = router;

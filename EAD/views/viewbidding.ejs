@@ -103,7 +103,7 @@ a:active,a:focus{outline:0;}
 
 <h1 style="margin-top:10%">Bidding page</h1>
 <div class="row" >
-  <div class="col-md-8">
+  <div class="col-md-8" style="margin-left:5%">
     <div class=" card card-plain card-blog">
       <div class="row" style="margin-left:5%">
         <div class="col-md-3">
@@ -137,7 +137,7 @@ a:active,a:focus{outline:0;}
     <br><br>
 
   </div>
-  <div class="col-md-4">
+  <div class="col-md-4" style="margin-left:-15%">
     <div class="card-body">
       <!-- <h6 class="card-category text-info">Enterprise</h6> -->
 <%if(prevbids.length != 0){%>
@@ -148,7 +148,7 @@ a:active,a:focus{outline:0;}
       <br><br>
       </p>
       <%}else{%>
-        <p class="card-description desc" >Be the first person to bid</p>
+        <p class="card-description desc" >zero bids</p>
         <%}%>
     </div>
 
@@ -156,19 +156,18 @@ a:active,a:focus{outline:0;}
 
   </div>
 </div>
-<div class="row">
-  <div class="col-md-6">
-    <input type="number" name="message" id="message" min="0" oninput="validity.valid||(value='');">
-
-    <button type="button" name="button" id="send_message" >Bid amount</button>
-
-  </div>
-  <div class="col-md-6 scroll">
-    <div style="width:70%;height:300px;color:#9a9a9a" id="chatroom">
+<div class="row" style="margin-left:22%">
+  <div class="col-md-8 scroll">
+    <div style="height:300px;color:#9a9a9a" id="chatroom">
+      <%if (prevbids.length==0) {%>
+        <center>
+        <p style="font-size:1.2rem;text-align:center;color:black !important">you can see here if anyone bids</p>
+        </center>
+      <%}else{%>
       <%for(i=prevbids.length -1 ;i>=0;i--){%>
     <p class='message'><%=prevbids[i].username%> : <%=prevbids[i].amount%></p>
         <%}%>
-
+<%}%>
 
     </div>
 

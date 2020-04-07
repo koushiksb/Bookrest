@@ -206,7 +206,7 @@ h6{font-size:1em;}
             <div class="container">
               <div class="row">
                 <div class="col-md-10 ml-auto mr-auto">
-                  <h2 class="title">Bid For The Book</h2>
+                  <h2 class="title">My books in auction</h2>
                   <br>
 
 
@@ -233,10 +233,10 @@ h6{font-size:1em;}
                           </p>
 
                           <p class="card-description desc">
-                            By <%=mybids[i].username%>  <br>
+
                             Base Amount : <%=mybids[i].baseamount%>
                           <br><br>
-  <a class="btn btn-rose btn-round" style="color:white" id='but' href="/book/viewbidding/<%=mybids[i].bookid.id%>/<%=mybids[i].userid%>/<%=mybids[i].id%>"  >View auction</a>
+  <a class="btn btn-rose btn-round" style="color:white" id='but' href="/book/bidding/<%=mybids[i].bookid.id%>/<%=mybids[i].userid%>/<%=mybids[i].id%>"  >View auction</a>
   &nbsp&nbsp&nbsp&nbsp
   <a class="btn btn-rose btn-round" style="color:white" id='but' href="#"  >Edit details</a>
 
