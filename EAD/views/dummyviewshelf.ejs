@@ -368,18 +368,18 @@ a:active,a:focus{outline:0;}
 <script type="text/javascript">
 function Request(id) {
 console.log(id);
-// $.ajax({
-//     type:'POST',
-//     url:'/my/request',
-//     data:{
-//       bookid:id,
-//     },
-//     success:function(result){
-//       alert('Request has been sent to Owner');
-//       console.log(result);
-//       return true
-//     }
-//   });
+$.ajax({
+    type:'POST',
+    url:'/my/request',
+    data:{
+      bookid:id,
+    },
+    success:function(result){
+      alert('Request has been sent to Owner');
+      console.log(result);
+      return true
+    }
+  });
 
 }
 </script>

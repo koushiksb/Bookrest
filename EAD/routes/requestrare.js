@@ -77,6 +77,7 @@ router.post('/viewrequest',(req,res)=>{
         book:req.body.bookid,
         user:req.body.requester,
         owner:'1',
+        paid:0
 
       });
       add.save().then(a=>{

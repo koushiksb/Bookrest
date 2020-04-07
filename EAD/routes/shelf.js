@@ -31,6 +31,7 @@ router.get('/view',(req,res)=>{
     // console.log(x);
     Shelf.find({user:req.user._id}).then(y=>{
       // console.log(y);
+      console.log(y);
       return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
     });
   })
@@ -112,8 +113,15 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 
 router.get('/viewbook/:title',(req,res)=>{
 
-  Book.findOne({Title:req.params.title}).then(x=>{
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,id:x._id,layout:'navbar2.ejs'});
+  Book.findOne({Title:req.params.title}).then(async (x)=>{
+    var owner = '0'
+    await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
+      // console.log(y);
+      owner  = y.owner
+console.log(y.owner);
+    });
+console.log(owner);
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,id:x._id,owner:owner,layout:'navbar2.ejs'});
   });
 
 });
@@ -142,7 +150,7 @@ router.post('/charge',(req,res)=>{
 }).then((hh)=>{
   // add bookid to the users subscription list
   // console.log(bookid);
-  Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{owner:0}).then(z=>{
+  Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
     res.redirect('/shelf/view');
   });
 });
