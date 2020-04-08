@@ -129,7 +129,13 @@ console.log(y.owner);
 console.log(owner);
     res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,layout:'navbar2.ejs'});
   });
+});
 
+router.get('/viewbk/:title',(req,res)=>{
+  Book.findOne({Title:req.params.title}).then(async (x)=>{
+    console.log(x)
+    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,layout:'navbar2.ejs'});
+  });
 });
 
 router.get('/deletebook/:title',(req,res)=>{

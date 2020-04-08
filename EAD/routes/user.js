@@ -196,11 +196,12 @@ router.get('/seebooks/:genre',(req,res)=>{
 router.post('/search',(req,res)=>{
   var str = req.body.search;
   var arr = str.split(" ");
+  arr = arr.toLocaleString().toLowerCase().split(',');
   Book.find({}).then(x=>{
     var gen = [];
     for(var i=0;i<x.length;i++){
       var quer = x[i]['Publisher']+' '+x[i]['Title']+' '+x[i]['Author']+' '+x[i]['YearOfPublication'];
-      var query = quer.split(" ")
+      var query = quer.toLowerCase().split(" ");
       if(arr.some(item => query.includes(item))){
         gen.push(x[i])
       }
