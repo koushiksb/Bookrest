@@ -120,7 +120,6 @@ router.get('/viewbook/:title',(req,res)=>{
         inbidding =1
       }
     })
-
     var owner = '0'
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);

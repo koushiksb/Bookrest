@@ -31,8 +31,10 @@
    <div class="section latest-offers" style="background-color: #2A2A2A">
      <h3 class="section-title" style="margin-left:23%;color:white;display:inline"><b>Search</b></h3>
      <div class="md-form mt-0" style="margin-left:23%;width:50%">
-       <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
-       <button  class="btn primary" style="margin-left:10px">Search</button>
+      <form method="post" action="/users/search">
+       <input class="form-control" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
+       <button type="submit" class="btn primary" style="margin-left:10px">Search</button>
+       </form>
      </div>
 
      <div class="container">

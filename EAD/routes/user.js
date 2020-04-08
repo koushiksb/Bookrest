@@ -193,6 +193,30 @@ router.get('/seebooks/:genre',(req,res)=>{
   })
 })
 
+router.post('/search',(req,res)=>{
+  var str = req.body.search;
+  var arr = str.split(" ");
+  Book.find({}).then(x=>{
+    var gen = [];
+    for(var i=0;i<x.length;i++){
+      var quer = x[i]['Publisher']+' '+x[i]['Title']+' '+x[i]['Author']+' '+x[i]['YearOfPublication'];
+      var query = quer.split(" ")
+      if(arr.some(item => query.includes(item))){
+        gen.push(x[i])
+      }
+    }
+    if(gen.length===0){
+      console.log('no items')
+      return res.sendStatus(200)
+    }
+    else{
+    console.log(gen[0])
+    return res.render('search',{books:gen,layout:'navbar2.ejs',query:str})
+    }
+  })
+})
+
+
 
 router.get('/profile',(req,res)=>{
 
