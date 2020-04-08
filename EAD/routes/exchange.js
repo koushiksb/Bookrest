@@ -55,8 +55,10 @@ router.get('/done/:bookReq/:bookSen',(req,res)=>{
 });
 });
 
-
+// router.get('/alltrades',(req,res)=>{
+//   Exchange.find({})
+//   return res.render('viewtrades')
+// })
 
 
 module.exports  = router
-
