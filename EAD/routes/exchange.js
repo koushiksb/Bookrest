@@ -43,7 +43,7 @@ router.get('/done/:bookReq/:bookSen',(req,res)=>{
      n.save()
     .then(z=>{
         console.log(z)
-        return res.sendStatus(200)
+        return res.redirect('/exchange/mytrades')
         // console.log(y);
     })
     .catch(err=>{
@@ -59,6 +59,27 @@ router.get('/done/:bookReq/:bookSen',(req,res)=>{
 //   Exchange.find({})
 //   return res.render('viewtrades')
 // })
+router.get('/mytrades',(req,res)=>{
+  Exchange.find({userReq:req.user.id,status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+  .then(x=>{
+    return res.render('myexchanges',{requests:x,layout:"navbar2"})
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
+
+router.post('/mytrades',(req,res)=>{
+  Exchange.findOneAndDelete({_id:req.body.id})
+  .then(x=>{
+    console.log(x);
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
 
 
 module.exports  = router

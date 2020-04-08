@@ -17,6 +17,8 @@ Profile.findOne({_id:req.user.profile})
   var m = 0
   await Openbid.findOne({_id:req.params.bidid}).populate('bookid')
   .then(z=>{
+    if(z.status==1){
+
     console.log('this is z');
       console.log(z);
       baseamount = z.baseamount
@@ -25,6 +27,11 @@ Profile.findOne({_id:req.user.profile})
       if(req.user.id == z.userid){
         m=1
       }
+
+
+    }else{
+      return res.sendStatus(200)
+    }
   })
   .catch(err=>{
     console.log(err);
@@ -72,7 +79,7 @@ router.post('/bidding',(req,res)=>{
 
 router.get('/allbidding',(req,res)=>{
   console.log(req.user.id);
-  Openbid.find({ userid: { $not: { $eq: req.user.id } } }).populate('bookid')
+  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid')
   .then(x=>{
     console.log(x);
 
