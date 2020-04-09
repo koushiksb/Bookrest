@@ -45,11 +45,11 @@
 
 <% for(i=0;i<exchange.length; i++){%>
   <div class="card-header moreBox" style="display:none;margin-top:30px">
-    <%=exchange[i].profile.location %>
+    <%=exchange[i].userReq.profile.location %>
   </div>
 <div class="card">
   <div class="card-body moreBox" style="display:none">
-    <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].profile.fname + exchange[i].profile.lname %></b> would like to make the exchange <b><%= exchange[i].bookSen.Title %></b> for <b><%= exchange[i].bookReq.Title %></b> </h5>
+    <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].userReq.profile.fname + exchange[i].userReq.profile.lname %></b> would like to make the exchange <b><%= exchange[i].bookSen.Title %></b> for <b><%= exchange[i].bookReq.Title %></b> </h5>
     <div class="card-image" style="padding-left:10%">
 
                   <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:25%;%">

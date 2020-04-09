@@ -82,26 +82,12 @@ router.post('/mytrades',(req,res)=>{
 })
 
 router.get('/tradepage',(req,res)=>{
-  Exchange.find({status:false}).then(async(x)=>{
-    var list = []
+  Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL')
+  .then(async(x)=>{
+    console.log(x.length)
     console.log(x[0])
-    for(var i=0;i<x.length;x++){
-      var gen = {}
-      await Book.findOne({_id:x[i].bookReq}).then(b1=>{
-        gen['bookReq']=b1;
-      })
-      await Book.findOne({_id:x[i].bookSen}).then(b2=>{
-        gen['bookSen']=b2;
-      })
-      await User.findOne({_id:x[i].userReq}).then(async(u1)=>{
-        await Profile.findOne({_id:u1.profile}).then(p1=>{
-          gen['profile']=p1;
-        })
-      })
-      list.push(gen)
-    }
     // return res.sendStatus(200)
-    return res.render('viewtrades',{exchange:list,layout:"navbar2"})
+    return res.render('viewtrades',{exchange:x,layout:"navbar2"})
   })
 })
 
