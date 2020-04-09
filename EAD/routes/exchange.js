@@ -143,5 +143,24 @@ router.post('/mytrades',(req,res)=>{
 
 })
 
+router.get('/tradepage',(req,res)=>{
+  Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL')
+  .then(x=>{
+    console.log(x.length)
+    console.log(x[0])
+    // return res.sendStatus(200)
+    return res.render('viewtrades',{exchange:x,layout:"navbar2"})
+  })
+})
+
+router.get('/viewtrade/:id',(req,res)=>{
+  Exchange.findOne({_id:req.params.id}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+  .then(x=>{
+    return res.render('tradeview',{exchange:x,layout:"navbar2"})
+  })
+})
+
+
+
 
 module.exports  = router
