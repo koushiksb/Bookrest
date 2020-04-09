@@ -22,7 +22,11 @@ const ExchangeSchema = new mongoose.Schema({
     type:Boolean,
     default:false
   },
-  exchange:{
+  exchangeReq:{
+    type:Boolean,
+    default:false
+  },
+  exchangeSen:{
     type:Boolean,
     default:false
   }
