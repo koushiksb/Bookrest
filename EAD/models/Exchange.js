@@ -21,6 +21,10 @@ const ExchangeSchema = new mongoose.Schema({
   status:{
     type:Boolean,
     default:false
+  },
+  exchange:{
+    type:Boolean,
+    default:false
   }
 })
 
