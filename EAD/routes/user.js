@@ -28,7 +28,7 @@ function IsAuth(req,res,next){
   res.redirect('/users/dashboard')
 }
 
-router.get('/login',IsAuth,(req,res)=>res.render('login'));
+router.get('/login',IsAuth,(req,res)=>{return res.render('login')});
 router.get('/signup',(req,res)=>res.render('signup',{errors:[],check:0}));
 
 router.post('/checkemail',function (req,res){

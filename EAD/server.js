@@ -9,6 +9,7 @@ const cookieSession = require('cookie-session')
 const expressLayouts = require('express-ejs-layouts')
 const cors = require('cors');
 const router = express.Router();
+
 const multer = require('multer');
 var partials      = require('express-partials');
 const Bidding = require('./models/Bidding.js')
@@ -108,7 +109,6 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
     //
 
 //Routes
-
  app.use('/users',require('./routes/user'));
   app.use('/test',require('./routes/testing'));
 app.use('/my',require('./routes/requestrare'));
