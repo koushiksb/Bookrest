@@ -118,6 +118,7 @@ router.post('/ongoing',(req,res)=>{
     }
     x.save()
     .then(a=>{
+      console.log(a)
       return res.sendStatus(200)
     })
     .catch(err=>{
@@ -144,12 +145,23 @@ router.post('/mytrades',(req,res)=>{
 })
 
 router.get('/tradepage',(req,res)=>{
+  var books = [];
+  Shelf.find({user:req.user.id}).populate('book','_id').then(y=>{
+    for(var i=0;i<y.length;i++){
+      books.push(y[i].book.id)
+    }
+    console.log(books);
+  })
+  
   Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL')
   .then(x=>{
-    console.log(x.length)
-    console.log(x[0])
-    // return res.sendStatus(200)
-    return res.render('viewtrades',{exchange:x,layout:"navbar2"})
+    var gen = [];
+    for(var i=0;i<x.length;i++){
+      if (books.includes(x[i].bookReq.id)){
+        gen.push(x[i]);
+      }
+    }
+    return res.render('viewtrades',{exchange:gen,layout:"navbar2"})
   })
 })
 
@@ -160,6 +172,14 @@ router.get('/viewtrade/:id',(req,res)=>{
   })
 })
 
+
+
+router.get('/accept/:id',(req,res)=>{
+  Exchange.findOneAndUpdate({_id:req.params.id},{status:true,userAcc:req.user.id}).then(x=>{
+    console.log(x);
+  })
+  return res.redirect('/exchange/ongoing')
+})
 
 
 

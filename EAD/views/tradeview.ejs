@@ -71,14 +71,14 @@
 
                       </div>
                       <div class="row">
-                        <a class="btn btn-rose btn-round" style="color:white;margin-left:35%" id='but' onclick="#" >Accept Request</a>
+                        <a class="btn btn-rose btn-round" style="color:white;margin-left:35%" href="/exchange/accept/<%=exchange._id%>" >Accept Request</a>
                       </div>
 
 
                     </div>
                     <div class="col-md-3" style="text-align:right"  >
                       <div class="card-image" >
-                        <img style="width:175px;height:220px" class="img" src="<%=exchange.bookSen.ImageURLL%>">
+                        <img style="width:175px;height:220px" class="img" src="<%=exchange.bookReq.ImageURLL%>">
                       </div>
                     </div>
 
@@ -88,8 +88,8 @@
                 </div>
             <h5>Add Posted by: <b><%= exchange.userReq.profile.fname + exchange.userReq.profile.lname%></b></h5>
             <h5>City: <b><%=exchange.userReq.profile.location%></b></h5>
-            <h5>Contact: <b><%=exchange.userReq.profile.phone%></b></h5>
-            <h5>Location: <b><%=exchange.userReq.profile.address%></b></h5>
+            <!-- <h5>Contact: <b><%=exchange.userReq.profile.phone%></b></h5> -->
+            <!-- <h5>Location: <b><%=exchange.userReq.profile.address%></b></h5> -->
             <hr />
           </div>
         </div>
