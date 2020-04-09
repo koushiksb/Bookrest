@@ -73,8 +73,10 @@ router.get('/mytrades',(req,res)=>{
 router.get('/tradescompleted',(req,res)=>{
   Exchange.find({userReq:req.user.id,status:true,exchangeReq:true,exchangeSen:true}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
   .then(x=>{
-    Exchange.find({userSen:req.user.id,status:true,exchangeReq:true,exchangeSen:true}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+    console.log(x.length)
+    Exchange.find({userAcc:req.user.id,status:true,exchangeReq:true,exchangeSen:true}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
     .then(y=>{
+      console.log(y.length)
       return res.render('tradescompleted',{requests:x,accepts:y,layout:"navbar2"})
 
     })
@@ -92,7 +94,7 @@ router.get('/ongoing',(req,res)=>{
   Exchange.find({userReq:req.user.id,status:true,$or:[{exchangeReq:false},{exchangeSen:false}]}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
   .then(x=>{
     console.log(x);
-    Exchange.find({userSen:req.user.id,status:true,$or:[{exchangeReq:false},{exchangeSen:false}]}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+    Exchange.find({userAcc:req.user.id,status:true,$or:[{exchangeReq:false},{exchangeSen:false}]}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
     .then(y=>{
       console.log(y);
     return res.render('ongoing',{requests:x,accepts:y,layout:"navbar2"})
@@ -118,17 +120,39 @@ router.post('/ongoing',(req,res)=>{
     }
     x.save()
     .then(a=>{
+      console.log(a)
+      if(a.exchangeReq && a.exchangeSen){
+        console.log("gjhbcdhd")
+        return res.redirect('/exchange/exchangeshelf/'+a._id)
+      }
+      else{
       return res.sendStatus(200)
+      }
     })
     .catch(err=>{
       console.log(err);
     })
-
   })
   .catch(err=>{
     console.log(err);
   })
+})
 
+
+router.get('exchangeshelf/:',(req,res)=>{
+  Exchange.findOne({_id:req.params.id}).then(x=>{
+    var u1 = x.userReq
+    var u2 = x.userAcc
+    var b1 = x.bookReq
+    var b2 = x.bookSen
+    Shelf.findOneAndUpdate({user:u1,book:b2},{book:b1}).then(x=>{
+      console.log(x);
+    })
+    Shelf.findOneAndUpdate({user:u2,book:b1},{book:b2}).then(y=>{
+      console.log(y);
+    })
+    return res.redirect('/shelf/view')
+  })
 })
 
 
@@ -144,12 +168,23 @@ router.post('/mytrades',(req,res)=>{
 })
 
 router.get('/tradepage',(req,res)=>{
+  var books = [];
+  Shelf.find({user:req.user.id}).populate('book','_id').then(y=>{
+    for(var i=0;i<y.length;i++){
+      books.push(y[i].book.id)
+    }
+    console.log(books);
+  })
+  
   Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL')
   .then(x=>{
-    console.log(x.length)
-    console.log(x[0])
-    // return res.sendStatus(200)
-    return res.render('viewtrades',{exchange:x,layout:"navbar2"})
+    var gen = [];
+    for(var i=0;i<x.length;i++){
+      if (books.includes(x[i].bookReq.id)){
+        gen.push(x[i]);
+      }
+    }
+    return res.render('viewtrades',{exchange:gen,layout:"navbar2"})
   })
 })
 
@@ -160,6 +195,14 @@ router.get('/viewtrade/:id',(req,res)=>{
   })
 })
 
+
+
+router.get('/accept/:id',(req,res)=>{
+  Exchange.findOneAndUpdate({_id:req.params.id},{status:true,userAcc:req.user.id}).then(x=>{
+    console.log(x);
+  })
+  return res.redirect('/exchange/ongoing')
+})
 
 
 
