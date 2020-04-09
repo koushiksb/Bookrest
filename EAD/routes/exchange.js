@@ -70,6 +70,68 @@ router.get('/mytrades',(req,res)=>{
 
 })
 
+router.get('/tradescompleted',(req,res)=>{
+  Exchange.find({userReq:req.user.id,status:true,exchangeReq:true,exchangeSen:true}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+  .then(x=>{
+    Exchange.find({userSen:req.user.id,status:true,exchangeReq:true,exchangeSen:true}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+    .then(y=>{
+      return res.render('tradescompleted',{requests:x,accepts:y,layout:"navbar2"})
+
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
+
+router.get('/ongoing',(req,res)=>{
+  Exchange.find({userReq:req.user.id,status:true,$or:[{exchangeReq:false},{exchangeSen:false}]}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+  .then(x=>{
+    console.log(x);
+    Exchange.find({userSen:req.user.id,status:true,$or:[{exchangeReq:false},{exchangeSen:false}]}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
+    .then(y=>{
+      console.log(y);
+    return res.render('ongoing',{requests:x,accepts:y,layout:"navbar2"})
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
+
+router.post('/ongoing',(req,res)=>{
+  Exchange.findOne({_id:req.body.id})
+  .then(x=>{
+    if(x.userReq == req.user.id){
+      x.exchangeReq = true
+    }else{
+        x.exchangeSen = true
+    }
+    x.save()
+    .then(a=>{
+      return res.sendStatus(200)
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
+
+
 router.post('/mytrades',(req,res)=>{
   Exchange.findOneAndDelete({_id:req.body.id})
   .then(x=>{

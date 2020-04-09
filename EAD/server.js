@@ -10,6 +10,7 @@ const expressLayouts = require('express-ejs-layouts')
 const cors = require('cors');
 const router = express.Router();
 const multer = require('multer');
+var partials      = require('express-partials');
 const Bidding = require('./models/Bidding.js')
 var app=express()
 //EJS
