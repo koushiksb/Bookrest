@@ -6,7 +6,7 @@ const Book=require('../models/Book');
 const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
-
+var Review = require("../models/Review")
 // store and validation
 const multerconf = {
   storage:multer.diskStorage({
@@ -133,8 +133,13 @@ console.log(owner);
 
 router.get('/viewbk/:title',(req,res)=>{
   Book.findOne({Title:req.params.title}).then(async (x)=>{
-    console.log(x)
-    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,layout:'navbar2.ejs'});
+   Review.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (y)=>{
+        await y.forEach(review => {
+          review.rating = Number(review.rating)*12.5;
+    });
+    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,reviews:y,layout:'navbar2.ejs'});
+  
+    })
   });
 });
 
