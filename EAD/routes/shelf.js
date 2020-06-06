@@ -25,6 +25,23 @@ const multerconf = {
     }
   }),
 }
+const bookUploadConf = {
+  storage:multer.diskStorage({
+    destination:function(req,file,next){
+      // const ext = file.mimetype.split('/')[0];
+      // if(ext === 'image'){
+        next(null,'./static/books');
+      // }
+      // else{
+      //   next(null,'./static/pdf');
+      // }
+    },
+    filename:function(req,file,next){
+      const ext = file.mimetype.split('/')[1];
+      next(null,file.fieldname+'.'+Date.now()+'.'+ext)
+    }
+  }),
+}
 
 router.get('/view',(req,res)=>{
 
@@ -120,14 +137,16 @@ router.get('/viewbook/:title',(req,res)=>{
         inbidding =1
       }
     })
-    var owner = '0'
+    var owner = '0';
+    var softcopy = false;
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);
       owner  = y.owner
+      softCopy = (y.softcopy.length>0);
 console.log(y.owner);
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
   });
 });
 
@@ -138,7 +157,7 @@ router.get('/viewbk/:title',(req,res)=>{
           review.rating = Number(review.rating)*12.5;
     });
     res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,reviews:y,layout:'navbar2.ejs'});
-  
+
     })
   });
 });
@@ -173,4 +192,17 @@ router.post('/charge',(req,res)=>{
 });
 });
 
+router.post('/uploadSoftCopy',multer(bookUploadConf).single('bookSoftCopy'),(req,res)=>{
+  Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:[req.file.path]}).then(book=>{
+    res.redirect('/shelf/view');
+  });
+})
+router.get('/readbook/:bookid',(req,res)=>{
+  Shelf.findOne({user:req.user._id,book:req.params.bookid}).then((book)=>{
+    console.log(book.softcopy[0])
+    res.render('pdfviewer',{pdfPath:book.softcopy[0]})
+  });
+
+
+});
 module.exports = router;

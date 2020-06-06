@@ -68,7 +68,13 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             <hr />
             <div class="row">
               <div class="col-md-4  col-sm-8">
-                <a href="#"><button class="btn btn-danger btn-block btn-round">Read book &nbsp;<i class="fa fa-chevron-right"></i></button></a>
+                <%if(softCopy){%>
+                <a href="/shelf/readbook/<%=id%>">
+                <button class="btn btn-danger btn-block btn-round">Read book &nbsp;<i class="fa fa-chevron-right"></i></button>
+              </a>
+                <%}else{%>
+                  <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#uploadModal">Upload SoftCopy &nbsp;<i class="fa fa-chevron-right"></i></button>
+                  <%}%>
               </div>
 
             <%if(owner!='1'){%>
@@ -117,31 +123,36 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             <button type="submit" value='submit' style="color:white"class="btn btn-round">create bid</button>
           </div>
         </form>
-
-
-          <!-- <form method="post">
-
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-                <input type="hidden" name='bookid'>
-                <input type="number" name='days' >
-                <textarea name="description" rows="8" cols="80"></textarea>
-
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Request</button>
-          </div>
-              </form> -->
         </div>
       </div>
     </div>
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div  class="modal-content">
+          <div class="modal-header" style="border-bottom:0px !important">
+            <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>Bookrest</h3><br>
+            <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">Find the hidden</p>
+          </div>
+          <form  action="/shelf/uploadSoftCopy" method="post" enctype="multipart/form-data">
+
+          <div class="modal-body" >
+            <div class="form-group">
+              <h6>Upload SoftCopy
+                <span class="icon-danger">*</span>
+              </h6>
+              <input type="file" name="bookSoftCopy" class="form-control border-input">
+            </div>
+            <input type="hidden" name="bookid" value="<%=id%>">
+          </div>
+          <div class="modal-footer" style="border-top:0px !important;padding:1rem 1rem !important">
+            <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
+            <button type="submit" value='submit' style="color:white"class="btn btn-round">Upload</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
 
     <div class="section">
     <div class="section section-dark">
