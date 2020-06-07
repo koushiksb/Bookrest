@@ -66,6 +66,15 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         This blazer in suede is a must-have of your wardrobe. Team it with a angora blazer and a angora sweater.</p>
 
             <hr />
+            <%if(otherUserShelf){%>
+              <div class="row">
+                <div class="col-md-4  col-sm-8">
+                  <button class="btn btn-danger btn-block btn-round" data-toggle="modal"  data-target="#readrequest" >Send Read Request &nbsp;<i class="fa fa-chevron-right"></i></button>
+
+
+                </div>
+              </div>
+              <%}else{%>
             <div class="row">
               <div class="col-md-4  col-sm-8">
                 <%if(softCopy){%>
@@ -85,6 +94,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 <%}%>
 <%}%>
             </div>
+            <%}%>
           </div>
         </div>
       </div>
@@ -152,9 +162,60 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         </div>
       </div>
     </div>
+    <div class="modal fade" id="readrequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div  class="modal-content">
+          <div class="modal-header">
+            <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;margin-left:35%;color:#66615b'>Bookrest</h3><br>
+            <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-left:39%;margin-top:-5% ;color:#66615b">Find the hidden</p>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <h6>No days
+                <span class="icon-danger">*</span>
+              </h6>
+              <input type="number" name="year" class="form-control border-input" placeholder="Number of Days">
+            </div>
+            <div class="form-group">
+              <h6>Leave a note to the owner</h6>
+              <textarea name="description" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
+              <h5>
+                <small>
+                  <span id="textarea-limited-message" class="pull-right">150 characters only</span>
+                </small>
+              </h5>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
+            <button type="button" style="color:white"class="btn btn-round" data-dismiss="modal" onclick=Request('<%=id%>')>Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    function Request(id) {
+    console.log(id);
+    $.ajax({
+        type:'POST',
+        url:'/my/request',
+        data:{
+          bookid:id,
+        },
+        success:function(result){
+          alert('Request has been sent to Owner');
+          console.log(result);
+          return true
+        }
+      });
+
+    }
+    </script>
 
 
-    <div class="section">
+    <!-- <div class="section">
     <div class="section section-dark">
       <div class="container">
         <div class="row">
@@ -219,7 +280,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!--   Core JS Files   -->
 

@@ -146,17 +146,73 @@ router.get('/viewbook/:title',(req,res)=>{
 console.log(y.owner);
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+  });
+});
+router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
+  var inbidding=0;
+  req.session.otherUserShelfUserId = req.params.userid;
+  Book.findOne({Title:req.params.title}).then(async (x)=>{
+  Openbid.findOne({bookid:x.id,userid:req.params.userid}).then(a=>{
+      if(a!=null){
+        inbidding =1
+      }
+    })
+    var owner = '0';
+    var softcopy = false;
+    await Shelf.findOne({user:req.params.userid,book:x.id}).then(y=>{
+      // console.log(y);
+      owner  = y.owner
+      softCopy = (y.softcopy.length>0);
+console.log(y.owner);
+    });
+console.log(owner);
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
   });
 });
 
-router.get('/viewbk/:title',(req,res)=>{
+router.get('/otherUserShelf/:userid',(req,res)=>{
+  Shelf.find({user:req.params.userid}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
+    // console.log(x);
+    Shelf.find({user:req.params.userid}).then(y=>{
+      // console.log(y);
+      console.log(y);
+      return res.render('otherUserShelf',{book:x,layout:'navbar2',owner:y,userid:req.params.userid});
+    });
+  })
+
+});
+
+
+
+
+router.get('/viewbk/:title',async (req,res)=>{
   Book.findOne({Title:req.params.title}).then(async (x)=>{
    Review.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (y)=>{
         await y.forEach(review => {
           review.rating = Number(review.rating)*12.5;
     });
-    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,reviews:y,layout:'navbar2.ejs'});
+    var otherUsers=[];
+    var col1 = 0;
+    var col2=0;
+  await  Shelf.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
+      await shelfs.forEach((item, i) => {
+        otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
+      });
+      if(otherUsers.length%2===0){
+        console.log('here')
+          col1=otherUsers.length/2;
+          col2=otherUsers.length;
+      }else{
+        console.log('not here')
+        col1=(otherUsers.length+1)/2;
+        col2=otherUsers.length;
+
+      }
+      console.log(col1,col2)
+    })
+    console.log(otherUsers)
+    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:'navbar2.ejs'});
 
     })
   });
