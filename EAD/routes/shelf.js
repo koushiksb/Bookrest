@@ -28,12 +28,11 @@ const multerconf = {
 
 router.get('/view',(req,res)=>{
 
-  Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
-    // console.log(x);
-    Shelf.find({user:req.user._id}).then(y=>{
-      // console.log(y);
+  Shelf.find({user:req.user._id}).select('book').populate('book','Title ImageURLM').then(x=>{
+    console.log(x);
+    Shelf.find({user:req.user._id}).select('user').populate('payment','purchaser book amount').then(y=>{
       console.log(y);
-      return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
+      return res.render('shelf1',{book:x,layout:'navbar2',payment:y});
     });
   })
 
