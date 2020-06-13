@@ -3,6 +3,8 @@ const router = express.Router();
 const User=require('../models/User');
 const Shelf=require('../models/Shelf');
 const Book=require('../models/Book');
+const Payment = require('../models/Payment')
+const Profile = require('../models/Profile')
 const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
@@ -46,10 +48,13 @@ const bookUploadConf = {
 router.get('/view',(req,res)=>{
 
   Shelf.find({user:req.user._id}).select('book').populate('book','Title ImageURLM').then(x=>{
-    console.log(x);
-    Shelf.find({user:req.user._id}).select('user').populate('payment','purchaser book amount').then(y=>{
-      console.log(y);
-      return res.render('shelf1',{book:x,layout:'navbar2',payment:y});
+    console.log('check1',x);
+    Shelf.find({user:req.user._id}).then(y=>{
+      // console.log('check2',y);
+      Payment.find({purchaser:req.user._id}).then(z=>{
+        console.log('z',z);
+        return res.render('shelf1',{book:x,layout:'navbar2',owner:y});        
+      });
     });
   })
 

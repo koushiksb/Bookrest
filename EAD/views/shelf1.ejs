@@ -54,7 +54,7 @@
                           <div>
                               <!-- <div class="af-explames-demo-mask"></div> -->
                               <!-- <canvas width="140" height="185" style="position: absolute; width: 280px; height: 370px; left: -65px; top: -92.5px; z-index: 5;"></canvas> -->
-                              <% if(1) {%>
+                              <% if(owner[i].owner === '1' && owner[i].paid !== '1') {%>
                                 <form action="/shelf/charge" method="post">
                                   <script
                                   src = "https://checkout.stripe.com/checkout.js"
