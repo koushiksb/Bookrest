@@ -215,7 +215,7 @@ router.post('/search',(req,res)=>{
     for(var i=0;i<x.length;i++){
       var quer = x[i]['Publisher']+' '+x[i]['Title']+' '+x[i]['Author']+' '+x[i]['YearOfPublication'];
       var query = quer.toLowerCase().split(" ");
-      if(arr.some(item => query.includes(item))){
+      if(arr.some(item => quer.includes(item))){
         gen.push(x[i])
       }
     }
