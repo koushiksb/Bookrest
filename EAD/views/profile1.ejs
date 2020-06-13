@@ -1,4 +1,5 @@
-<html lang="en" class=" cssanimations"><head>
+<html lang="en" class=" cssanimations">
+<head>
   <meta charset="utf-8">
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
@@ -10,20 +11,87 @@
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/demo/demo.css" rel="stylesheet">
   <!-- Extra details for Live View on GitHub Pages -->
   <!-- Google Tag Manager -->
+  <style media="screen">
+  :root {
+--primary-color: #66615b;
+}
+/* .multiple-option {
+margin-top:3rem;
+margin-left:auto;
+margin-right: auto;
+margin-bottom: auto;
+margin: auto;
+display: grid;
+grid-gap: 1rem;
+max-width: 450px;
+grid-template-columns: repeat(3, 1fr);
+} */
+/* .multiple-option__item {
+display: flex;
+text-align: center;
+flex-direction: column;
+margin-top: 30px;
+} */
+.multiple-option__item{
 
+  position: absolute;
+}
+.multiple-option__item [type="checkbox"] {
+margin: 0;
+opacity: 0;
+width: 100%;
+height: 80%;
+position: absolute;
+}
+.multiple-option__item [type="checkbox"]:hover {
+cursor: pointer;
+}
+.multiple-option__item label {
+width: fit-content;
+height: auto;
+display: flex;
+padding: 0.5rem;
+font-size: 1rem;
+border-radius: 5px;
+align-items: center;
+justify-content: center;
+border: 1px dashed var(--primary-color);
+}
+.multiple-option__item input[type="checkbox"]:checked + label {
+background-color: var(--primary-color);
+color: white;
+}
+.mycolumn{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 40%;
+  max-height: 300px;
+}
+.column2{
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 60%;
+  max-height: 300px;
+}
+
+  </style>
+</head>
 <body style='height:500px'>
     <!-- End Navbar -->
   <div  class="wrapper">
     <div class="profile-content section">
       <div  class="container">
         <div class="row" style='justify-content:center;'>
-          <h1 style='font-family:"Comic Sans MS",cursive,sans-serif !important''>Bookrest</h1>
+          <h1 style='font-family:"Comic Sans MS",cursive,sans-serif !important'>Bookrest</h1>
         </div>
         <p class='text-center' style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;color:#66615b">Find the hidden</p>
 <br>
 <br>        <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <form class="settings-form" method='post' action='profile'>
+              <%if(pro!==null && pro!==undefined){%>
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="form-group">
@@ -51,7 +119,170 @@
                 <label>Address</label>
                 <textarea class="form-control textarea-limited"  name='address' placeholder="This is a textarea limited to 150 characters." rows="3" maxlength="150"><%=pro.address%></textarea>
               </div>
-              <div class="text-center">
+              <%}else{%>
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input type="text" name='fname' class="form-control border-input" required placeholder="First Name">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="text" name='lname' class="form-control border-input" placeholder="Last Name">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="text" name='phone' class="form-control border-input" required placeholder="Phone Number">
+                </div>
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" name='location' class="form-control border-input" required title='watch your spelling' placeholder="City">
+                </div>
+
+                <div class="form-group">
+                  <label>Address</label>
+                  <textarea class="form-control textarea-limited"  name='address' placeholder="This is a textarea limited to 150 characters." rows="3" maxlength="150"></textarea>
+                </div>
+
+                <%}%>
+              <section style="box-sizing:border-box;" >
+                <div class="row" style="width:100%;box-sizing:border-box;margin-left:1.5rem;" >
+                <div class="mycolumn" >
+                  <h1 style='font-family:"Comic Sans MS",cursive,sans-serif !important'>What is your Favorite Genre?</h1>
+                </div>
+                <div class="column2" style="margin-top:30px">
+                  <%if(genre.Romance){%>
+                  <div class="multiple-option__item" style="top:0;left:30%">
+                    <input type="checkbox" name="Genre" value="Romance" checked  />
+                    <label>Romance</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:0;left:30%">
+    <input type="checkbox" name="Genre" value="Romance"  />
+    <label>Romance</label>
+  </div>
+
+  <%}%>
+                  <%if(genre.History){%>
+                  <div class="multiple-option__item" style="top:20%;left:20%">
+                    <input type="checkbox" name="Genre" value="History" checked />
+                    <label>History</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:20%;left:20%">
+    <input type="checkbox" name="Genre" value="History" />
+    <label>History</label>
+  </div>
+<%}%>
+                  <%if(genre.Fiction){%>
+                  <div class="multiple-option__item" style="top:40%;left:10%">
+                    <input type="checkbox" name="Genre" value="Fiction" checked/>
+                    <label>Fiction</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:40%;left:10%">
+    <input type="checkbox" name="Genre" value="Fiction"/>
+    <label>Fiction</label>
+  </div>
+<%}%>
+                  <%if(genre.Novel){%>
+                  <div class="multiple-option__item" style="top:40%;left:37%" >
+                    <input type="checkbox" name="Genre" value="Novel" checked />
+                    <label>Novel</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:40%;left:37%" >
+    <input type="checkbox" name="Genre" value="Novel" />
+    <label>Novel</label>
+  </div>
+<%}%>
+                  <%if(genre.Fantasy){%>
+                  <div class="multiple-option__item" style="top:20%;left:50%">
+                    <input type="checkbox" name="Genre" value="Fantasy" checked />
+                    <label>Fantasy</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:20%;left:50%">
+    <input type="checkbox" name="Genre" value="Fantasy" />
+    <label>Fantasy</label>
+  </div>
+<%}%>
+                  <%if(genre.Poetry){%>
+                  <div class="multiple-option__item" style="top:60%;left:22%">
+                    <input type="checkbox" name="Genre" value="Poetry" checked />
+                    <label>Poetry</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:60%;left:22%">
+    <input type="checkbox" name="Genre" value="Poetry" />
+    <label>Poetry</label>
+  </div>
+<%}%>
+                  <%if(genre.Thriller){%>
+                  <div class="multiple-option__item" style="top:40%;left:63%">
+                    <input type="checkbox" name="Genre" value="Thriller" checked />
+                    <label>Thriller</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:40%;left:63%">
+    <input type="checkbox" name="Genre" value="Thriller" />
+    <label>Thriller</label>
+  </div>
+<%}%>
+                  <%if(genre.Mystery){%>
+                  <div class="multiple-option__item" style="top:60%;left:51%">
+                    <input type="checkbox" name="Genre" value="Mystery" checked />
+                    <label>Mystery</label>
+                  </div>
+<%}else{%>
+  <div class="multiple-option__item" style="top:60%;left:51%">
+    <input type="checkbox" name="Genre" value="Mystery"  />
+    <label>Mystery</label>
+  </div>
+<%}%>
+                  <%if(genre.FairyTale){%>
+                    <div class="multiple-option__item" style="top:80%;left:35%">
+                      <input type="checkbox" name="Genre" value="FairyTale" checked />
+                      <label>FairyTale</label>
+                    </div>
+  <%}else{%>
+    <div class="multiple-option__item" style="top:80%;left:35%">
+      <input type="checkbox" name="Genre" value="FairyTale" />
+      <label>FairyTale</label>
+    </div>
+<%}%>
+
+                </div>
+                </div>
+              </section>
+              <!-- <section class="multiple-option">
+                <h1>What is your favorite Genre?</h1>
+                <div class="multiple-option__item">
+                  <input type="checkbox" value="Mexican food" />
+                  <label>Mexican food</label>
+                </div>
+                <div class="multiple-option__item">
+                  <input type="checkbox" value="Italian food" />
+                  <label>Italian food</label>
+                </div>
+                <div class="multiple-option__item">
+                  <input type="checkbox" value="Spanish food" />
+                  <label>Spanish food</label>
+                </div>
+                <div class="multiple-option__item">
+                  <input type="checkbox" value="Chinesse food" />
+                  <label>Chinesse food</label>
+                </div>
+                <div class="multiple-option__item">
+                  <input type="checkbox" value="Indian food" />
+                  <label>Indian food</label>
+                </div>
+              </section> -->
+              <div class="text-center" style="margin-top:2rem">
                 <button type="submit" class="btn btn-outline-default btn-file btn-round">Save</button>
               </div>
             </form>
@@ -60,3 +291,5 @@
       </div>
     </div>
   </div>
+</body>
+</html>

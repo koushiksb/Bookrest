@@ -19,7 +19,7 @@ router.get('/shelf',(req,res)=>{
 
 router.get('/request',(req,res)=>{
     req.session.name = 'asdfgb'
-    Shelf.find({user:'5e5a9d624f4f426bfc199fb0'}).select('book -_id').populate('book','Title').then(x=>{
+    Shelf.find({user:req.user.id}).select('book -_id').populate('book','Title').then(x=>{
       console.log(x[0]);
       return res.render('dummyviewshelf',{book:x})
     })
@@ -31,10 +31,10 @@ router.post('/request',(req,res)=>{
 
 console.log('posted');
 console.log(req.body.bookid);
-RareRequest.findOne({recipient:'5e5a9d624f4f426bfc199fb0',book:req.body.bookid,requester:req.user.id}).then(a=>{
+RareRequest.findOne({recipient:req.session.otherUserShelfUserId,book:req.body.bookid,requester:req.user.id}).then(a=>{
   if(a==null){
     var k  = new RareRequest({
-      recipient:'5e5a9d624f4f426bfc199fb0',
+      recipient:req.session.otherUserShelfUserId,
       book:req.body.bookid,
     // '5e5a9d624f4f426bfc199fb1'
       requester:req.user.id,

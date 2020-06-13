@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- End Google Tag Manager -->
+  <style>
+  .checked {
+  color: orange;
+}
+  </style>
+</head>
+
+<body class="product-page sidebar-collapse">
+  <div class="page-header page-header-xs" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1153&q=80');">
+    <div class="filter"></div>
+  </div>
+  <div class="main">
+    <div class="section">
+      
+      <div class="container">
+<h3>Post Details</h3>
+        <div class=" card card-blog">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="card-image">
+                        <img style="width:175px;height:220px" class="img" src="<%=exchange.bookSen.ImageURLL%>">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="card-body">
+                            <h6 class="card-category text-info">Book giving away</h6>
+                            <p style="margin-bottom:1px;margin-left:-35%" class="card-title">
+                              <a href="#pablo"><%=exchange.bookSen.Title%></a>
+                            </p >&nbsp
+                            <br>
+                            <p class="author" style="margin-left:-35%">
+                              by
+                              <a href="#pablo">
+                                <b><%=exchange.bookSen.Author%></b>
+                              </a>
+                            </p>
+                          </div>
+
+                        </div>
+                        <div class="col-md-6" style="text-align:right">
+                          <div class="card-body">
+                            <h6 class="card-category text-info">Book requested</h6>
+                            <p style="margin-bottom:1px;margin-right:-35%" class="card-title">
+                              <a href="#pablo"><%=exchange.bookReq.Title%></a>
+                            </p >&nbsp
+                            <br>
+                            <p class="author" style="margin-right:-35%">
+                              by
+                              <a href="#pablo">
+                                <b><%=exchange.bookReq.Author%></b>
+                              </a>
+                            </p>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <a class="btn btn-rose btn-round" style="color:white;margin-left:35%" href="/exchange/accept/<%=exchange._id%>" >Accept Request</a>
+                      </div>
+
+
+                    </div>
+                    <div class="col-md-3" style="text-align:right"  >
+                      <div class="card-image" >
+                        <img style="width:175px;height:220px" class="img" src="<%=exchange.bookReq.ImageURLL%>">
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <br>
+                </div>
+            <h5>Add Posted by: <b><%= exchange.userReq.profile.fname + exchange.userReq.profile.lname%></b></h5>
+            <h5>City: <b><%=exchange.userReq.profile.location%></b></h5>
+            <!-- <h5>Contact: <b><%=exchange.userReq.profile.phone%></b></h5> -->
+            <!-- <h5>Location: <b><%=exchange.userReq.profile.address%></b></h5> -->
+            <hr />
+          </div>
+        </div>
+ 
+          </div>
+      </div>
+    </div>
+    <footer class="footer footer-big" style="background-color: black">
+
+          <div class="col-md-4 ml-auto ">
+            <div class="social-area">
+              <a href="#facebook" class="btn btn-neutral btn-round btn-just-icon btn-facebook" style="margin-left: 15px;">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="#twitter" class="btn btn-neutral btn-just-icon btn-round btn-twitter" style="margin-left: 15px;">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="#google" class="btn btn-neutral btn-just-icon btn-round btn-google" style="margin-left: 15px;">
+                <i class="fa fa-google-plus" aria-hidden="true"></i>
+              </a>
+              <a href="#pin" class="btn btn-neutral btn-just-icon btn-round btn-pinterest" style="margin-left: 15px;">
+                <i class="fa fa-pinterest-p" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+  
+    </footer>  <!--   Core JS Files   -->
+  
+</body>
+</html>

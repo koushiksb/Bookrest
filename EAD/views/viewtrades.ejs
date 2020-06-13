@@ -52,13 +52,13 @@
     <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].userReq.profile.fname + exchange[i].userReq.profile.lname %></b> would like to make the exchange <b><%= exchange[i].bookSen.Title %></b> for <b><%= exchange[i].bookReq.Title %></b> </h5>
     <div class="card-image" style="padding-left:10%">
 
-                  <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:25%;%">
+                  <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
                   <img src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/DoubleArrowLeftRight-512.png" alt="Rounded Image" class="img-responsive" style="width:10%;margin-left:40px;margin-right: 40px">
-                  <img src="<%= exchange[i].bookReq.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:25%;">
+                  <img src="<%= exchange[i].bookReq.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
                 
               </div>
     <p class="card-text" style="color:black">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">View</a>
+    <a href="/exchange/viewtrade/<%= exchange[i]._id %>" class="btn btn-primary">View</a>
   </div>
 </div>
  <%}%>
