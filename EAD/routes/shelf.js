@@ -6,7 +6,7 @@ const Book=require('../models/Book');
 const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
-
+var Review = require("../models/Review")
 // store and validation
 const multerconf = {
   storage:multer.diskStorage({
@@ -14,6 +14,23 @@ const multerconf = {
       // const ext = file.mimetype.split('/')[0];
       // if(ext === 'image'){
         next(null,'./static/coverimages');
+      // }
+      // else{
+      //   next(null,'./static/pdf');
+      // }
+    },
+    filename:function(req,file,next){
+      const ext = file.mimetype.split('/')[1];
+      next(null,file.fieldname+'.'+Date.now()+'.'+ext)
+    }
+  }),
+}
+const bookUploadConf = {
+  storage:multer.diskStorage({
+    destination:function(req,file,next){
+      // const ext = file.mimetype.split('/')[0];
+      // if(ext === 'image'){
+        next(null,'./static/books');
       // }
       // else{
       //   next(null,'./static/pdf');
@@ -119,21 +136,84 @@ router.get('/viewbook/:title',(req,res)=>{
         inbidding =1
       }
     })
-    var owner = '0'
+    var owner = '0';
+    var softcopy = false;
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);
       owner  = y.owner
+      softCopy = (y.softcopy.length>0);
 console.log(y.owner);
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+  });
+});
+router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
+  var inbidding=0;
+  req.session.otherUserShelfUserId = req.params.userid;
+  Book.findOne({Title:req.params.title}).then(async (x)=>{
+  Openbid.findOne({bookid:x.id,userid:req.params.userid}).then(a=>{
+      if(a!=null){
+        inbidding =1
+      }
+    })
+    var owner = '0';
+    var softcopy = false;
+    await Shelf.findOne({user:req.params.userid,book:x.id}).then(y=>{
+      // console.log(y);
+      owner  = y.owner
+      softCopy = (y.softcopy.length>0);
+console.log(y.owner);
+    });
+console.log(owner);
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
   });
 });
 
-router.get('/viewbk/:title',(req,res)=>{
+router.get('/otherUserShelf/:userid',(req,res)=>{
+  Shelf.find({user:req.params.userid}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
+    // console.log(x);
+    Shelf.find({user:req.params.userid}).then(y=>{
+      // console.log(y);
+      console.log(y);
+      return res.render('otherUserShelf',{book:x,layout:'navbar2',owner:y,userid:req.params.userid});
+    });
+  })
+
+});
+
+
+
+
+router.get('/viewbk/:title',async (req,res)=>{
   Book.findOne({Title:req.params.title}).then(async (x)=>{
-    console.log(x)
-    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,layout:'navbar2.ejs'});
+   Review.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (y)=>{
+        await y.forEach(review => {
+          review.rating = Number(review.rating)*12.5;
+    });
+    var otherUsers=[];
+    var col1 = 0;
+    var col2=0;
+  await  Shelf.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
+      await shelfs.forEach((item, i) => {
+        otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
+      });
+      if(otherUsers.length%2===0){
+        console.log('here')
+          col1=otherUsers.length/2;
+          col2=otherUsers.length;
+      }else{
+        console.log('not here')
+        col1=(otherUsers.length+1)/2;
+        col2=otherUsers.length;
+
+      }
+      console.log(col1,col2)
+    })
+    console.log(otherUsers)
+    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:'navbar2.ejs'});
+
+    })
   });
 });
 
@@ -167,4 +247,17 @@ router.post('/charge',(req,res)=>{
 });
 });
 
+router.post('/uploadSoftCopy',multer(bookUploadConf).single('bookSoftCopy'),(req,res)=>{
+  Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:[req.file.path]}).then(book=>{
+    res.redirect('/shelf/view');
+  });
+})
+router.get('/readbook/:bookid',(req,res)=>{
+  Shelf.findOne({user:req.user._id,book:req.params.bookid}).then((book)=>{
+    console.log(book.softcopy[0])
+    res.render('pdfviewer',{pdfPath:book.softcopy[0]})
+  });
+
+
+});
 module.exports = router;

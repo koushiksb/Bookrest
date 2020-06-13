@@ -41,8 +41,8 @@ module.exports=function(passport){
 passport.use(
   new GoogleStrategy({
     callbackURL:'/users/google/redirect',
-    clientID:'629614788190-ibkd0nf7trn1318ui41e18sskc12g6b2.apps.googleusercontent.com',
-    clientSecret:'XxwsdLoGyYMbwVYEnLLj0gZ8'
+    clientID:'295876350346-30lus3bd41ip8i62es6oahdi2n4lqc1t.apps.googleusercontent.com',
+    clientSecret:'LCNFYe04zS29_Np6Wk2DASC5'
 
   },(accessToken,refreshToken,profile,email,done)=>{
 

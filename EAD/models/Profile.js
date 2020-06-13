@@ -20,7 +20,9 @@ const ProfileSchema = new mongoose.Schema({
   },
   phone:{
     type:String
-  }
+  },
+  favouriteGenre:[{type:String}],
+
 })
 const Profile = mongoose.model('Profile',ProfileSchema);
 

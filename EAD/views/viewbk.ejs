@@ -20,10 +20,106 @@ h3{orphans:3;widows:3;}
 h3{page-break-after:avoid;}
 }
 /*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0 */
-h3{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+h3{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:'Comic Sans MS',cursive,sans-serif;font-weight:300;}
 h3{margin:30px 0 0;}
 h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
+.reviews-heading{
+  display: flex;
+  flex-direction: row;
+  flex: 100%;
+  margin-top: 2rem;
+}
+.review-box{
+  display: flex;
+  flex-direction: row;
+  /* margin-top: 2rem; */
 
+
+}
+.reviews-border{
+  border: 1px solid #f5593d;
+
+}
+.column{
+  display: flex;
+  flex-direction: column;
+  flex:0 0 100%;
+  padding: 1rem;
+
+}
+.myrow{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.review-user-image{
+  width:7%;
+  height: auto;
+
+}
+.vertical-center{
+  align-items:center;
+}
+.review-user-name{
+  margin-left: 1rem;
+  font-family:'Comic Sans MS',cursive,sans-serif ;
+}
+.margin-top-review-box{
+  margin-top: 0.5rem;
+}
+
+.star-ratings-css {
+  unicode-bidi: bidi-override;
+  color: #c5c5c5;
+  font-size: 16px;
+  height: 25px;
+  width: 100px;
+
+  position: relative;
+  padding: 0;
+  text-shadow: 0px 1px 0 #a2a2a2;
+
+}
+.star-ratings-css-top {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  .star-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }
+.readmore{
+display: none;
+}
+.readmore-button{
+  cursor: pointer;
+  margin-left: auto;
+  font-weight: 400;
+  font-family: 'Comic Sans MS',cursive,sans-serif;
+}
+.readmore-button:hover{
+  cursor: pointer;
+  text-decoration: underline;
+
+
+}
+#showless{
+  display: none;
+}
+.other-users{
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 2rem;
+
+}
 </style>
 </head>
 
@@ -37,7 +133,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
           <div class="col-md-4 ml-auto">
             <div class="pull-right">
               <span class="text-muted">Status</span>
-              <button class="btn btn-link">Not Requested</button>
+              <button class="btn btn-link">Requested</button>
             </div>
           </div>
         </div>
@@ -58,7 +154,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
           </div>
           <div class="col-md-8 col-sm-6">
             <h2><%= title %></h2>
-            <h4 class="price" style="align:right"><strong> <%= author %></strong></h4>
+            <h4 class="price" ><strong> <%= author %></strong></h4>
             <hr />
             <p>Book Description : This blazer in suede is a must-have of your wardrobe. Team it with a angora blazer and a angora sweater.
             This blazer in suede is a must-have of your wardrobe. Team it with a angora blazer and a angora sweater.
@@ -68,18 +164,95 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             <hr />
             <div class="row">
               <div class="col-md-4  col-sm-8">
-                <a href="#"><button class="btn btn-danger btn-block btn-round">Read book &nbsp;<i class="fa fa-chevron-right"></i></button></a>
-              </div>
-              <div class="col-md-4  col-sm-8">
-                <a href="/exchange/require/<%=title%>"><button class="btn btn-danger btn-block btn-round">Request &nbsp;<i class="fa fa-chevron-right"></i></button></a>
+                <a href="/exchange/require/<%=title%>"><button class="btn btn-danger btn-block btn-round">Request for trade &nbsp;<i class="fa fa-chevron-right"></i></button></a>
               </div>
             </div>
           </div>
         </div>
+        <div class="other-users">
+          <h3>Other users with this Book</h3>
+        </div>
+        <div class="row" style="justify-content: center;margin-top: 2rem;">
+            <div class="column reviews-border" style="flex-basis: 60%;">
+              <div class="row" style="width:80%;margin-left:auto;margin-right:auto;justify-content:center;">
+                <div style="display:flex;flex-direction:column;flex-basis:50%" >
+                  <%for(var i=0;i<col1;i++){%>
+                    <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>'><%=otherUsers[i].name%></a></h3>
+                    <%}%>
+                </div>
+                <div style="display:flex;flex-direction:column;flex-basis:50%">
+                  <%for(var i=col1;i<col2;i++){%>
+                    <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>'><%=otherUsers[i].name%></a></h3>
+                    <%}%>
+                </div>
+
+              </div>
+
+            </div>
+
+        </div>
+
+        <div class="reviews-heading">
+          <h3 >Reviews</h3>
+        </div>
+        <div class="row" style="justify-content: center;margin-top: 2rem;">
+          <div class="column reviews-border" style="flex-basis: 80%;">
+            <%for(review=0;review<reviews.length;review++){%>
+              <%if(review>4){%>
+                <br class="readmore">
+                <div class="review-box readmore">
+                  <div class="column">
+                    <div class="myrow vertical-center">
+                      <img class="review-user-image" src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="">
+                      <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
+                    </div>
+                    <div class="myrow margin-top-review-box">
+
+                      <div class="star-ratings-css">
+                        <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                        <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                      </div>
+                    </div>
+                    <div class="myrow margin-top-review-box" style="font-weight: 400;">
+                      <%=reviews[review].review%>
+                    </div>
+                  </div>
+              </div>
+
+                <%}else{%>
+                  <br>
+                  <div class="review-box">
+                    <div class="column">
+                      <div class="myrow vertical-center">
+                        <img class="review-user-image" src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="">
+                        <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
+                      </div>
+                      <div class="myrow margin-top-review-box">
+
+                        <div class="star-ratings-css">
+                          <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                          <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                        </div>
+                      </div>
+                      <div class="myrow margin-top-review-box" style="font-weight: 400;">
+                        <%=reviews[review].review%>
+                      </div>
+                    </div>
+                </div>
+
+                  <%}%>
+          <%}%>
+          <div class='readmore-button' id="showmore" onclick="showmore()">Read More</div>
+          <div class='readmore-button' id="showless" onclick="showless()">Read Less</div>
+
+        </div>
+        </div>
       </div>
     </div>
-    
-    <div class="section">
+
+
+
+    <!-- <div class="section">
     <div class="section section-dark">
       <div class="container">
         <div class="row">
@@ -144,10 +317,31 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!--   Core JS Files   -->
+  <script>
+function showmore(){
+  console.log('hurray')
+  document.getElementById("showmore").style.display='none';
+  var divs = document.getElementsByClassName('readmore');
+  for(a=0;a<divs.length;a++){
+    console.log('done');
 
+    divs[a].style.display='block' ;
+  }
+  document.getElementById("showless").style.display='block';
+}
+function showless(){
+  document.getElementById("showless").style.display='none';
+  var divs = document.getElementsByClassName('readmore');
+  for(a=0;a<divs.length;a++){
+    divs[a].style.display='none';
+  }
+  document.getElementById("showmore").style.display='block';
+}
+
+</script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>

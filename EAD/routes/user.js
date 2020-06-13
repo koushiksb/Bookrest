@@ -28,7 +28,7 @@ function IsAuth(req,res,next){
   res.redirect('/users/dashboard')
 }
 
-router.get('/login',IsAuth,(req,res)=>res.render('login'));
+router.get('/login',IsAuth,(req,res)=>{return res.render('login')});
 router.get('/signup',(req,res)=>res.render('signup',{errors:[],check:0}));
 
 router.post('/checkemail',function (req,res){
@@ -163,7 +163,20 @@ router.get('/logout',(req,res)=>{
 router.get('/dashboard',async (req,res)=>{
 console.log(req.isAuthenticated());
       if(req.user.profile==undefined){
-       return res.render('profile',{user:req.user.email})
+        var genre={
+          Romance:false,
+          History:false,
+          Novel:false,
+          Thriller:false,
+          FairyTale:false,
+          Mystery:false,
+          Fiction:false,
+          Poetry:false,
+          fantasy:false
+
+        }
+
+       return res.render('profile1',{user:req.user.email,pro:null,genre:genre})
      }else{
         Genre.find({}).then(async(x)=>{
           // console.log(x[0])
@@ -223,18 +236,41 @@ router.get('/profile',(req,res)=>{
 
   Profile.findById({_id:req.user.profile}).then(x=>{
     console.log(x);
-      return res.render('profile1',{user:req.user.email,pro:x,layout:'navbar2'})
+    var genre={
+      Romance:false,
+      History:false,
+      Novel:false,
+      Thriller:false,
+      FairyTale:false,
+      Mystery:false,
+      Fiction:false,
+      Poetry:false,
+      fantasy:false
+
+    }
+    x.favouriteGenre.forEach((item, i) => {
+      genre[item] = true;
+    });
+    console.log(genre)
+      return res.render('profile1',{user:req.user.email,genre:genre,pro:x,layout:'navbar2'})
   })
 
 
 })
 
 router.post('/profile',(req,res)=>{
+
   var fname=req.body.fname;
   var lname=req.body.lname;
   var phone = req.body.phone
   var location = req.body.location
   var address = req.body.address
+  var favouriteGenre = req.body.Genre;
+// Object.keys(req.body).forEach((item, i) => {
+//   if(req.body[item]==='on'){
+//     favouriteGenre.push(item);
+//   }
+// });
 
 console.log(req.body);
 
@@ -244,7 +280,8 @@ if(req.user.profile==undefined){  new Profile({
   lname:lname,
   phone:phone,
   location:location,
-  address:address
+  address:address,
+  favouriteGenre:favouriteGenre,
 }).save().then(x=>{
    User.findOne({_id:req.user.id}).then(u=>{
      u.profile = x.id
@@ -262,6 +299,7 @@ else{
     x.location = location
     x.phone = phone
     x.address = address
+    x.favouriteGenre=favouriteGenre,
     x.save().then(z=>{
       return res.redirect('/users/dashboard')
     })
