@@ -11,7 +11,7 @@ const ShelfSchema = new mongoose.Schema({
     ref:'User'
   },
   softcopy:{
-    type:[{type:String}]
+    type:String
   },
   owner:{
     type:String

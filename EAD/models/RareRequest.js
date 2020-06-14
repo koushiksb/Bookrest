@@ -13,12 +13,15 @@ const Requestrareschema = new mongoose.Schema({
     ref:'Book'
   },
   period : {
-    type:Date,
+    type:Number,
   },
   requester:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
 
+  },
+  notetoowner:{
+    type:String
   },
   status :{
     type:Number,  // 0 means pending,1 means accepted,-1 means declined

@@ -171,11 +171,11 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
               <h6>No days
                 <span class="icon-danger">*</span>
               </h6>
-              <input type="number" name="year" class="form-control border-input" placeholder="Number of Days">
+              <input type="number" id="noofdays" name="noofdays" class="form-control border-input" placeholder="Number of Days">
             </div>
             <div class="form-group">
               <h6>Leave a note to the owner</h6>
-              <textarea name="description" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
+              <textarea name="notetoowner" id="notetoowner" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
               <h5>
                 <small>
                   <span id="textarea-limited-message" class="pull-right">150 characters only</span>
@@ -200,6 +200,8 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         url:'/my/request',
         data:{
           bookid:id,
+          noofdays:document.getElementById('noofdays').value,
+          notetoowner:document.getElementById('notetoowner').value
         },
         success:function(result){
           alert('Request has been sent to Owner');

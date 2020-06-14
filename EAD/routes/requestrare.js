@@ -30,12 +30,16 @@ router.get('/request',(req,res)=>{
 router.post('/request',(req,res)=>{
 
 console.log('posted');
-console.log(req.body.bookid);
+console.log(req.body);
 RareRequest.findOne({recipient:req.session.otherUserShelfUserId,book:req.body.bookid,requester:req.user.id}).then(a=>{
   if(a==null){
+    // var datee = new Date()
+    // datee.setDate(datee.getDate() + req.body.noofdays);
     var k  = new RareRequest({
       recipient:req.session.otherUserShelfUserId,
       book:req.body.bookid,
+      period:req.body.noofdays,
+      notetoowner:req.body.notetoowner,
     // '5e5a9d624f4f426bfc199fb1'
       requester:req.user.id,
       status:0
@@ -76,17 +80,26 @@ router.post('/viewrequest',(req,res)=>{
 
   console.log(req.body);
 
-  RareRequest.findOne({book:req.body.bookid,recipient:req.user.id}).then(x=>{
+  RareRequest.findOne({book:req.body.bookid,recipient:req.user.id}).then(async x=>{
     console.log(x);
     console.log(req.body.status);
+    var till_date = new Date();
+    till_date.setDate(till_date.getDate() + x.period);
     x.status=req.body.status
     x.save()
+    var softcopylink = '';
+
+    Shelf.findOne({user:req.user.id}).then(softCopy=>{
+      softcopylink = softCopy.softcopy
+    })
     if(req.body.status == 1){
       var add  = new Shelf({
         book:req.body.bookid,
         user:req.body.requester,
         owner:'1',
-        paid:0
+        paid:0,
+        softcopy:softcopylink,
+        period:till_date
 
       });
       add.save().then(a=>{
