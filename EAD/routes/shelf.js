@@ -48,24 +48,24 @@ const bookUploadConf = {
 router.get('/view',(req,res)=>{
 
   Shelf.find({user:req.user._id}).select('book').populate('book','Title ImageURLM').then(x=>{
-    console.log('check1',x);
+    // console.log('check1',x);
     Shelf.find({user:req.user._id}).then(async(y)=>{
       // console.log('check2',y);
 
         await y.forEach(async (item,index)=>{
           if(item.owner === '1'){
             await Payment.find({purchaser:item.user,book:Object(item.book)}).then(async(z)=>{
-              console.log('z1',z);
+              // console.log('z1',z);
               if(z.length > 0){
-                console.log('amount',z[0]['amount']);
+                // console.log('amount',z[0]['amount']);
                 y[index].amount = z[0]['amount'];
+                // console.log('huhujnuhy',y);
+                return res.render('shelf1',{book:x,layout:'navbar2',owner:y});        
               }              
             });
           }
         });
   
-        console.log('huhujnuhy',y);
-        return res.render('shelf1',{book:x,layout:'navbar2',owner:y});        
     });
   })
 
@@ -259,7 +259,9 @@ router.post('/charge',(req,res)=>{
   // console.log(bookid);
   Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
     Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true}).then(d=>{
-      res.redirect('/shelf/view');      
+      User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+        res.redirect('/shelf/view');
+      });
     });
   });
 });

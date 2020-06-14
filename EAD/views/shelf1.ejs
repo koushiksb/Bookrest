@@ -54,14 +54,13 @@
                           <div>
                               <!-- <div class="af-explames-demo-mask"></div> -->
                               <!-- <canvas width="140" height="185" style="position: absolute; width: 280px; height: 370px; left: -65px; top: -92.5px; z-index: 5;"></canvas> -->
-                              <% if(owner[i].owner === '1' && owner[i].paid !== '1') {%>
-                                hi<%= owner[i].amount %>
+                              <% if(owner[i].owner === '1' && owner[i].paid !== 1) {%>
                                 <form action="/shelf/charge" method="post">
                                   <script
                                   src = "https://checkout.stripe.com/checkout.js"
                                   class = "stripe-button"
-                                  data-key = "pk_test_d8zWt8DzfYfP9i9WIwMwJJh900xIyYtz5s"
-                                  data-amount = "<%= owner[i].amount %>"
+                                  data-key = "pk_test_51Gtt6XLG3iR3WbW87jLGZqAHKPibjAmJeK4dqHoVPVsGMA2RVOP1Vjk2GYYgpOTUtTOSGAAXzQKUx5RKZvETBfkC00mH6pT7Wp"
+                                  data-amount = "<%= owner[i].amount*100 %>"
                                   data-name = "<%= book[i].book.Title %>"
                                   data-description = ""
                                   data-locale = "auto"
