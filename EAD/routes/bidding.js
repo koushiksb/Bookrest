@@ -111,7 +111,7 @@ router.post('/openbid',(req,res)=>{
     username:username,
    bookid:req.body.bookid ,
    baseamount:req.body.baseamount ,
-   date:Date.now() ,
+   date:req.body.biddingtime,
    duration:120 ,
    status:1 ,
  });
