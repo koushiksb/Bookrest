@@ -3,6 +3,7 @@ const router = express.Router();
 const Profile = require('../models/Profile')
 const Openbid = require('../models/Openbid')
 const Bidding = require('../models/Bidding')
+var dateFormat = require('dateformat');
 
 router.get('/bidding/:book/:owner/:bidid',(req,res)=>{
 console.log(req.params);
@@ -79,9 +80,12 @@ router.post('/bidding',(req,res)=>{
 
 router.get('/allbidding',(req,res)=>{
   console.log(req.user.id);
-  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid')
-  .then(x=>{
+  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').lean()
+  .then(async x=>{
     console.log(x);
+    await x.forEach((item, i) => {
+      item.date = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    });
 
     res.render('allbiddings',{bids:x,layout:"navbar2.ejs"})
 
@@ -126,8 +130,12 @@ router.post('/openbid',(req,res)=>{
 })
 
 router.get('/mystuff',(req,res)=>{
-  Openbid.find({userid:req.user.id}).populate('bookid')
-  .then(x=>{
+  Openbid.find({userid:req.user.id}).populate('bookid').lean()
+  .then(async x=>{
+              await x.forEach((item, i) => {
+                item.date = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+              });
+      console.log(x)
     return res.render('mystuff',{mybids:x,layout:'navbar2'})
   })
   .catch(err=>{
