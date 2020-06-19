@@ -12,6 +12,7 @@ const Book = require('../models/Book.js');
 const User=require('../models/User')
 const Token=require('../models/Token')
 const Profile=require('../models/Profile')
+const Review=require('../models/Review')
 var urlencodedparser=bodyparser.urlencoded({extended:true});
 bodyParser = require('body-parser').json();
 
@@ -186,7 +187,7 @@ console.log(req.isAuthenticated());
           for (var i = 0; i < arrayLength; i++) {
             var g = x[i]['Genre'];
             // console.log(g);
-            await Book.find({Genre:g}).then(y=>{
+            await Book.find({Genre:g}).lean().then(y=>{
               // console.log(y[0])
               gen[g]=y.slice(0,12);
               // console.log(gen)
@@ -210,7 +211,7 @@ router.post('/search',(req,res)=>{
   var str = req.body.search;
   var arr = str.split(" ");
   arr = arr.toLocaleString().toLowerCase().split(',');
-  Book.find({}).then(x=>{
+  Book.find({}).then(async(x)=>{
     var gen = [];
     for(var i=0;i<x.length;i++){
       var quer = x[i]['Publisher']+' '+x[i]['Title']+' '+x[i]['Author']+' '+x[i]['YearOfPublication'];
@@ -220,11 +221,11 @@ router.post('/search',(req,res)=>{
       }
     }
     if(gen.length===0){
-      console.log('no items')
+      // console.log('no items')
       return res.sendStatus(200)
     }
     else{
-    console.log(gen[0])
+    // console.log(gen[0])
     return res.render('search',{books:gen,layout:'navbar2.ejs',query:str})
     }
   })
