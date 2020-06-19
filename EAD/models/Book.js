@@ -26,6 +26,12 @@ const BookSchema = new mongoose.Schema({
   ImageURLL:{
     type:String
   },
+  Rating:{
+    type:Number
+  },
+  Treviews:{
+    type:Number
+  },
   Genre:{
     type:String
   }

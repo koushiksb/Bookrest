@@ -52,13 +52,12 @@
                   <div class="card-description">
                     <h5 class="card-title"><%= books[i].Tilte%></h5>
                     <p class="card-description"><%= books[i].Author%></p>
-                  </div>
-                  <div class="actions">
+                    <% for(var m=0; m<Math.round(books[i].Rating/2) ;m++){%>
                     <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
+                    <%}%>
+                    <% for(var m=5; m>Math.round(books[i].Rating/2) ;m--){%>
                     <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
+                    <%}%>
                   </div>
                 </div>
               </div>

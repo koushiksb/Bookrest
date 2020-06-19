@@ -5,6 +5,7 @@ const User = require('../models/User.js');
 const Exchange = require('../models/Exchange.js');
 const Profile = require('../models/Profile.js');
 const Shelf = require('../models/Shelf.js');
+const Review = require('../models/Review.js');
 
 
 router.get('/confirm/:bookReq/:bookSen',(req,res)=>{
@@ -139,7 +140,7 @@ router.post('/ongoing',(req,res)=>{
 })
 
 
-router.get('exchangeshelf/:',(req,res)=>{
+router.get('/exchangeshelf/:id',(req,res)=>{
   Exchange.findOne({_id:req.params.id}).then(x=>{
     var u1 = x.userReq
     var u2 = x.userAcc
@@ -151,7 +152,7 @@ router.get('exchangeshelf/:',(req,res)=>{
     Shelf.findOneAndUpdate({user:u2,book:b1},{book:b2}).then(y=>{
       console.log(y);
     })
-    return res.redirect('/shelf/view')
+    return res.redirect('/exchange/tradescompleted')
   })
 })
 
@@ -202,6 +203,32 @@ router.get('/accept/:id',(req,res)=>{
     console.log(x);
   })
   return res.redirect('/exchange/ongoing')
+})
+
+
+router.get('/trail',(req,res)=>{
+  Book.find({}).then(async(x)=>{
+    for (var i=0; i<x.length; i++){
+      var b_id = x[i]._id;
+      var rate = 0;
+      var t_r = 0
+      await Review.find({book:b_id}).then(z=>{
+        var sum = 0;
+        t_r = z.length
+        for (var l=0;l<z.length;l++){
+          sum = sum + Number(z[l].rating);
+        }
+        sum = (sum/z.length);
+        rate =  sum;
+      })
+      x[i].Rating = rate;
+      x[i].Treviews = t_r; 
+      console.log(x[i])
+      x[i].save()
+    }
+    // console.log(x[0])
+  })
+  return res.sendStatus(200)
 })
 
 
