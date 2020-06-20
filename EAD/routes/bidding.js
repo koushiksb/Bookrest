@@ -80,11 +80,15 @@ router.post('/bidding',(req,res)=>{
 
 router.get('/allbidding',(req,res)=>{
   console.log(req.user.id);
+  var canEdit = true;
   Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').lean()
   .then(async x=>{
     console.log(x);
     await x.forEach((item, i) => {
-      item.date = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+      if(new Date() >=item.date  ){
+        item['canEdit'] = false;
+      }
+      item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     });
 
     res.render('allbiddings',{bids:x,layout:"navbar2.ejs"})
@@ -121,7 +125,7 @@ router.post('/openbid',(req,res)=>{
  });
   bid.save()
   .then(x=>{
-    return res.redirect('/book/allbidding')
+    return res.redirect('/book/mystuff')
   })
   .catch(err=>{
     console.log(err);
@@ -133,14 +137,45 @@ router.get('/mystuff',(req,res)=>{
   Openbid.find({userid:req.user.id}).populate('bookid').lean()
   .then(async x=>{
               await x.forEach((item, i) => {
-                item.date = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+                item.date = item.date.toISOString().slice(0,16);
               });
       console.log(x)
-    return res.render('mystuff',{mybids:x,layout:'navbar2'})
+    return res.render('mystuff',{mybids:x,layout:'navbar2',today:new Date().toISOString().slice(0,16)})
   })
   .catch(err=>{
     console.log(err);
   })
+})
+router.post('/delete',(req,res)=>{
+  console.log('egr');
+  console.log(req.body.bidid);
+  Openbid.findOneAndDelete({_id:req.body.bidid})
+  .then(x=>{
+    console.log("done");
+    res.sendStatus(200)
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
+router.post('/updatebid',(req,res)=>{
+  Openbid.findOne({_id:req.body.bidid})
+  .then(x=>{
+    x.date=req.body.date;
+    x.baseamount = req.body.baseamount;
+    x.save().then(y=>{
+      console.log("done");
+      res.sendStatus(200);
+
+    })
+  })
+  .catch(err=>{
+    console.log(err);
+    res.sendStatus(500)
+  })
+res.sendStatus(200)
 })
 // router.get('/viewbidding',(req,res)=>{
 //   Openbid.find({userid:req.user.id}).populate('bookid')

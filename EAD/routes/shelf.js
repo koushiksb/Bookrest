@@ -213,7 +213,7 @@ router.get('/viewbk/:title',async (req,res)=>{
     var col2=0;
   await  Shelf.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
       await shelfs.forEach((item, i) => {
-        if(item.softcopy.length>0){
+        if(item.softcopy){
           otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
 
         }
@@ -278,8 +278,8 @@ router.post('/uploadSoftCopy',multer(bookUploadConf).single('bookSoftCopy'),(req
 })
 router.get('/readbook/:bookid',(req,res)=>{
   Shelf.findOne({user:req.user._id,book:req.params.bookid}).then((book)=>{
-    console.log(book.softcopy[0])
-    res.render('pdfviewer',{pdfPath:book.softcopy[0]})
+    console.log(book.softcopy)
+    res.render('pdfviewer',{pdfPath:book.softcopy})
   });
 
 

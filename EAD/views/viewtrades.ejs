@@ -29,11 +29,11 @@
 </head>
 
 <body class="product-page sidebar-collapse">
-  
+
   <div class="page-header page-header-xs" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1153&q=80');">
     <div class="filter"></div>
   </div>
- 
+
     <div class="main">
       <div class="container">
         <div class="row">
@@ -42,7 +42,7 @@
             <br/>
           </div>
         </div>
-
+<%if(exchange.length){%>
 <% for(i=0;i<exchange.length; i++){%>
   <div class="card-header moreBox" style="display:none;margin-top:30px">
     <%=exchange[i].userReq.profile.location %>
@@ -55,17 +55,25 @@
                   <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
                   <img src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/DoubleArrowLeftRight-512.png" alt="Rounded Image" class="img-responsive" style="width:10%;margin-left:40px;margin-right: 40px">
                   <img src="<%= exchange[i].bookReq.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
-                
+
               </div>
     <p class="card-text" style="color:black">With supporting text below as a natural lead-in to additional content.</p>
     <a href="/exchange/viewtrade/<%= exchange[i]._id %>" class="btn btn-primary">View</a>
   </div>
 </div>
- <%}%>
+<div style="margin-left:45%" id="loadMore">
+  <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See All...</button>
+</div>
 
-            <div style="margin-left:45%" id="loadMore">
-              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See All...</button>
-          </div>
+ <%}%>
+ <%}else{%>
+
+   <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:30vh;">
+     <h3>Currently No Trade Requests</h3>
+   </div>
+   <%}%>
+
+
         </div>
       </div>
 
@@ -74,7 +82,7 @@
   $(".moreBox").slice(0, 12).show();
     if ($(".blogBox:hidden").length != 0) {
       $("#loadMore").show();
-    }   
+    }
     $("#loadMore").on('click', function (e) {
       e.preventDefault();
       $(".moreBox:hidden").slice(0, 12).slideDown();
@@ -82,11 +90,17 @@
         $("#loadMore").fadeOut('slow');
       }
     });
+    if(!<%=exchange.length%>){
+      console.log('yes')
+      console.log(document.getElementsByTagName('body'))
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+    }
   });
+
 </script>
   <!--   Core JS Files   -->
     <footer class="footer footer-big" style="background-color: black;width: 100%">
-        
+
           <div class="col-md-4 ml-auto ">
             <div class="social-area">
               <a href="#facebook" class="btn btn-neutral btn-round btn-just-icon btn-facebook" style="margin-left: 15px;">
@@ -105,7 +119,7 @@
           </div>
         </div>
       </div>
-    </footer>  
+    </footer>
 </body>
 
 

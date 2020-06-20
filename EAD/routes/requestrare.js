@@ -74,6 +74,18 @@ console.log(x);
   return res.render('dummyviewrequest',{requests:x,layout:'navbar2'})
 })
 })
+// router.get('/viewsentrequest',(req,res)=>{
+//
+// console.log('found');
+// RareRequest.find({requester:req.user.id}).populate({path:'recipient',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(x=>{
+// // RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
+// console.log(x);
+// var y = x.recipient;
+// x.recipient = x.requester;
+// y=x.requester
+//   return res.render('sentRequests',{requests:x,layout:'navbar2'})
+// })
+// })
 
 router.post('/viewrequest',(req,res)=>{
   console.log('posted');
