@@ -80,11 +80,17 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
                 <%if(softCopy){%>
                 <a href="/shelf/readbook/<%=id%>">
                 <button class="btn btn-danger btn-block btn-round">Read book &nbsp;<i class="fa fa-chevron-right"></i></button>
+
               </a>
                 <%}else{%>
                   <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#uploadModal">Upload SoftCopy &nbsp;<i class="fa fa-chevron-right"></i></button>
                   <%}%>
               </div>
+              <%if(softCopy){%>
+              <div class="col-md-4  col-sm-8">
+                <button class="btn btn-danger btn-block btn-round"  data-toggle="modal" data-target="#amount">Set Amount &nbsp;<i class="fa fa-chevron-right"></i></button>
+              </div>
+<%}%>
 
             <%if(owner!='1'){%>
               <%if(inbidding!=1 && hasHardCopy){%>
@@ -128,6 +134,40 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
           <div class="modal-footer" style="border-top:0px !important;padding:1rem 1rem !important">
             <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
             <button type="submit" value='submit' style="color:white"class="btn btn-round">create bid</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="amount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div  class="modal-content">
+          <div class="modal-header" style="border-bottom:0px !important">
+            <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>Bookrest</h3><br>
+            <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">Find the hidden</p>
+          </div>
+          <form   method="post">
+
+          <div class="modal-body" >
+
+            <div><p>set the amount payable by user requested to read the book per one day</p>
+            <p>If you do not set, then users will be charged 5 rupees per day</p> </div><br>
+            <div class="form-group">
+              <h6>Amount
+                <span class="icon-danger">*</span>
+              </h6>
+              <%if(readRequestAmount===undefined){%>
+              <input type="number" id="payableamount" name="amount" class="form-control border-input" placeholder="Enter the Payable Amount...">
+              <%}else{%>
+                <input type="number" id="payableamount" value="<%=readRequestAmount%>" name="amount" class="form-control border-input" placeholder="Enter the Payable Amount...">
+
+                <%}%>
+            </div>
+            <input type="hidden" name="bookid" value="<%=id%>">
+          </div>
+          <div class="modal-footer" style="border-top:0px !important;padding:1rem 1rem !important">
+            <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
+            <button type="button" onclick="setamount('<%=id%>')" style="color:white"class="btn btn-round">Set Amount</button>
           </div>
         </form>
         </div>
@@ -212,7 +252,26 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 
     }
     </script>
+    <script type="text/javascript">
+    function setamount(id) {
+    console.log(id);
+    $.ajax({
+        type:'POST',
+        url:'/shelf/setpayableamount',
+        data:{
+          bookid:id,
+          amount:document.getElementById('payableamount').value,
+        },
+        success:function(result){
+          alert('Amount has been updated');
+          console.log(result);
+          location.reload()
 
+        }
+      });
+
+    }
+    </script>
 
     <!-- <div class="section">
     <div class="section section-dark">

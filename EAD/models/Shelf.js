@@ -25,6 +25,10 @@ const ShelfSchema = new mongoose.Schema({
   },
   paid:{
     type:Number   // 0 not paid, 1 paid
+  },
+  readRequestAmount:{
+    type:Number,
+    default:20
   }
   // ra:{
   //   type: mongoose.Schema.Types.mixed

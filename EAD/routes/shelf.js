@@ -155,14 +155,17 @@ router.get('/viewbook/:title',(req,res)=>{
     })
     var owner = '0';
     var softcopy = false;
+    var readRequestAmount;
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);
       owner  = y.owner
-      softCopy = (y.softcopy.length>0);
+      readRequestAmount = y.readRequestAmount;
+      softCopy = (y.softcopy!==undefined && y.softcopy!==null );
 console.log(y.owner);
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+console.log(readRequestAmount);
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,readRequestAmount:readRequestAmount,layout:'navbar2.ejs'});
   });
 });
 router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
@@ -284,4 +287,15 @@ router.get('/readbook/:bookid',(req,res)=>{
 
 
 });
+router.post('/setpayableamount',(req,res)=>{
+  Shelf.findOne({user:req.user._id,book:req.body.bookid}).then(book=>{
+      book.readRequestAmount = req.body.amount;
+      book.save().then(call=>{
+        console.log('saved');
+        res.sendStatus(200)
+      })
+
+  })
+
+})
 module.exports = router;
