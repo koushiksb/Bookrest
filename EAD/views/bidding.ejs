@@ -270,7 +270,10 @@ a:active,a:focus{outline:0;}
       <p>Your highestbid : </p>
 
       <%}else{%>
-        <p class="card-description desc" >Be the first person to bid</p>
+        <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:auto">
+          <p class="card-description desc" >Be the first person to bid</p>
+        </div>
+
         <%}%>
     </div>
 
@@ -288,9 +291,10 @@ a:active,a:focus{outline:0;}
   <div class="col-md-6 scroll">
     <div style="height:300px;color:#9a9a9a" id="chatroom">
       <%if (prevbids.length==0) {%>
-        <center>
-        <p style="font-size:1.2rem;text-align:center;color:#66615b !important">you can see here if anyone bids</p>
-        </center>
+
+        <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:280px">
+                  <p style="font-size:1.2rem;text-align:center;color:#66615b !important">you can see here if anyone bids</p>
+        </div>
       <%}else{%>
       <%for(i=prevbids.length -1 ;i>=0;i--){%>
           <p class='card1 message'><%=prevbids[i].username%> : <%=prevbids[i].amount%></p>

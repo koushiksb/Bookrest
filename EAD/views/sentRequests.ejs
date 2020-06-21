@@ -229,6 +229,7 @@ a:active,a:focus{outline:0;}
 .projects-1 .project-pills .nav.nav-pills .nav-item:last-child .nav-link{border-radius:0 0 12px 12px!important;margin-left:-1px;}
 }
 
+.b:active,.b:active:focus,.b:active:hover,.b:focus,.b:hover{background-color:red!important;color:#fff!important;border-color:red!important;box-shadow:none;}
 
 
     </style>
@@ -305,7 +306,7 @@ a:active,a:focus{outline:0;}
                           No of Days <%=requests[i].period%> <br>
                           Requested from <%=requests[i].requester.profile.fname%> <br>
                         <br>
-<a class="btn btn-rose btn-round" style="color:white" id='but' onclick="deleteRequest('<%=requests[i]._id%>')" >Delete</a>
+<a class="b btn btn-round" style="color:red;background-color:#fff;border:1px solid red" id='but' onclick="deleteRequest('<%=requests[i]._id%>')" >Delete</a>
 
                         </p>
                       </div>

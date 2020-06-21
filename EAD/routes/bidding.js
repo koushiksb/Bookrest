@@ -99,10 +99,10 @@ router.get('/allbidding',(req,res)=>{
   })
 })
 
-router.post('/openbid',(req,res)=>{
+router.post('/openbid',async (req,res)=>{
   var username='Anonymous'
 
-  Profile.findOne({_id:req.user.profile})
+  await Profile.findOne({_id:req.user.profile})
   .then(x=>{
     console.log('here');
     console.log(x);
