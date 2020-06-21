@@ -13,6 +13,10 @@ const ShelfSchema = new mongoose.Schema({
   softcopy:{
     type:String
   },
+  hasHardCopy:{
+    type:Boolean,
+    default:false
+  },
   owner:{
     type:String
   },
