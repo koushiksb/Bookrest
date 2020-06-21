@@ -99,11 +99,15 @@
      <div class="container">
        <h3 class="section-title" style="color:white;margin-bottom: 20px"><b>All Genres</b></h3>
        <% for(i=0;i<genre.length ;i++){%>
-       			<button rel="tooltip" title="This is a morphing button" class="btn btn-round "   style="color:white;font-weight: bold;background-ccolor:white; margin-right: 20px;margin-bottom:15px" onclick="location.href='#'i+"><%= genre[i]["Genre"]%>
+       			<a href=#<%= genre[i]["Genre"]%>>
+            <button rel="tooltip" title=genre[i]["Genre"] class="btn btn-round "   style="color:white;font-weight: bold;background-ccolor:white; margin-right: 20px;margin-bottom:15px"><%= genre[i]["Genre"]%>
        			</button>
+          </a>
        <%}%>
        <% for(var i in books){%>
        		<!-- <div id=> -->
+          <a name= <%= i %>></a>
+          <br>
        		<h3><%= i %></h3><!-- </div> --><br>
        		<div class="col-md-12">
            <div class="products">
