@@ -68,6 +68,9 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             <hr />
             <%if(otherUserShelf){%>
               <div class="row">
+                <p>If you want to read this book send read request to the user. You will be charged Rs <%=readRequestAmount%> per day. You will lose access to the book after selected period of time </p>
+              </div>
+              <div class="row">
                 <div class="col-md-4  col-sm-8">
                   <button class="btn btn-danger btn-block btn-round" data-toggle="modal"  data-target="#readrequest" >Send Read Request &nbsp;<i class="fa fa-chevron-right"></i></button>
 
@@ -83,16 +86,19 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 
               </a>
                 <%}else{%>
+                  <%if(owner!='1'){%>
                   <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#uploadModal">Upload SoftCopy &nbsp;<i class="fa fa-chevron-right"></i></button>
                   <%}%>
+                  <%}%>
               </div>
+
+            <%if(owner!='1'){%>
               <%if(softCopy){%>
               <div class="col-md-4  col-sm-8">
                 <button class="btn btn-danger btn-block btn-round"  data-toggle="modal" data-target="#amount">Set Amount &nbsp;<i class="fa fa-chevron-right"></i></button>
               </div>
 <%}%>
 
-            <%if(owner!='1'){%>
               <%if(inbidding!=1 && hasHardCopy){%>
               <div class="col-md-4  col-sm-8">
                 <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#exampleModal">Open Bid &nbsp;<i class="fa fa-chevron-right"></i></button>

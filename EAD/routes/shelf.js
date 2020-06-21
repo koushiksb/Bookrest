@@ -148,30 +148,47 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 router.get('/viewbook/:title',(req,res)=>{
   var inbidding=0
   Book.findOne({Title:req.params.title}).then(async (x)=>{
+    var owner = '0';
+    var softCopy = false;
+    var readRequestAmount=5;
+    var hasHardCopy=false;
+
   Openbid.findOne({bookid:x.id,userid:req.user.id}).then(a=>{
       if(a!=null){
         inbidding =1
       }
     })
-    var owner = '0';
-    var softcopy = false;
-    var readRequestAmount;
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);
-      owner  = y.owner
-      readRequestAmount = y.readRequestAmount;
-      softCopy = (y.softcopy!==undefined && y.softcopy!==null );
+      console.log(y);
+      if(y.hasHardCopy){
+        hasHardCopy = y.hasHardCopy;
+      }
+      if(y.owner){
+        owner  = y.owner
+
+      }
+      if(y.readRequestAmount){
+        readRequestAmount = y.readRequestAmount;
+
+      }
+      if(y.softcopy){
+        softCopy = (y.softcopy.length>0 );
+
+      }
 console.log(y.owner);
     });
 console.log(owner);
 console.log(readRequestAmount);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,readRequestAmount:readRequestAmount,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,readRequestAmount:readRequestAmount,hasHardCopy:hasHardCopy,layout:'navbar2.ejs'});
   });
 });
 router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
   var inbidding=0;
   req.session.otherUserShelfUserId = req.params.userid;
+  console.log(req.params);
   Book.findOne({Title:req.params.title}).then(async (x)=>{
+    console.log(x);
   Openbid.findOne({bookid:x.id,userid:req.params.userid}).then(a=>{
       if(a!=null){
         inbidding =1
@@ -179,11 +196,14 @@ router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
     })
     var owner = '0';
     var softcopy = false;
-    await Shelf.findOne({user:req.params.userid,book:x.id,owner:{$exists:false},softcopy:{$exists:true}}).then(y=>{
-      // console.log(y);
-      owner  = y.owner
-      softCopy = (y.softcopy.length>0);
-console.log(y.owner);
+    var readRequestAmount = false;
+    await Shelf.findOne({user:req.params.userid,book:x._id,owner:{$exists:false},softcopy:{$exists:true}}).then(y=>{
+      console.log(y);
+      softCopy = true;
+      if(y.readRequestAmount){
+        readRequestAmount = y.readRequestAmount;
+
+      }
     });
 console.log(owner);
     res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
@@ -191,12 +211,23 @@ console.log(owner);
 });
 
 router.get('/otherUserShelf/:userid',(req,res)=>{
-  Shelf.find({user:req.params.userid,softcopy:{$exists:true}}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
+  Shelf.find({user:req.params.userid,softcopy:{$exists:true},owner:{$exists:false}}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
     // console.log(x);
+    var owner = '0';
+    readRequestAmount = 5;
     Shelf.find({user:req.params.userid}).then(y=>{
       // console.log(y);
       console.log(y);
-      return res.render('otherUserShelf',{book:x,layout:'navbar2',owner:y,userid:req.params.userid});
+      if(y.owner){
+        owner  = y.owner
+
+      }
+      if(y.readRequestAmount){
+        readRequestAmount = y.readRequestAmount;
+
+      }
+
+      return res.render('otherUserShelf',{book:x,layout:'navbar2',owner:y,readRequestAmount:readRequestAmount,userid:req.params.userid});
     });
   })
 
@@ -214,7 +245,7 @@ router.get('/viewbk/:title',async (req,res)=>{
     var otherUsers=[];
     var col1 = 0;
     var col2=0;
-  await  Shelf.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
+  await  Shelf.find({book:x._id,softcopy:{$exists:true},owner:{$exists:false},user:{$ne:req.user._id}}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
       await shelfs.forEach((item, i) => {
         if(item.softcopy){
           otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})

@@ -31,8 +31,9 @@ router.post('/request',(req,res)=>{
 
 console.log('posted');
 console.log(req.body);
+
 RareRequest.findOne({recipient:req.session.otherUserShelfUserId,book:req.body.bookid,requester:req.user.id}).then(a=>{
-  if(a==null){
+
     // var datee = new Date()
     // datee.setDate(datee.getDate() + req.body.noofdays);
     var k  = new RareRequest({
@@ -55,9 +56,6 @@ RareRequest.findOne({recipient:req.session.otherUserShelfUserId,book:req.body.bo
       return res.sendStatus(500)
     })
 
-  }else{
-    console.log('alredyrequested');
-  }
 }
 
 )
@@ -68,7 +66,7 @@ RareRequest.findOne({recipient:req.session.otherUserShelfUserId,book:req.body.bo
 router.get('/viewrequest',(req,res)=>{
 
 console.log('found');
-RareRequest.find({recipient:req.user.id,status:'0'}).populate({path:'requester',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(x=>{
+RareRequest.find({recipient:req.user.id,status:0}).populate({path:'requester',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(x=>{
 // RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
 console.log(x);
   return res.render('dummyviewrequest',{requests:x,layout:'navbar2'})
@@ -77,7 +75,7 @@ console.log(x);
 router.get('/viewsentrequest',(req,res)=>{
 
 console.log('found');
-RareRequest.find({requester:req.user.id,status:'0'}).populate({path:'recipient',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(async (x)=>{
+RareRequest.find({requester:req.user.id,status:0}).populate({path:'recipient',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(async (x)=>{
 // RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
 console.log(x);
 console.log('exchange............');
@@ -93,7 +91,7 @@ console.log(x);
 })
 })
 router.get('/oldrequests',(req,res)=>{
-  RareRequest.find({requester:req.user.id,status:{$ne:'0'}}).populate({path:'recipient',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(async (x)=>{
+  RareRequest.find({requester:req.user.id,status:{$ne:0}}).populate({path:'recipient',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(async (x)=>{
   // RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
   console.log(x);
   console.log('exchange............');
@@ -124,16 +122,17 @@ router.post('/viewrequest',(req,res)=>{
 
   console.log(req.body);
 
-  RareRequest.findOne({book:req.body.bookid,recipient:req.user.id}).then(async x=>{
+  RareRequest.find({book:req.body.bookid,recipient:req.user._id}).then(async x=>{
+    x = x[x.length-1]
     console.log(x);
     console.log(req.body.status);
     var till_date = new Date();
     till_date.setDate(till_date.getDate() + x.period);
-    x.status=req.body.status
-    x.save()
+    x.status=Number(req.body.status)
+  await  x.save()
     var softcopylink = '';
 
-    Shelf.findOne({user:req.user.id}).then(softCopy=>{
+  await  Shelf.findOne({user:req.user.id,book:req.body.bookid}).then(softCopy=>{
       softcopylink = softCopy.softcopy
     })
     if(req.body.status == 1){
