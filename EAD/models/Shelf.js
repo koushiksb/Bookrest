@@ -11,7 +11,11 @@ const ShelfSchema = new mongoose.Schema({
     ref:'User'
   },
   softcopy:{
-    type:[{type:String}]
+    type:String
+  },
+  hasHardCopy:{
+    type:Boolean,
+    default:false
   },
   owner:{
     type:String
@@ -21,6 +25,10 @@ const ShelfSchema = new mongoose.Schema({
   },
   paid:{
     type:Number   // 0 not paid, 1 paid
+  },
+  readRequestAmount:{
+    type:Number,
+    default:20
   }
   // ra:{
   //   type: mongoose.Schema.Types.mixed

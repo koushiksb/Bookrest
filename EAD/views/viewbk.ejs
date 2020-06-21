@@ -185,7 +185,11 @@ display: none;
                     <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>'><%=otherUsers[i].name%></a></h3>
                     <%}%>
                 </div>
-
+                <%if(col1==0 && col2==0){%>
+                  <div style="display:flex;flex-direction:column;flex-basis:100%;align-items:center" >
+                      <h3>No users have softCopy of this book</h3>
+                  </div>
+                <%}%>
               </div>
 
             </div>

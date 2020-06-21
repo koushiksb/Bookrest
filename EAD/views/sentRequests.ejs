@@ -229,11 +229,12 @@ a:active,a:focus{outline:0;}
 .projects-1 .project-pills .nav.nav-pills .nav-item:last-child .nav-link{border-radius:0 0 12px 12px!important;margin-left:-1px;}
 }
 
+.b:active,.b:active:focus,.b:active:hover,.b:focus,.b:hover{background-color:red!important;color:#fff!important;border-color:red!important;box-shadow:none;}
 
 
     </style>
   </head>
-  <body>
+  <body onload="nav()">
     <!-- <%for(i=0;i<requests.length;i++){%>
     <h3><%=requests[i].book.Title%></h3>
     <button type="button" name="button" onclick="Update('<%=requests[i].book.id%>',1)" id='<%=requests[i].book.Title%>'>Accept</button>
@@ -275,9 +276,10 @@ a:active,a:focus{outline:0;}
               <div class="col-md-10 ml-auto mr-auto">
                 <h2 class="title">Rare requests</h2>
                 <br>
-                <div class="row" style="justify-content:center">
-                <%- include ("./requestsnav.ejs") %>
-                </div>
+<div class="row" style="justify-content:center">
+<%- include ("./requestsnav.ejs") %>
+</div>
+
 <%if(requests.length>0){%>
 <%for(i=0;i<requests.length;i++){%>
                 <div id='<%=i%>' class=" card card-blog">
@@ -302,11 +304,9 @@ a:active,a:focus{outline:0;}
 
                         <p class="card-description desc">
                           No of Days <%=requests[i].period%> <br>
-                          <%=requests[i].requester.profile.fname%> says <%=requests[i].notetoowner%> <br>
+                          Requested from <%=requests[i].requester.profile.fname%> <br>
                         <br>
-<a class="btn btn-rose btn-round" style="color:white" id='but' onclick="Update('<%=requests[i].book.id%>','<%= requests[i].requester.id%>',1,'<%=i%>')" >Accept</a>
-&nbsp&nbsp&nbsp&nbsp
-<a class="b btn btn-round " style="color:red;background-color:#fff;border:1px solid red" id='but' onclick="Update('<%=requests[i].book.id%>','<%= requests[i].requester.id%>',-1,<%=i%>)" >Decline</a>
+<a class="b btn btn-round" style="color:red;background-color:#fff;border:1px solid red" id='but' onclick="deleteRequest('<%=requests[i]._id%>')" >Delete</a>
 
                         </p>
                       </div>
@@ -360,15 +360,31 @@ a:active,a:focus{outline:0;}
             });
 console.log('asdfgh');
 
+
         }
 
+deleteRequest(id){
+  $.ajax({
+      type:'POST',
+      url:'/my/deleterequest',
+      data:{
+        id:id,
+      },
+      success:function(result){
+        alert('Request Deleted');
+        return false;
+        location.reload()
+      }
+    });
 
+
+}
       </script>
       <script type="text/javascript">
         function nav() {
-          document.getElementById("nav1").classList.remove('active')
+          document.getElementById("nav2").classList.remove('active')
 
-          document.getElementById("nav2").classList.add('active')
+          document.getElementById("nav1").classList.add('active')
         }
       </script>
 

@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"> -->
   <!-- CSS Files -->
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
   <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
-<style media="screen">
+<!-- <style media="screen">
 h3{margin-top:0;margin-bottom:.5rem;}
 h3{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
 h3{font-size:1.75rem;}
@@ -24,7 +24,7 @@ h3{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-fam
 h3{margin:30px 0 0;}
 h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 
-</style>
+</style> -->
 </head>
 
 <body class="product-page sidebar-collapse">
@@ -80,14 +80,20 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
                 <%if(softCopy){%>
                 <a href="/shelf/readbook/<%=id%>">
                 <button class="btn btn-danger btn-block btn-round">Read book &nbsp;<i class="fa fa-chevron-right"></i></button>
+
               </a>
                 <%}else{%>
                   <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#uploadModal">Upload SoftCopy &nbsp;<i class="fa fa-chevron-right"></i></button>
                   <%}%>
               </div>
+              <%if(softCopy){%>
+              <div class="col-md-4  col-sm-8">
+                <button class="btn btn-danger btn-block btn-round"  data-toggle="modal" data-target="#amount">Set Amount &nbsp;<i class="fa fa-chevron-right"></i></button>
+              </div>
+<%}%>
 
             <%if(owner!='1'){%>
-              <%if(inbidding!=1){%>
+              <%if(inbidding!=1 && hasHardCopy){%>
               <div class="col-md-4  col-sm-8">
                 <button class="btn btn-danger btn-block btn-round" data-toggle="modal" data-target="#exampleModal">Open Bid &nbsp;<i class="fa fa-chevron-right"></i></button>
               </div>
@@ -117,20 +123,51 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
               </h6>
               <input type="number" name="baseamount" class="form-control border-input" placeholder="Enter the Base Amount...">
             </div>
-            <input type="hidden" name="bookid" value="<%=id%>">
             <div class="form-group">
-              <h6>Leave a note to the owner</h6>
-              <textarea name="description" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
-              <h5>
-                <small>
-                  <span id="textarea-limited-message" class="pull-right">150 characters only</span>
-                </small>
-              </h5>
+              <h6>Bidding Date
+                <span class="icon-danger">*</span>
+              </h6>
+              <input type="datetime-local" id="biddingtime" name="biddingtime" class="form-control border-input">
             </div>
+            <input type="hidden" name="bookid" value="<%=id%>">
           </div>
           <div class="modal-footer" style="border-top:0px !important;padding:1rem 1rem !important">
             <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
             <button type="submit" value='submit' style="color:white"class="btn btn-round">create bid</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="amount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div  class="modal-content">
+          <div class="modal-header" style="border-bottom:0px !important">
+            <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>Bookrest</h3><br>
+            <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">Find the hidden</p>
+          </div>
+          <form   method="post">
+
+          <div class="modal-body" >
+
+            <div><p>set the amount payable by user requested to read the book per one day</p>
+            <p>If you do not set, then users will be charged 5 rupees per day</p> </div><br>
+            <div class="form-group">
+              <h6>Amount
+                <span class="icon-danger">*</span>
+              </h6>
+              <%if(readRequestAmount===undefined){%>
+              <input type="number" id="payableamount" name="amount" class="form-control border-input" placeholder="Enter the Payable Amount...">
+              <%}else{%>
+                <input type="number" id="payableamount" value="<%=readRequestAmount%>" name="amount" class="form-control border-input" placeholder="Enter the Payable Amount...">
+
+                <%}%>
+            </div>
+            <input type="hidden" name="bookid" value="<%=id%>">
+          </div>
+          <div class="modal-footer" style="border-top:0px !important;padding:1rem 1rem !important">
+            <button type="button" class="b btn btn-round"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Close</button>
+            <button type="button" onclick="setamount('<%=id%>')" style="color:white"class="btn btn-round">Set Amount</button>
           </div>
         </form>
         </div>
@@ -174,11 +211,11 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
               <h6>No days
                 <span class="icon-danger">*</span>
               </h6>
-              <input type="number" name="year" class="form-control border-input" placeholder="Number of Days">
+              <input type="number" id="noofdays" name="noofdays" class="form-control border-input" placeholder="Number of Days">
             </div>
             <div class="form-group">
               <h6>Leave a note to the owner</h6>
-              <textarea name="description" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
+              <textarea name="notetoowner" id="notetoowner" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
               <h5>
                 <small>
                   <span id="textarea-limited-message" class="pull-right">150 characters only</span>
@@ -203,6 +240,8 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         url:'/my/request',
         data:{
           bookid:id,
+          noofdays:document.getElementById('noofdays').value,
+          notetoowner:document.getElementById('notetoowner').value
         },
         success:function(result){
           alert('Request has been sent to Owner');
@@ -213,7 +252,26 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 
     }
     </script>
+    <script type="text/javascript">
+    function setamount(id) {
+    console.log(id);
+    $.ajax({
+        type:'POST',
+        url:'/shelf/setpayableamount',
+        data:{
+          bookid:id,
+          amount:document.getElementById('payableamount').value,
+        },
+        success:function(result){
+          alert('Amount has been updated');
+          console.log(result);
+          location.reload()
 
+        }
+      });
+
+    }
+    </script>
 
     <!-- <div class="section">
     <div class="section section-dark">

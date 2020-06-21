@@ -3,6 +3,8 @@ const router = express.Router();
 const User=require('../models/User');
 const Shelf=require('../models/Shelf');
 const Book=require('../models/Book');
+const Payment = require('../models/Payment')
+const Profile = require('../models/Profile')
 const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
@@ -45,11 +47,26 @@ const bookUploadConf = {
 
 router.get('/view',(req,res)=>{
 
-  Shelf.find({user:req.user._id}).select('book').populate('book','Title ImageURLM').then(x=>{
-    console.log(x);
-    Shelf.find({user:req.user._id}).select('user').populate('payment','purchaser book amount').then(y=>{
-      console.log(y);
-      return res.render('shelf1',{book:x,layout:'navbar2',payment:y});
+  Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).select('book').populate('book','Title ImageURLM').then(x=>{
+    // console.log('check1',x);
+    Shelf.find({user:req.user._id}).then(async (y)=>{
+      // console.log('check2',y);
+
+      await   y.forEach((item,index)=>{
+          if(item.owner === '1'){
+            Payment.find({purchaser:item.user,book:item.book}).then((z)=>{
+              // console.log('z1',z);
+              if(z.length > 0){
+                // console.log('amount',z[0]['amount']);
+                y[index].amount = z[0]['amount'];
+                // console.log('huhujnuhy',y);
+              }
+
+
+            });
+          }
+        });
+return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
     });
   })
 
@@ -138,14 +155,17 @@ router.get('/viewbook/:title',(req,res)=>{
     })
     var owner = '0';
     var softcopy = false;
+    var readRequestAmount;
     await Shelf.findOne({user:req.user._id,book:x.id}).then(y=>{
       // console.log(y);
       owner  = y.owner
-      softCopy = (y.softcopy.length>0);
+      readRequestAmount = y.readRequestAmount;
+      softCopy = (y.softcopy!==undefined && y.softcopy!==null );
 console.log(y.owner);
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+console.log(readRequestAmount);
+    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,readRequestAmount:readRequestAmount,layout:'navbar2.ejs'});
   });
 });
 router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
@@ -159,7 +179,7 @@ router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
     })
     var owner = '0';
     var softcopy = false;
-    await Shelf.findOne({user:req.params.userid,book:x.id}).then(y=>{
+    await Shelf.findOne({user:req.params.userid,book:x.id,owner:{$exists:false},softcopy:{$exists:true}}).then(y=>{
       // console.log(y);
       owner  = y.owner
       softCopy = (y.softcopy.length>0);
@@ -171,7 +191,7 @@ console.log(owner);
 });
 
 router.get('/otherUserShelf/:userid',(req,res)=>{
-  Shelf.find({user:req.params.userid}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
+  Shelf.find({user:req.params.userid,softcopy:{$exists:true}}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
     // console.log(x);
     Shelf.find({user:req.params.userid}).then(y=>{
       // console.log(y);
@@ -196,7 +216,10 @@ router.get('/viewbk/:title',async (req,res)=>{
     var col2=0;
   await  Shelf.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
       await shelfs.forEach((item, i) => {
-        otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
+        if(item.softcopy){
+          otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
+
+        }
       });
       if(otherUsers.length%2===0){
         console.log('here')
@@ -242,7 +265,11 @@ router.post('/charge',(req,res)=>{
   // add bookid to the users subscription list
   // console.log(bookid);
   Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
-    res.redirect('/shelf/view');
+    Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true}).then(d=>{
+      User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+        res.redirect('/shelf/view');
+      });
+    });
   });
 });
 });
@@ -254,10 +281,21 @@ router.post('/uploadSoftCopy',multer(bookUploadConf).single('bookSoftCopy'),(req
 })
 router.get('/readbook/:bookid',(req,res)=>{
   Shelf.findOne({user:req.user._id,book:req.params.bookid}).then((book)=>{
-    console.log(book.softcopy[0])
-    res.render('pdfviewer',{pdfPath:book.softcopy[0]})
+    console.log(book.softcopy)
+    res.render('pdfviewer',{pdfPath:book.softcopy})
   });
 
 
 });
+router.post('/setpayableamount',(req,res)=>{
+  Shelf.findOne({user:req.user._id,book:req.body.bookid}).then(book=>{
+      book.readRequestAmount = req.body.amount;
+      book.save().then(call=>{
+        console.log('saved');
+        res.sendStatus(200)
+      })
+
+  })
+
+})
 module.exports = router;
