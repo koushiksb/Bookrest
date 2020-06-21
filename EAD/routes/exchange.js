@@ -207,22 +207,23 @@ router.get('/accept/:id',(req,res)=>{
 
 
 router.get('/trail',(req,res)=>{
-  Book.find({}).then(async(x)=>{
+  Shelf.find({}).then(x=>{
     for (var i=0; i<x.length; i++){
-      var b_id = x[i]._id;
-      var rate = 0;
-      var t_r = 0
-      await Review.find({book:b_id}).then(z=>{
-        var sum = 0;
-        t_r = z.length
-        for (var l=0;l<z.length;l++){
-          sum = sum + Number(z[l].rating);
-        }
-        sum = (sum/z.length);
-        rate =  sum;
-      })
-      x[i].Rating = rate;
-      x[i].Treviews = t_r; 
+      // var b_id = x[i]._id;
+      // var rate = 0;
+      // var t_r = 0
+      // await Review.find({book:b_id}).then(z=>{
+      //   var sum = 0;
+      //   t_r = z.length
+      //   for (var l=0;l<z.length;l++){
+      //     sum = sum + Number(z[l].rating);
+      //   }
+      //   sum = (sum/z.length);
+      //   rate =  sum;
+      // })
+      x[i].readRequestAmount = 5;
+      // x[i].Rating = rate;
+      // x[i].Treviews = t_r; 
       console.log(x[i])
       x[i].save()
     }
