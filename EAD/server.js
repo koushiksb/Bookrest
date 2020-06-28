@@ -9,10 +9,13 @@ const cookieSession = require('cookie-session')
 const expressLayouts = require('express-ejs-layouts')
 const cors = require('cors');
 const router = express.Router();
+const CronJob = require('cron').CronJob;
 
 const multer = require('multer');
 var partials      = require('express-partials');
-const Bidding = require('./models/Bidding.js')
+const Bidding = require('./models/Bidding.js');
+const Openbid = require('./models/Openbid');
+
 var app=express()
 //EJS
 //
@@ -147,11 +150,40 @@ app.get("*", function(req, res){
      socket.username = data.username
    })
    socket.on('sold',(data)=>{
-    var soldto = data.username;
-    var users = this.manager.rooms[data.room];
-    for(var i = 0; i < users.length; i++) {
-     io.sockets.socket(users[i]).disconnect();
- }
+     console.log(data)
+     console.log('yoo')
+
+Openbid.findOne({_id:data.bidid,status:1,soldto:{$exists:false}}).then(async (bid)=>{
+  var soldto = false;
+  var soldfor = false;
+  var amount = false;
+  console.log(bid)
+  if(bid!=null){
+await Bidding.find({bidid:data.bidid}).sort({amount : -1}).limit(1).then((allbids)=>{
+    if(allbids.length>0){
+      soldfor = allbids[0].amount;
+      soldto = allbids[0].userid;
+
+    }
+  })
+  if(soldto && soldfor){
+    bid.soldto=soldto;
+    bid.soldfor=soldfor;
+    bid.status = 0;
+    bid.save().then(suc=>{
+      console.log('updated successfully');
+
+    })
+  }
+}else{
+  console.log('alredy updated')
+}
+
+})
+ // User.findOne({})
+ // Openbid.findOne({_id:data.bidid}).then((bid)=>{
+ //
+ // })
 
 
   })
@@ -180,5 +212,12 @@ app.get("*", function(req, res){
       socket.broadcast.in(data.room).emit('typing',{username:socket.username})
    })
  })
+
+//  const job = new CronJob('00 00 00 * * *', function() {
+//  	const d = new Date();
+//  	console.log('Midnight:', d);
+// },null,true,'Asia/Kolkata');
+//  console.log('After job instantiation');
+//  job.start();
 
 console.log('you are listening to port 3000');

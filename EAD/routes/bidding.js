@@ -31,7 +31,7 @@ Profile.findOne({_id:req.user.profile})
 
 
     }else{
-      return res.sendStatus(200)
+      return res.redirect('/book/allbidding')
     }
   })
   .catch(err=>{
@@ -81,7 +81,7 @@ router.post('/bidding',(req,res)=>{
 router.get('/allbidding',(req,res)=>{
   console.log(req.user.id);
   var canEdit = true;
-  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').lean()
+  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
     console.log(x);
     await x.forEach((item, i) => {
@@ -89,6 +89,8 @@ router.get('/allbidding',(req,res)=>{
         item['canEdit'] = false;
       }
       item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+      item['actualdate'] = item.date;
+      item.date = item.date.toISOString().slice(0,16)
     });
 
     res.render('allbiddings',{bids:x,layout:"navbar2.ejs"})
@@ -106,7 +108,7 @@ router.post('/openbid',async (req,res)=>{
   .then(x=>{
     console.log('here');
     console.log(x);
-    var username = x.fname +' ' +x.lname
+    username = x.fname +' ' +x.lname
     console.log(username);
   })
   .catch(err=>{
@@ -134,11 +136,13 @@ router.post('/openbid',async (req,res)=>{
 })
 
 router.get('/mystuff',(req,res)=>{
-  Openbid.find({userid:req.user.id}).populate('bookid').lean()
+  Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
               await x.forEach((item, i) => {
-                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT",true);
+                item['actualdate'] = item.date;
                 item.date = item.date.toISOString().slice(0,16);
+
               });
       console.log(x)
     return res.render('mystuff',{mybids:x,layout:'navbar2',today:new Date().toISOString().slice(0,16)})
@@ -176,6 +180,35 @@ router.post('/updatebid',(req,res)=>{
     res.sendStatus(500)
   })
 res.sendStatus(200)
+})
+router.get('/booksSold',(req,res)=>{
+  Openbid.find({userid:req.user.id,status:0}).populate({path:'soldto',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
+    if(x){
+    for (var i = 0; i < x.length; i++) {
+      if(x[i].soldto){
+      x[i]['username'] = x[i].soldto.profile.fname + ' ' + x[i].soldto.profile.lname;
+      }
+    }
+    }
+    console.log(x);
+    // res.sendStatus(200)
+    res.render('booksSold',{bids:x,layout:'navbar2'});
+  })
+})
+
+router.get('/booksBrought',(req,res)=>{
+  Openbid.find({soldto:req.user.id,status:0}).populate({path:'userid',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
+    if(x){
+    for (var i = 0; i < x.length; i++) {
+      if(x[i].userid){
+      x[i]['username'] = x[i].userid.profile.fname + ' ' + x[i].userid.profile.lname;
+      }
+    }
+    }
+    console.log(x);
+    // res.sendStatus(200)
+    res.render('booksBrought',{bids:x,layout:'navbar2'});
+  })
 })
 // router.get('/viewbidding',(req,res)=>{
 //   Openbid.find({userid:req.user.id}).populate('bookid')

@@ -238,7 +238,7 @@ a:active,a:focus{outline:0;}
     </style>
 
   </head>
-  <body>
+  <body onload="setmintime()">
 
 
 
@@ -288,7 +288,7 @@ a:active,a:focus{outline:0;}
                           <br><br>
   <a class="btn btn-rose btn-round" style="color:white" id='but' href="/book/bidding/<%=mybids[i].bookid._id%>/<%=mybids[i].userid%>/<%=mybids[i]._id%>"  >View auction</a>
   &nbsp&nbsp&nbsp&nbsp
-  <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" data-toggle="modal" data-target="#exampleModal"  >Edit details</a>
+  <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" data-toggle="modal" data-target='#x<%=i.toString()%>'  >Edit details</a>
 
                           </p>
                         </div>
@@ -296,7 +296,7 @@ a:active,a:focus{outline:0;}
                       </div>
                     </div>
                   </div>
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="x<%=i.toString()%>"   >
                     <div class="modal-dialog" role="document">
                       <div  class="modal-content">
                         <div class="modal-header" style="border-bottom:0px !important">
@@ -323,10 +323,10 @@ a:active,a:focus{outline:0;}
                           <input type="hidden" name="bidid" value="<%=mybids[i]._id%>">
                         </div>
                         <div class="modal-footer" style="border-top:0px !important;padding:1rem 1rem !important">
-                          <button type="button" class="b btn btn-round" onclick="deletebid('<%=mybids[i]._id%>','<%=mybids[i].bookid.Title%>')"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Delete Auction</button>
+                          <button type="button" class="b btn btn-round" onclick="deletebid('<%=mybids[i]._id%>','<%=mybids[i].bookid.Title%>','<%=mybids[i].actualdate%>')"  style="color:red;background-color:#fff;border:1px solid red" data-dismiss="modal">Delete Auction</button>
                           <button type="button" class="b btn btn-round" data-dismiss="modal" >close</button>
 
-                          <button type="button" style="color:white"class="btn btn-round" onclick="updatebid('<%=mybids[i]._id%>')">Update</button>
+                          <button type="button" style="color:white"class="btn btn-round" onclick="updatebid('<%=mybids[i]._id%>','<%=mybids[i].actualdate%>')">Update</button>
                         </div>
                       </form>
                       </div>
@@ -350,7 +350,8 @@ a:active,a:focus{outline:0;}
 
 
 <script type="text/javascript">
-function deletebid(bidid,bookname) {
+function deletebid(bidid,bookname,actualdate) {
+  if(new Date(actualdate)>new Date()){
   console.log('delete');
   $.ajax({
       type:'POST',
@@ -363,9 +364,13 @@ function deletebid(bidid,bookname) {
         location.reload(true)
       }
     });
+  }else{
+    alert("you can't delete now")
+  }
 }
-function updatebid(bidid) {
+function updatebid(bidid,actualdate) {
   console.log('updare');
+  if(new Date(actualdate)>new Date()){
   $.ajax({
       type:'POST',
       url:'/book/updatebid',
@@ -380,9 +385,17 @@ function updatebid(bidid) {
         location.reload(true)
       }
     });
+  }else{
+    alert("you can't update now")
+  }
 }
 
-</script>
 
+</script>
+<script type="text/javascript">
+  function setmintime(){
+    document.getElementById('biddingtime').min = new Date().toISOString().slice(0,16)
+  }
+</script>
   </body>
 </html>

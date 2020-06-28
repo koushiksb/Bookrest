@@ -232,7 +232,7 @@ a:active,a:focus{outline:0;}
               </a>
             </p>
 
-            <p class="card-description desc">
+            <p  class="card-description desc">
               By <%=details.username%>  <br>
               Base Amount : <%=details.baseamount%>
             <br><br>
@@ -250,9 +250,11 @@ a:active,a:focus{outline:0;}
       <!-- <h6 class="card-category text-info">Enterprise</h6> -->
 <%if(prevbids.length != 0){%>
       <p class="card-description desc">
+        <span id="highbid">
         Highest bid : <%=baseamount%>
 <br>
         By <%=user%>
+        </span>
         <br>
         Time Left ::
       <input id="minutes" type="text" style="width: 25px;
@@ -267,11 +269,11 @@ a:active,a:focus{outline:0;}
       <i id='sold'></i>
       <br><br>
       </p>
-      <p>Your highestbid : </p>
+      <!-- <p>Your highestbid :  </p> -->
 
       <%}else{%>
-        <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:auto">
-          <p class="card-description desc" >Be the first person to bid</p>
+        <div id='inimsg' style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:auto">
+          <p class="card-description desc"  >Be the first person to bid</p>
         </div>
 
         <%}%>
@@ -293,7 +295,7 @@ a:active,a:focus{outline:0;}
       <%if (prevbids.length==0) {%>
 
         <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:280px">
-                  <p style="font-size:1.2rem;text-align:center;color:#66615b !important">you can see here if anyone bids</p>
+                  <p style="font-size:1.2rem;text-align:center;color:#66615b !important" id="removeonbid">you can see here if anyone bids</p>
         </div>
       <%}else{%>
       <%for(i=prevbids.length -1 ;i>=0;i--){%>
@@ -332,7 +334,7 @@ a:active,a:focus{outline:0;}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
 <script type="text/javascript" src= 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
 <script type="text/javascript">
-$(function(){
+
   var socket =  io.connect('http://127.0.0.1:3000');
 
 
@@ -371,6 +373,21 @@ var a = [
   socket.on('new_message',(data)=>{
     highestbid = data.message
     chatroom.prepend("<p class='message card1'>" + data.username + ":" +data.message + '</p>')
+    if(document.getElementById('removeonbid')){
+      document.getElementById('removeonbid').remove()
+    }
+    if(document.getElementById('inimsg')){
+      document.getElementById('inimsg').remove()
+
+    }
+    if(document.getElementById("highbid")){
+
+      document.getElementById("highbid").innerHTML = "Highest bid :"+ data.message+
+      "<br> By  " + data.username;
+
+
+    }
+    
     feedback.html(' ')
   })
   message.bind('keypress',()=>{
@@ -379,12 +396,12 @@ var a = [
   socket.on('typing',(data)=>{
     feedback.html('<p><i>' + data.username +'/is typing a message...' +'</i></p>')
   })
-})
 
-var mins = 0.2;
+
+var mins = 5;
 var secs = mins * 60;
 function countdown() {
-    setTimeout('Decrement()', 60);
+    setTimeout('Decrement()',60)
 }
 
 function Decrement() {
@@ -403,13 +420,14 @@ function Decrement() {
             seconds.style.color = "red";
         }
         if (mins < 0) {
-            alert('time up');
+            alert('sold out');
             document.getElementById('sold').innerHTML = 'sold';
             document.getElementById('send_message').disabled = true;
+            socket.emit('sold',{room:'<%=room%>',bidid:'<%=bidid%>'})
             socket.close()
-            // socket.emit('sold',{room:'<%=room%>',username:'<%=username%>'})
-            minutes.value = 0;
-            seconds.value = 0;
+            document.getElementById("minutes").value = 0  ;
+            document.getElementById("seconds").value = 0;
+            location.href = "/book/allbidding"
         }
         else {
             secs--;

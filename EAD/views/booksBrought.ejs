@@ -276,13 +276,10 @@ a:active,a:focus{outline:0;}
                           </p>
 
                           <p class="card-description desc">
-                            By <%=bids[i].username%>  <br>
-                            Base Amount : <%=bids[i].baseamount%><br>
-                            Starts On : <%=bids[i].formatDate%>
-                            <input type="hidden" id="#b<%=i%>" value="<%=bids[i].actualdate%>">
+                            Brought from <%=bids[i].username%>  <br>
+                            Brought for Amount : <%=bids[i].soldfor%><br>
                           <br><br>
-  <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" onclick="redirect('/book/bidding/<%=bids[i].bookid._id%>/<%=bids[i].userid%>/<%=bids[i]._id%>','#b<%=i%>')"  >Bid Here</a>
-  &nbsp&nbsp&nbsp&nbsp
+
 
                           </p>
                         </div>
@@ -293,7 +290,7 @@ a:active,a:focus{outline:0;}
   <%}%>
   <%}else{%>
     <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:30vh;">
-      <h3>Currently No books Scheduled for Auction</h3>
+      <h3>You didn't brought any books in auction yet</h3>
     </div>
     <%}%>
                 </div>
@@ -311,17 +308,7 @@ a:active,a:focus{outline:0;}
             function nav() {
               document.getElementById("nav2").classList.remove('active')
 
-              document.getElementById("nav1").classList.add('active')
-            }
-            function redirect(url,id){
-              console.log('asdfgh')
-              console.log(new Date(document.getElementById(id).value))
-              console.log(new Date())
-              if(new Date(document.getElementById(id).value) > new Date()){
-                alert("Auction hasn't started yet")
-              }else{
-              location.href = url
-              }
+              document.getElementById("nav4").classList.add('active')
             }
           </script>
 

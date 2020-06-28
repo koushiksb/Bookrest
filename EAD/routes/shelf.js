@@ -47,7 +47,7 @@ const bookUploadConf = {
 
 router.get('/view',(req,res)=>{
 
-  Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).select('book').populate('book','Title ImageURLM').then(x=>{
+  Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).populate('book','Title ImageURLM').then(x=>{
     // console.log('check1',x);
     Shelf.find({user:req.user._id}).then(async (y)=>{
       // console.log('check2',y);
@@ -66,6 +66,7 @@ router.get('/view',(req,res)=>{
             });
           }
         });
+        console.log(x)
 return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
     });
   })
@@ -153,8 +154,9 @@ router.get('/viewbook/:title',(req,res)=>{
     var readRequestAmount=5;
     var hasHardCopy=false;
 
-  Openbid.findOne({bookid:x.id,userid:req.user.id}).then(a=>{
+  await Openbid.findOne({bookid:x.id,userid:req.user.id}).then(a=>{
       if(a!=null){
+        console.log('a',a)
         inbidding =1
       }
     })
@@ -176,10 +178,9 @@ router.get('/viewbook/:title',(req,res)=>{
         softCopy = (y.softcopy.length>0 );
 
       }
-console.log(y.owner);
+      console.log(y)
     });
-console.log(owner);
-console.log(readRequestAmount);
+    console.log('in bidding',inbidding)
     res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:false,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,readRequestAmount:readRequestAmount,hasHardCopy:hasHardCopy,layout:'navbar2.ejs'});
   });
 });
@@ -188,6 +189,7 @@ router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
   req.session.otherUserShelfUserId = req.params.userid;
   console.log(req.params);
   Book.findOne({Title:req.params.title}).then(async (x)=>{
+    console.log('selected book')
     console.log(x);
   Openbid.findOne({bookid:x.id,userid:req.params.userid}).then(a=>{
       if(a!=null){
@@ -202,11 +204,11 @@ router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
       softCopy = true;
       if(y.readRequestAmount){
         readRequestAmount = y.readRequestAmount;
-
+        console.log(readRequestAmount,y.readRequestAmount)
       }
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,title:x.Title,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,readRequestAmount:readRequestAmount,title:x.Title,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
   });
 });
 

@@ -24,7 +24,7 @@ OpenbidSchema = new mongoose.Schema({
   },
   status:{
     type:Number,
-    default:1
+    default:1 // 0 means over 1 means active
   },
   typeofcopy:{
     type:String
@@ -35,7 +35,7 @@ OpenbidSchema = new mongoose.Schema({
   },
   soldfor:{
     type:Number
-  }       // 0 means over 1 means active
+  }
 })
 
 const Openbid = mongoose.model('Allbids',OpenbidSchema);
