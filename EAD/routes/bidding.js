@@ -15,7 +15,8 @@ Profile.findOne({_id:req.user.profile})
   var details = ' '
   var user = ''
   var id=' '
-  var m = 0
+  var m = 0;
+  var lastbidtime=false;
   await Openbid.findOne({_id:req.params.bidid}).populate('bookid')
   .then(z=>{
     if(z.status==1){
@@ -45,6 +46,8 @@ Profile.findOne({_id:req.user.profile})
     if(y[y.length -1].amount>baseamount){
       baseamount = y[y.length -1].amount
       user = y[y.length -1].username
+      lastbidtime = y[y.length -1].time
+
     }
   }
 
@@ -53,7 +56,7 @@ Profile.findOne({_id:req.user.profile})
     //   y[i] = y[i].toJSON()
     // }
     // console.log(y);
-    var info = {username  : x.fname + ' ' + x.lname,userid:req.user.id,room:bidfor,bidid:req.params.bidid,prevbids:y,baseamount:baseamount,details:details,user:user,layout:"navbar2.ejs" }
+    var info = {username  : x.fname + ' ' + x.lname,userid:req.user.id,room:bidfor,bidid:req.params.bidid,prevbids:y,baseamount:baseamount,details:details,user:user,lastbidtime:lastbidtime,layout:"navbar2.ejs" }
     if(m==1){
       return res.render('viewbidding.ejs',info)
 

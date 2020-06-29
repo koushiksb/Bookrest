@@ -207,7 +207,7 @@ a:active,a:focus{outline:0;}
 
 
   </head>
-  <body onload="countdown();">
+  <body >
 
 <h1 style="margin-top:10%"></h1>
 <div class="row" >
@@ -222,7 +222,7 @@ a:active,a:focus{outline:0;}
         <div  class="col-md-8">
           <div class="card-body">
             <!-- <h6 class="card-category text-info">Enterprise</h6> -->
-            <h3 style="margin-bottom:1px" class="card-title">
+            <h3 style="margin-bottom:1px;display:flex;flex-wrap:wrap" class="card-title">
               <a href="#pablo"><%=details.bookid.Title%></a>
             </h3 >&nbsp
             <p class="author">
@@ -245,7 +245,7 @@ a:active,a:focus{outline:0;}
     <br><br>
 
   </div>
-  <div class="col-md-4" style="margin-left:-15%">
+  <div class="col-md-4" style="margin-left:-5%">
     <div class="card-body">
       <!-- <h6 class="card-category text-info">Enterprise</h6> -->
 <%if(prevbids.length != 0){%>
@@ -257,14 +257,7 @@ a:active,a:focus{outline:0;}
         </span>
         <br>
         Time Left ::
-      <input id="minutes" type="text" style="width: 25px;
-           border: none; font-size: 16px;
-          font-weight: bold; color: black;"><font size="5"> :
-                      </font>
-      <input id="seconds" type="text" style="width: 25px;
-                      border: none; font-size: 16px;
-                      font-weight: bold; color: black;">
-
+        <span id='time'>5:00</span>
       <br>
       <i id='sold'></i>
       <br><br>
@@ -272,6 +265,20 @@ a:active,a:focus{outline:0;}
       <!-- <p>Your highestbid :  </p> -->
 
       <%}else{%>
+        <p id='appendhere' style="display:none" class="card-description desc">
+          <span id="highbid">
+          Highest bid : <%=baseamount%>
+  <br>
+          By <%=user%>
+          </span>
+          <br>
+          Time Left ::
+          <span id='time'>5:00</span>
+        <br>
+        <i id='sold'></i>
+        <br><br>
+        </p>
+
         <div id='inimsg' style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:auto">
           <p class="card-description desc"  >Be the first person to bid</p>
         </div>
@@ -380,6 +387,9 @@ var a = [
       document.getElementById('inimsg').remove()
 
     }
+    if(document.getElementById("appendhere")){
+      document.getElementById("appendhere").style.display='block';
+    }
     if(document.getElementById("highbid")){
 
       document.getElementById("highbid").innerHTML = "Highest bid :"+ data.message+
@@ -387,7 +397,14 @@ var a = [
 
 
     }
-    
+    if(check===false){
+    fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+}else{
+  resetTimer()
+}
+
     feedback.html(' ')
   })
   message.bind('keypress',()=>{
@@ -398,51 +415,72 @@ var a = [
   })
 
 
-var mins = 5;
-var secs = mins * 60;
-function countdown() {
-    setTimeout('Decrement()',60)
-}
+  var timer;
+  var check=false;
+  function startTimer(duration, display) {
+      timer = duration;
+      var minutes, seconds;
+      check = true;
+      setInterval(function () {
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10);
 
-function Decrement() {
-    if (document.getElementById) {
-        minutes = document.getElementById("minutes");
-        seconds = document.getElementById("seconds");
-        if (seconds < 59) {
-            seconds.value = secs;
-        }
-        else {
-            minutes.value = getminutes();
-            seconds.value = getseconds();
-        }
-        if (mins < 1) {
-            minutes.style.color = "red";
-            seconds.style.color = "red";
-        }
-        if (mins < 0) {
-            alert('sold out');
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+
+          if (--timer < 0) {
+              timer = 0;
+              console.log('timeover')
+              alert('Time Over');
             document.getElementById('sold').innerHTML = 'sold';
             document.getElementById('send_message').disabled = true;
             socket.emit('sold',{room:'<%=room%>',bidid:'<%=bidid%>'})
             socket.close()
-            document.getElementById("minutes").value = 0  ;
-            document.getElementById("seconds").value = 0;
             location.href = "/book/allbidding"
-        }
-        else {
-            secs--;
-            setTimeout('Decrement()', 1000);
-        }
+          }
+      }, 1000);
+  }
+
+  function resetTimer() {
+    timer = 60 * 5;
+  }
+window.onload=function (){
+  if('<%=lastbidtime%>'!=='false'){
+    console.log('asdv')
+    console.log('<%=lastbidtime%>')
+    if(document.getElementById("appendhere")){
+      document.getElementById("appendhere").style.display='block';
     }
-}
+    console.log(new Date().getTime(),new Date('<%=lastbidtime%>').getTime())
+    console.log((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000)
+    if((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000<300){
+      fiveMinutes = 300-((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000);
+          display = document.querySelector('#time');
+          console.log('sddisplay',display)
+      startTimer(fiveMinutes, display);
+  }else{
+    if(document.getElementById("appendhere")){
+      document.getElementById("appendhere").style.display='block';
+    }
+    console.log('display')
+    fiveMinutes=0;
+    display = document.querySelector('#time').textContent="0:00";
+    location.href = "/book/allbidding"
+// startTimer(fiveMinutes, display);
+document.getElementById('send_message').disabled = true;
 
-function getminutes() {
-    mins = Math.floor(secs / 60);
-    return mins;
-}
+  }
 
-function getseconds() {
-    return secs - Math.round(mins * 60);
+
+  }
+
+  if(timer===0){
+
+    document.getElementById('send_message').disabled = true;
+    location.href = "/book/allbidding"
+  }
 }
 
 
