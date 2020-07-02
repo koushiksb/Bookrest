@@ -248,33 +248,42 @@ a:active,a:focus{outline:0;}
   <div class="col-md-4" style="margin-left:-15%">
     <div class="card-body">
       <!-- <h6 class="card-category text-info">Enterprise</h6> -->
-<%if(prevbids.length != 0){%>
-      <p class="card-description desc">
-        Highest bid : <%=baseamount%>
-<br>
-        By <%=user%>
-        <br>
-        Time Left ::
-      <input id="minutes" type="text" style="width: 25px;
-           border: none; font-size: 16px;
-          font-weight: bold; color: black;"><font size="5"> :
-                      </font>
-      <input id="seconds" type="text" style="width: 25px;
-                      border: none; font-size: 16px;
-                      font-weight: bold; color: black;">
-
+      <%if(prevbids.length != 0){%>
+            <p class="card-description desc">
+              <span id="highbid">
+              Highest bid : <%=baseamount%>
       <br>
-      <i id='sold'></i>
-      <br><br>
-      </p>
-      <p>Your highestbid : </p>
+              By <%=user%>
+              </span>
+              <br>
+              Time Left ::
+              <span id='time'>5:00</span>
+            <br>
+            <i id='sold'></i>
+            <br><br>
+            </p>
+            <!-- <p>Your highestbid :  </p> -->
 
-      <%}else{%>
-        <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
-          <p class="card-description desc" >No one participated yet</p>
-        </div>
-        <%}%>
-    </div>
+            <%}else{%>
+              <p id='appendhere' style="display:none" class="card-description desc">
+                <span id="highbid">
+                Highest bid : <%=baseamount%>
+        <br>
+                By <%=user%>
+                </span>
+                <br>
+                Time Left ::
+                <span id='time'>5:00</span>
+              <br>
+              <i id='sold'></i>
+              <br><br>
+              </p>
+
+              <div id='inimsg' style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:auto">
+                <p class="card-description desc"  >Be the first person to bid</p>
+              </div>
+
+              <%}%>    </div>
 
 
 
@@ -288,7 +297,7 @@ a:active,a:focus{outline:0;}
     <div style="height:300px;color:#9a9a9a" id="chatroom">
       <%if (prevbids.length==0) {%>
 <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:280px">
-          <p style="font-size:1.2rem;text-align:center;color:#66615b !important">you can see here if anyone bids</p>
+          <p style="font-size:1.2rem;text-align:center;color:#66615b !important" id="removeonbid">you can see here if anyone bids</p>
 </div>
       <%}else{%>
       <%for(i=prevbids.length -1 ;i>=0;i--){%>
@@ -327,7 +336,7 @@ a:active,a:focus{outline:0;}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
 <script type="text/javascript" src= 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
 <script type="text/javascript">
-$(function(){
+
   var socket =  io.connect('http://127.0.0.1:3000');
 
 
@@ -366,6 +375,31 @@ var a = [
   socket.on('new_message',(data)=>{
     highestbid = data.message
     chatroom.prepend("<p class='message card1'>" + data.username + ":" +data.message + '</p>')
+    if(document.getElementById('removeonbid')){
+      document.getElementById('removeonbid').remove()
+    }
+    if(document.getElementById('inimsg')){
+      document.getElementById('inimsg').remove()
+
+    }
+    if(document.getElementById("appendhere")){
+      document.getElementById("appendhere").style.display='block';
+    }
+    if(document.getElementById("highbid")){
+
+      document.getElementById("highbid").innerHTML = "Highest bid :"+ data.message+
+      "<br> By  " + data.username;
+
+
+    }
+    if(check===false){
+    fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+}else{
+  resetTimer()
+}
+
     feedback.html(' ')
   })
   message.bind('keypress',()=>{
@@ -374,52 +408,74 @@ var a = [
   socket.on('typing',(data)=>{
     feedback.html('<p><i>' + data.username +'/is typing a message...' +'</i></p>')
   })
-})
 
-var mins = 0.2;
-var secs = mins * 60;
-function countdown() {
-    setTimeout('Decrement()', 60);
-}
 
-function Decrement() {
-    if (document.getElementById) {
-        minutes = document.getElementById("minutes");
-        seconds = document.getElementById("seconds");
-        if (seconds < 59) {
-            seconds.value = secs;
-        }
-        else {
-            minutes.value = getminutes();
-            seconds.value = getseconds();
-        }
-        if (mins < 1) {
-            minutes.style.color = "red";
-            seconds.style.color = "red";
-        }
-        if (mins < 0) {
-            alert('time up');
+  var timer;
+  var check=false;
+  function startTimer(duration, display) {
+      timer = duration;
+      var minutes, seconds;
+      check = true;
+      setInterval(function () {
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+
+          if (--timer < 0) {
+              timer = 0;
+              console.log('timeover')
+              // alert('Time Over');
             document.getElementById('sold').innerHTML = 'sold';
             document.getElementById('send_message').disabled = true;
+            socket.emit('sold',{room:'<%=room%>',bidid:'<%=bidid%>'})
             socket.close()
-            // socket.emit('sold',{room:'<%=room%>',username:'<%=username%>'})
-            minutes.value = 0;
-            seconds.value = 0;
-        }
-        else {
-            secs--;
-            setTimeout('Decrement()', 1000);
-        }
+            location.href = "/book/allbidding"
+          }
+      }, 1000);
+  }
+
+  function resetTimer() {
+    timer = 60 * 5;
+  }
+window.onload=function (){
+  if('<%=lastbidtime%>'!=='false'){
+    console.log('asdv')
+    console.log('<%=lastbidtime%>')
+    if(document.getElementById("appendhere")){
+      document.getElementById("appendhere").style.display='block';
     }
-}
+    console.log(new Date().getTime(),new Date('<%=lastbidtime%>').getTime())
+    console.log((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000)
+    if((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000<300){
+      fiveMinutes = 300-((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000);
+          display = document.querySelector('#time');
+          console.log('sddisplay',display)
+      startTimer(fiveMinutes, display);
+  }else{
+    if(document.getElementById("appendhere")){
+      document.getElementById("appendhere").style.display='block';
+    }
+    console.log('display')
+    fiveMinutes=0;
+    display = document.querySelector('#time').textContent="0:00";
+    location.href = "/book/allbidding"
+// startTimer(fiveMinutes, display);
+document.getElementById('send_message').disabled = true;
 
-function getminutes() {
-    mins = Math.floor(secs / 60);
-    return mins;
-}
+  }
 
-function getseconds() {
-    return secs - Math.round(mins * 60);
+
+  }
+
+  if(timer===0){
+
+    document.getElementById('send_message').disabled = true;
+    location.href = "/book/allbidding"
+  }
 }
 
 

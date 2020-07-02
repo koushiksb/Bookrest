@@ -433,7 +433,7 @@ var a = [
           if (--timer < 0) {
               timer = 0;
               console.log('timeover')
-              alert('Time Over');
+              // alert('Time Over');
             document.getElementById('sold').innerHTML = 'sold';
             document.getElementById('send_message').disabled = true;
             socket.emit('sold',{room:'<%=room%>',bidid:'<%=bidid%>'})
