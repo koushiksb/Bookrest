@@ -1,37 +1,15 @@
 <html lang="en" class=" cssanimations">
 <head>
   <meta charset="utf-8">
-  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
-  <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/demo/demo.css" rel="stylesheet">
-  <!-- Extra details for Live View on GitHub Pages -->
-  <!-- Google Tag Manager -->
   <style media="screen">
   :root {
 --primary-color: #66615b;
 }
-/* .multiple-option {
-margin-top:3rem;
-margin-left:auto;
-margin-right: auto;
-margin-bottom: auto;
-margin: auto;
-display: grid;
-grid-gap: 1rem;
-max-width: 450px;
-grid-template-columns: repeat(3, 1fr);
-} */
-/* .multiple-option__item {
-display: flex;
-text-align: center;
-flex-direction: column;
-margin-top: 30px;
-} */
 .multiple-option__item{
 
   position: absolute;
@@ -75,11 +53,12 @@ color: white;
   flex-basis: 60%;
   max-height: 300px;
 }
-
+.btn-danger.btn-link{
+  color:#f5593d !important;
+}
   </style>
 </head>
 <body style='height:500px'>
-    <!-- End Navbar -->
   <div  class="wrapper">
     <div class="profile-content section">
       <div  class="container">
@@ -88,7 +67,44 @@ color: white;
         </div>
         <p class='text-center' style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;color:#66615b">Find the hidden</p>
 <br>
-<br>        <div class="row">
+<br>
+  <%if(pro!==null && pro!==undefined){%>
+<div class="row">
+          <div class="profile-picture">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <div class="fileinput-new img-no-padding">
+                <img src="/static/pics/person.svg" alt="...">
+              </div>
+              <div class="fileinput-preview fileinput-exists img-no-padding" style=""></div>
+              <div>
+                <span class="btn btn-outline-default btn-file btn-round"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name="profilepic"></span>
+                <br>
+                <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%}else{%>
+          <div class="row">
+                    <div class="profile-picture">
+                      <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new img-no-padding">
+                          <img src="/static/pics/person.svg" alt="...">
+                        </div>
+                        <div class="fileinput-preview fileinput-exists img-no-padding" style=""></div>
+                        <div>
+                          <span class="btn btn-outline-default btn-file btn-round"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name="profilepic"></span>
+                          <br>
+                          <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+          <%}%>
+        <br>
+        <br>
+        <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <form class="settings-form" method='post' action='profile'>
               <%if(pro!==null && pro!==undefined){%>
@@ -105,6 +121,10 @@ color: white;
                     <input type="text" name='lname' class="form-control border-input" value='<%=pro.lname%>' placeholder="Last Name">
                   </div>
                 </div>
+              </div>
+              <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" name='phone' class="form-control border-input" value='<%=user%>' required disabled placeholder="E mail">
               </div>
               <div class="form-group">
                 <label>Phone Number</label>
@@ -259,29 +279,6 @@ color: white;
                 </div>
                 </div>
               </section>
-              <!-- <section class="multiple-option">
-                <h1>What is your favorite Genre?</h1>
-                <div class="multiple-option__item">
-                  <input type="checkbox" value="Mexican food" />
-                  <label>Mexican food</label>
-                </div>
-                <div class="multiple-option__item">
-                  <input type="checkbox" value="Italian food" />
-                  <label>Italian food</label>
-                </div>
-                <div class="multiple-option__item">
-                  <input type="checkbox" value="Spanish food" />
-                  <label>Spanish food</label>
-                </div>
-                <div class="multiple-option__item">
-                  <input type="checkbox" value="Chinesse food" />
-                  <label>Chinesse food</label>
-                </div>
-                <div class="multiple-option__item">
-                  <input type="checkbox" value="Indian food" />
-                  <label>Indian food</label>
-                </div>
-              </section> -->
               <div class="text-center" style="margin-top:2rem">
                 <button type="submit" class="btn btn-outline-default btn-file btn-round">Save</button>
               </div>
@@ -291,5 +288,12 @@ color: white;
       </div>
     </div>
   </div>
+  <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+  <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/plugins/jasny-bootstrap.min.js"></script>
+  <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/paper-kit.min.js?v=2.3.1" type="text/javascript"></script>
+
+
 </body>
 </html>
