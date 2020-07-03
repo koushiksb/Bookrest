@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
+
     <style media="screen">
     /*! CSS Used from: https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css */
 .fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
@@ -229,6 +232,104 @@ a:active,a:focus{outline:0;}
 .projects-1 .project-pills .nav.nav-pills .nav-item:last-child .nav-link{border-radius:0 0 12px 12px!important;margin-left:-1px;}
 }
 
+*,::after,::before{box-sizing:border-box;}
+h5{margin-top:0;margin-bottom:.5rem;}
+a{color:#007bff;text-decoration:none;background-color:transparent;}
+a:hover{color:#0056b3;text-decoration:underline;}
+label{display:inline-block;margin-bottom:.5rem;}
+input{margin:0;font-family:inherit;font-size:inherit;line-height:inherit;}
+input{overflow:visible;}
+input[type=checkbox]{box-sizing:border-box;padding:0;}
+h5{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
+h5{font-size:1.25rem;}
+.form-check{position:relative;display:block;padding-left:1.25rem;}
+.form-check-input{position:absolute;margin-top:.3rem;margin-left:-1.25rem;}
+.form-check-label{margin-bottom:0;}
+.collapse:not(.show){display:none;}
+.card{position:relative;display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;min-width:0;word-wrap:break-word;background-color:#fff;background-clip:border-box;border:1px solid rgba(0,0,0,.125);border-radius:.25rem;}
+.card-body{-ms-flex:1 1 auto;flex:1 1 auto;min-height:1px;padding:1.25rem;}
+.card-header{padding:.75rem 1.25rem;margin-bottom:0;background-color:rgba(0,0,0,.03);border-bottom:1px solid rgba(0,0,0,.125);}
+.card-header:first-child{border-radius:calc(.25rem - 1px) calc(.25rem - 1px) 0 0;}
+.mb-0{margin-bottom:0!important;}
+@media print{
+*,::after,::before{text-shadow:none!important;box-shadow:none!important;}
+a:not(.btn){text-decoration:underline;}
+}
+/*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.1 */
+.noUi-target,.noUi-target *{-webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-ms-touch-action:none;touch-action:none;-ms-user-select:none;-moz-user-select:none;user-select:none;box-sizing:border-box;}
+.noUi-target{position:relative;}
+.noUi-base,.noUi-connects{width:100%;height:100%;position:relative;z-index:1;}
+.noUi-connects{overflow:hidden;z-index:0;}
+.noUi-connect,.noUi-origin{will-change:transform;position:absolute;z-index:1;top:0;right:0;-ms-transform-origin:0 0;-webkit-transform-origin:0 0;-webkit-transform-style:preserve-3d;transform-origin:0 0;transform-style:flat;}
+.noUi-connect{height:100%;width:100%;}
+.noUi-origin{height:10%;width:10%;}
+.noUi-horizontal .noUi-origin{height:0;}
+.noUi-handle{-webkit-backface-visibility:hidden;backface-visibility:hidden;position:absolute;}
+.noUi-handle:active,.noUi-handle:focus,.noUi-handle:focus:active{outline:none!important;}
+.noUi-touch-area{height:100%;width:100%;}
+.noUi-horizontal{height:1px;}
+.noUi-target{background:#c8c8c8;border-radius:4px;}
+.noUi-connects{border-radius:3px;}
+.noUi-connect{background:#3fb8af;}
+.noUi-handle{box-sizing:border-box;width:14px;height:14px;left:100%;top:-6px;cursor:pointer;border-radius:50%;transition:all .2s ease-out;border:1px solid;}
+.slider{background:#c8c8c8;}
+.slider .noUi-connect{background-color:#51cbce;border-radius:4px;}
+.slider .noUi-handle{border-color:#51cbce;background-color:#51cbce;box-shadow:0 0 10px 0 #51cbce;}
+.slider.slider-info .noUi-connect{background-color:#51bcda;}
+.slider.slider-info .noUi-handle{border-color:#51bcda;background-color:#51bcda;box-shadow:0 0 10px 0 #51bcda;}
+.form-check{padding-left:0;margin-bottom:.5rem;}
+.form-check .form-check-label{display:inline-block;position:relative;cursor:pointer;padding-left:35px;line-height:26px;margin-bottom:0;}
+.form-check .form-check-sign:after,.form-check .form-check-sign:before{content:" ";display:inline-block;position:absolute;width:24px;height:24px;left:0;cursor:pointer;border-radius:6px;top:0;background-color:#aaa7a4;transition:opacity .3s linear;}
+.form-check .form-check-sign:after{font-family:FontAwesome;content:"\f00c";top:-1px;text-align:center;font-size:15px;opacity:0;color:#fff;border:0;background-color:inherit;}
+.form-check input[type=checkbox]{opacity:0;position:absolute;visibility:hidden;}
+.form-check input[type=checkbox]:checked+.form-check-sign:after{opacity:1;}
+.form-check .form-check-label input[type=checkbox]:disabled+.form-check-sign{pointer-events:none!important;}
+.form-check-label input[type=checkbox]:checked+.form-check-sign:before{background-color:#66615b;}
+a,h5,input{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:Montserrat,Helvetica,Arial,sans-serif;font-weight:300;}
+h5{font-size:1.35em;line-height:1.4em;}
+a{color:#51bcda;}
+a:focus,a:hover{color:#2ba9cd;text-decoration:none;}
+a:active,a:focus{outline:0;}
+[data-toggle=collapse] i{transition:all .15s linear;}
+::-moz-placeholder{color:#9a9a9a;}
+:-ms-input-placeholder{color:#9a9a9a;}
+::-webkit-input-placeholder{color:#9a9a9a;}
+.panel-title{font-size:1.35em;}
+.panel-title a{display:block;padding:.75rem;}
+.panel-title i{float:right;padding-top:5px;}
+.panel-title a:focus,.panel-title a:hover{text-decoration:none;}
+#accordion .panel-title a:focus,#accordion .panel-title a:hover{color:#f5593d;}
+#accordion .card-header{background-color:#fff;}
+.card-collapse{padding:0!important;}
+.panel-title a[aria-expanded=true] i{transform:rotate(180deg);transition:all .3s linear;}
+.card{border-radius:12px;box-shadow:0 6px 10px -4px rgba(0,0,0,.15);background-color:#fff;color:#333;margin-bottom:20px;position:relative;z-index:1;border:0 none;transition:transform .3s cubic-bezier(.34,2,.6,1),box-shadow .2s ease;}
+.card:not(.card-plain):hover{box-shadow:0 12px 19px -7px rgba(0,0,0,.3);transform:translateY(-10px);-webkit-transform:translateY(-10px);-ms-transform:translateY(-10px);-moz-transform:translateY(-10px);}
+.card.card-refine:hover{box-shadow:0 6px 10px -4px rgba(0,0,0,.15);transform:none;-webkit-transform:none;-ms-transform:none;-moz-transform:none;}
+.card a:not(.btn){color:#444;}
+.card a:not(.btn):focus,.card a:not(.btn):hover{color:#333;}
+.card .card-body{padding:20px;}
+.card-refine .panel-title{font-size:1em;}
+.ecommerce-page .card-refine{margin-top:30px;}
+.nc-icon{display:inline-block;font:normal normal normal 14px/1 nucleo-icons;font-size:inherit;speak:none;text-transform:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.nc-minimal-down:before{content:"\ea39";}
+/*! CSS Used fontfaces */
+@font-face{font-family:'FontAwesome';src:url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.eot?v=4.7.0');src:url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.eot#iefix&v=4.7.0') format('embedded-opentype'),url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),url('https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gTD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3g3D_vx3rCubqg.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gbD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gfD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:200;src:local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_aZA3gnD_vx3rCs.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WRhyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459W1hyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WZhyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WdhyyTh89ZNpQ.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gTD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3g3D_vx3rCubqg.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gbD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gfD_vx3rCubqg.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gnD_vx3rCs.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:nucleo-icons;src:url(https://demos.creative-tim.com/paper-kit-2-pro/assets/fonts/nucleo-icons.eot);src:url(https://demos.creative-tim.com/paper-kit-2-pro/assets/fonts/nucleo-icons.eot) format("embedded-opentype"),url(https://demos.creative-tim.com/paper-kit-2-pro/assets/fonts/nucleo-icons.woff2) format("woff2"),url(https://demos.creative-tim.com/paper-kit-2-pro/assets/fonts/nucleo-icons.woff) format("woff"),url(https://demos.creative-tim.com/paper-kit-2-pro/assets/fonts/nucleo-icons.ttf) format("truetype"),url(https://demos.creative-tim.com/paper-kit-2-pro/assets/fonts/nucleo-icons.svg) format("svg");font-weight:400;font-style:normal;}
 
     </style>
 
@@ -245,57 +346,212 @@ a:active,a:focus{outline:0;}
           <div class="blog-3">
             <div class="container">
               <div class="row">
-                <div class="col-md-10 ml-auto mr-auto">
+                <div class="col-md-12 ml-auto mr-auto">
                   <h2 class="title">Bid For The Book</h2>
                   <br>
 
                   <div class="row" style="justify-content:center">
                   <%- include ("./auctionnav.ejs") %>
                   </div>
-
-  <%if(bids.length>0){%>
-  <%for(i=0;i<bids.length;i++){%>
-                  <div class=" card card-plain card-blog">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <div class="card-image">
-                          <img style="width:175px;height:auto" class="img" src="<%=bids[i].bookid.ImageURLL%>">
+<div class="row">
+  <div class="col-md-3">
+    <div class="card card-refine">
+                  <div class="panel-group" id="accordion" aria-multiselectable="true" aria-expanded="true">
+                    <div class="card-header card-collapse" role="tab" id="designer">
+                      <h5 class="mb-0 panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#refineDesigner" aria-expanded="false" aria-controls="collapseThree">
+                          Genre
+                          <i class="nc-icon nc-minimal-down"></i>
+                        </a>
+                      </h5>
+                    </div>
+                    <div id="refineDesigner" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="">
+                      <div class="card-body">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            All
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Fantasy
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Fiction
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            FairyTale
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            History
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Mystery
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Novel
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Poetry
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Romance
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            Thriller
+                            <span class="form-check-sign"></span>
+                          </label>
                         </div>
                       </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <!-- <h6 class="card-category text-info">Enterprise</h6> -->
-                          <h3 style="margin-bottom:1px" class="card-title">
-                            <a href="#pablo"><%=bids[i].bookid.Title%></a>
-                          </h3 >&nbsp
-                          <p class="author">
-                            by
-                            <a href="#pablo">
-                              <b><%=bids[i].bookid.Author%></b>
-                            </a>
-                          </p>
-
-                          <p class="card-description desc">
-                            By <%=bids[i].username%>  <br>
-                            Base Amount : <%=bids[i].baseamount%><br>
-                            Starts On : <%=bids[i].formatDate%>
-                            <input type="hidden" id="#b<%=i%>" value="<%=bids[i].actualdate%>">
-                          <br><br>
-  <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" onclick="redirect('/book/bidding/<%=bids[i].bookid._id%>/<%=bids[i].userid%>/<%=bids[i]._id%>','#b<%=i%>')"  >Bid Here</a>
-  &nbsp&nbsp&nbsp&nbsp
-
-                          </p>
+                    </div>
+                    <div class="card-header card-collapse" role="tab" id="color">
+                      <h5 class="mb-0 panel-title">
+                        <a class="" data-toggle="collapse" data-parent="#accordion" href="#colorMaker" aria-expanded="true" aria-controls="collapseTree">
+                          Base Amount
+                          <i class="nc-icon nc-minimal-down"></i>
+                        </a>
+                      </h5>
+                    </div>
+                    <div id="colorMaker" class="collapse show" role="tabpanel" aria-labelledby="headingOne" style="">
+                      <div class="card-body">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            All
+                            <span class="form-check-sign"></span>
+                          </label>
                         </div>
-
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            100 and less
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            100 - 500
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            500 - 1000
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            1000-2500
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            2500-5000
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="">
+                            5000 and above
+                            <span class="form-check-sign"></span>
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
-  <%}%>
-  <%}else{%>
-    <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:30vh;">
-      <h3>Currently No books Scheduled for Auction</h3>
-    </div>
+                </div>
+  </div>
+  <div class="col-md-9">
+    <%if(bids.length>0){%>
+    <%for(i=0;i<bids.length;i++){%>
+                    <div class=" card card-plain card-blog">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="card-image">
+                            <img style="width:100%;" class="img" src="<%=bids[i].bookid.ImageURLL%>">
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h6 class="card-category text-info"><%=bids[i].bookid.Genre%></h6>
+
+                            <!-- <h6 class="card-category text-info">Enterprise</h6> -->
+                            <h3 style="margin-bottom:1px" class="card-title">
+                              <a href="#pablo"><%=bids[i].bookid.Title%></a>
+                            </h3 >&nbsp
+                            <p class="author">
+                              by
+                              <a href="#pablo">
+                                <b><%=bids[i].bookid.Author%></b>
+                              </a>
+                            </p>
+
+                            <p class="card-description desc">
+                              By <%=bids[i].username%>  <br>
+                              Base Amount : <%=bids[i].baseamount%><br>
+                              Starts On : <%=bids[i].formatDate%>
+                              <input type="hidden" id="#b<%=i%>" value="<%=bids[i].actualdate%>">
+                            <br><br>
+    <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" onclick="redirect('/book/bidding/<%=bids[i].bookid._id%>/<%=bids[i].userid%>/<%=bids[i]._id%>','#b<%=i%>')"  >Bid Here</a>
+    &nbsp&nbsp&nbsp&nbsp
+
+                            </p>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
     <%}%>
+    <%}else{%>
+      <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;width:100%;height:30vh;">
+        <h3>Currently No books Scheduled for Auction</h3>
+      </div>
+      <%}%>
+  </div>
+</div>
+
                 </div>
               </div>
             </div>

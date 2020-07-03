@@ -55,13 +55,14 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 .review-user-image{
   width:7%;
   height: auto;
-
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px
 }
 .vertical-center{
   align-items:center;
 }
 .review-user-name{
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   font-family:'Comic Sans MS',cursive,sans-serif ;
 }
 .margin-top-review-box{
@@ -81,7 +82,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 
 }
 .star-ratings-css-top {
-    color: #e7711b;
+    color: #fc0324;
     padding: 0;
     position: absolute;
     z-index: 1;
@@ -121,6 +122,7 @@ display: none;
 
 }
 </style>
+
 </head>
 
 <body class="product-page sidebar-collapse">
@@ -155,6 +157,8 @@ display: none;
           <div class="col-md-8 col-sm-6">
             <h2><%= title %></h2>
             <h4 class="price" ><strong> <%= author %></strong></h4>
+            <h6 style="margin-top:2rem">Genre : <%=genre%></h6>
+            <p style="margin-top:0.5rem;font-weight:400">Rating :&nbsp&nbsp <%=rating%>&nbsp/&nbsp5</p>
             <hr />
             <p>Book Description : This blazer in suede is a must-have of your wardrobe. Team it with a angora blazer and a angora sweater.
             This blazer in suede is a must-have of your wardrobe. Team it with a angora blazer and a angora sweater.
@@ -207,14 +211,14 @@ display: none;
                 <div class="review-box readmore">
                   <div class="column">
                     <div class="myrow vertical-center">
-                      <img class="review-user-image" src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="">
-                      <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
-                    </div>
-                    <div class="myrow margin-top-review-box">
+                      <img class="review-user-image" src="../../static/pics/person.svg" alt="">
+                      <div class="col">
+                        <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
+                        <div class="star-ratings-css">
+                          <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
+                          <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
+                        </div>
 
-                      <div class="star-ratings-css">
-                        <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                        <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                       </div>
                     </div>
                     <div class="myrow margin-top-review-box" style="font-weight: 400;">
@@ -228,14 +232,14 @@ display: none;
                   <div class="review-box">
                     <div class="column">
                       <div class="myrow vertical-center">
-                        <img class="review-user-image" src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="">
-                        <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
-                      </div>
-                      <div class="myrow margin-top-review-box">
+                        <img class="review-user-image" src="../../static/pics/person.svg" alt="">
+                        <div class="col">
+                          <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
+                          <div class="star-ratings-css">
+                            <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
+                            <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
+                          </div>
 
-                        <div class="star-ratings-css">
-                          <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                          <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                         </div>
                       </div>
                       <div class="myrow margin-top-review-box" style="font-weight: 400;">

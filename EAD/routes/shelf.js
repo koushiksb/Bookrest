@@ -242,7 +242,7 @@ router.get('/viewbk/:title',async (req,res)=>{
   Book.findOne({Title:req.params.title}).then(async (x)=>{
    Review.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (y)=>{
         await y.forEach(review => {
-          review.rating = Number(review.rating)*12.5;
+          review.rating = Number(review.rating)*10;
     });
     var otherUsers=[];
     var col1 = 0;
@@ -267,7 +267,7 @@ router.get('/viewbk/:title',async (req,res)=>{
       console.log(col1,col2)
     })
     console.log(otherUsers)
-    res.render('viewbk',{image:x.ImageURLL,title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:'navbar2.ejs'});
+    res.render('viewbk',{image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:'navbar2.ejs'});
 
     })
   });
