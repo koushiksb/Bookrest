@@ -237,12 +237,24 @@ router.post('/allAuctionFilteredData',(req,res)=>{
   // })
   //
   var genreFilters=[];
+  if(req.body.genre.all!=='true'){
   Object.entries(req.body.genre).forEach((item, i) => {
 console.log(item)
 if(item[1]==='true' && item[0]!=='all' ){
   genreFilters.push(item[0])
 }
   });
+}else{
+    genreFilters = ['Fantasy',
+                  'Fiction',
+                  'Fairytale',
+                  'History',
+                  'Mystery',
+                  'Novel',
+                  'Poetry',
+                  'Romance',
+                  'Thriller'];
+}
 console.log(genreFilters)
 
   Openbid.aggregate([
@@ -311,12 +323,24 @@ console.log(genreFilters)
 router.post('/myAuctionFilteredData',(req,res)=>{
   console.log(req.body.genre)
   var genreFilters=[];
+  if(req.body.genre.all!=='true'){
   Object.entries(req.body.genre).forEach((item, i) => {
 console.log(item)
 if(item[1]==='true' && item[0]!=='all' ){
   genreFilters.push(item[0])
 }
   });
+}else{
+    genreFilters = ['Fantasy',
+                  'Fiction',
+                  'Fairytale',
+                  'History',
+                  'Mystery',
+                  'Novel',
+                  'Poetry',
+                  'Romance',
+                  'Thriller'];
+}
 
   Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
@@ -344,12 +368,24 @@ if(item[1]==='true' && item[0]!=='all' ){
 })
 router.post('/booksSoldAuctionFilteredData',(req,res)=>{
   var genreFilters=[];
+  if(req.body.genre.all!=='true'){
   Object.entries(req.body.genre).forEach((item, i) => {
 console.log(item)
 if(item[1]==='true' && item[0]!=='all' ){
   genreFilters.push(item[0])
 }
   });
+}else{
+    genreFilters = ['Fantasy',
+                  'Fiction',
+                  'Fairytale',
+                  'History',
+                  'Mystery',
+                  'Novel',
+                  'Poetry',
+                  'Romance',
+                  'Thriller'];
+}
 
   Openbid.find({userid:req.user.id,status:0}).populate({path:'soldto',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
     if(x){
@@ -375,12 +411,24 @@ if(item[1]==='true' && item[0]!=='all' ){
 
 router.post('/booksBroughtAuctionFilteredData',(req,res)=>{
   var genreFilters=[];
+  if(req.body.genre.all!=='true'){
   Object.entries(req.body.genre).forEach((item, i) => {
 console.log(item)
 if(item[1]==='true' && item[0]!=='all' ){
   genreFilters.push(item[0])
 }
   });
+}else{
+    genreFilters = ['Fantasy',
+                  'Fiction',
+                  'Fairytale',
+                  'History',
+                  'Mystery',
+                  'Novel',
+                  'Poetry',
+                  'Romance',
+                  'Thriller'];
+}
   Openbid.find({soldto:req.user.id,status:0}).populate({path:'userid',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
     if(x){
     for (var i = 0; i < x.length; i++) {
