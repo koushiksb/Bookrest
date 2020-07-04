@@ -565,15 +565,15 @@ a:active,a:focus{outline:0;}
           <script type="text/javascript">
             var genreFilters = {
               all:true,
-              fantasy:false,
-              fiction:false,
-              fairytale:false,
-              history:false,
-              mystery:false,
-              novel:false,
-              poetry:false,
-              romance:false,
-              thriller:false,
+              Fantasy:false,
+              Fiction:false,
+              Fairytale:false,
+              History:false,
+              Mystery:false,
+              Novel:false,
+              Poetry:false,
+              Romance:false,
+              Thriller:false,
             };
             var priceFilters={
               all:true,
@@ -588,15 +588,15 @@ a:active,a:focus{outline:0;}
             console.log(JSON.parse(a))
             function filterData(){
               genreFilters.all=document.getElementById('g-0').checked;
-              genreFilters.fantasy=document.getElementById('g-1').checked;
-              genreFilters.fiction=document.getElementById('g-2').checked;
-              genreFilters.fairytale=document.getElementById('g-3').checked;
-              genreFilters.history=document.getElementById('g-4').checked;
-              genreFilters.mystery=document.getElementById('g-5').checked;
-              genreFilters.novel=document.getElementById('g-6').checked;
-              genreFilters.poetry=document.getElementById('g-7').checked;
-              genreFilters.romance=document.getElementById('g-8').checked;
-              genreFilters.thriller=document.getElementById('g-9').checked;
+              genreFilters.Fantasy=document.getElementById('g-1').checked;
+              genreFilters.Fiction=document.getElementById('g-2').checked;
+              genreFilters.Fairytale=document.getElementById('g-3').checked;
+              genreFilters.History=document.getElementById('g-4').checked;
+              genreFilters.Mystery=document.getElementById('g-5').checked;
+              genreFilters.Novel=document.getElementById('g-6').checked;
+              genreFilters.Poetry=document.getElementById('g-7').checked;
+              genreFilters.Romance=document.getElementById('g-8').checked;
+              genreFilters.Thriller=document.getElementById('g-9').checked;
               priceFilters.all = document.getElementById('p-0').checked;
               priceFilters.one = document.getElementById('p-1').checked;
               priceFilters.two = document.getElementById('p-2').checked;
@@ -636,16 +636,16 @@ a:active,a:focus{outline:0;}
                                                   '<a href="#pablo">'+bids[i].bookid.Title+'</a>'+
                                                 '</h3 >&nbsp'+
                                                 '<p class="author">'+
-                                                  'by'+
+                                                  'by&nbsp'+
                                                   '<a href="#pablo">'+
                                                     '<b>'+bids[i].bookid.Author+'</b>'+
                                                   '</a>'+
                                                 '</p>'+
 
                                                 '<p class="card-description desc">'+
-                                                  'By'+ bids[i].username +' <br>'
-                                                  + 'Base Amount :'+ bids[i].baseamount+'<br>'+
-                                                  'Starts On :'+ bids[i].formatDate+
+                                                  'By&nbsp'+ bids[i].username +' <br>'
+                                                  + 'Base Amount :&nbsp'+ bids[i].baseamount+'<br>'+
+                                                  'Starts On :&nbsp'+ bids[i].formatDate+
                                                   '<input type="hidden" id="#b'+i+'" value="'+bids[i].actualdate+'">'+
                                                 '<br><br>'+
                         '<a class="btn btn-rose btn-round" style="color:white" id="but"  onclick='+'"redirect('+

@@ -215,28 +215,193 @@ router.get('/booksBrought',(req,res)=>{
 })
 
 router.post('/allAuctionFilteredData',(req,res)=>{
-  console.log(req.user.id);
-  var canEdit = true;
-  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').sort({date:1}).lean()
-  .then(async x=>{
-    console.log(x);
-    await x.forEach((item, i) => {
-      if(new Date() >=item.date  ){
-        item['canEdit'] = false;
+  // console.log(req.user.id);
+  // var canEdit = true;
+  // Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').sort({date:1}).lean()
+  // .then(async x=>{
+  //   console.log(x);
+  //   await x.forEach((item, i) => {
+  //     if(new Date() >=item.date  ){
+  //       item['canEdit'] = false;
+  //     }
+  //     item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+  //     item['actualdate'] = item.date;
+  //     item.date = item.date.toISOString().slice(0,16)
+  //   });
+  //   console.log(x)
+  //   return res.json({bids:x})
+  //
+  // })
+  // .catch(err=>{
+  //   console.log(err);
+  // })
+  //
+  var genreFilters=[];
+  Object.entries(req.body.genre).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  genreFilters.push(item[0])
+}
+  });
+console.log(genreFilters)
+
+  Openbid.aggregate([
+    {
+      $match:{
+        userid: { $not: { $eq: req.user.id } },
+        status:1
+    }
+  },
+  {
+    $lookup:{
+      from:'books',
+      let :{bookid:'$bookid'},
+      pipeline:[
+        {
+          $match: {
+    $expr: { $eq: ['$_id', '$$bookid'] }
+}
+
+},
+        {
+        $project:{
+          _id:1,
+          userid:1,
+          username:1,
+          ImageURLL:1,
+          Title:1,
+          Author:1,
+          Genre:1,
+          Rating:1
+        },
       }
-      item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-      item['actualdate'] = item.date;
-      item.date = item.date.toISOString().slice(0,16)
-    });
+    ],
+      as:'bookid'
+    }
+  },
+{
+    $unwind:{path:'$bookid'}
+  },
+  {
+    $match:{
+      "bookid.Genre":{$in:genreFilters}
+    }
+  }
+]).exec(function (err,bids){
+  console.log('aggregate');
+  if(bids){
 
-    res.json({bids:x})
+  bids.forEach((item, i) => {
+        if(new Date() >=item.date  ){
+          item['canEdit'] = false;
+        }
+        item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM TT");
+        item['actualdate'] = item.date;
+        item.date = item.date.toISOString().slice(0,16)
 
+  });
+  res.json({bids:bids})
+
+  }
+  console.log(bids)
+
+})
+})
+
+router.post('/myAuctionFilteredData',(req,res)=>{
+  console.log(req.body.genre)
+  var genreFilters=[];
+  Object.entries(req.body.genre).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  genreFilters.push(item[0])
+}
+  });
+
+  Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
+  .then(async x=>{
+              await x.forEach((item, i) => {
+                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT",true);
+                item['actualdate'] = item.date;
+                item.date = item.date.toISOString().slice(0,16);
+
+
+              });
+      console.log(x)
+      var finaldata = [];
+      x.forEach((item, i) => {
+        if(genreFilters.includes(item.bookid.Genre)){
+          finaldata.push(item)
+        }
+      });
+      console.log(finaldata)
+    return res.send({mybids:finaldata,today:new Date().toISOString().slice(0,16)})
   })
   .catch(err=>{
     console.log(err);
   })
 
 })
+router.post('/booksSoldAuctionFilteredData',(req,res)=>{
+  var genreFilters=[];
+  Object.entries(req.body.genre).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  genreFilters.push(item[0])
+}
+  });
+
+  Openbid.find({userid:req.user.id,status:0}).populate({path:'soldto',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
+    if(x){
+    for (var i = 0; i < x.length; i++) {
+      if(x[i].soldto){
+      x[i]['username'] = x[i].soldto.profile.fname + ' ' + x[i].soldto.profile.lname;
+      }
+    }
+    }
+    console.log(x);
+    var finaldata = [];
+    x.forEach((item, i) => {
+      if(genreFilters.includes(item.bookid.Genre)){
+        finaldata.push(item)
+      }
+    });
+
+    // res.sendStatus(200)
+    res.send({bids:finaldata});
+  })
+
+});
+
+router.post('/booksBroughtAuctionFilteredData',(req,res)=>{
+  var genreFilters=[];
+  Object.entries(req.body.genre).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  genreFilters.push(item[0])
+}
+  });
+  Openbid.find({soldto:req.user.id,status:0}).populate({path:'userid',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
+    if(x){
+    for (var i = 0; i < x.length; i++) {
+      if(x[i].userid){
+      x[i]['username'] = x[i].userid.profile.fname + ' ' + x[i].userid.profile.lname;
+      }
+    }
+    }
+    console.log(x);
+    var finaldata = [];
+    x.forEach((item, i) => {
+      if(genreFilters.includes(item.bookid.Genre)){
+        finaldata.push(item)
+      }
+    });
+
+    // res.sendStatus(200)
+    res.send({bids:finaldata});
+  })
+
+});
 // router.get('/viewbidding',(req,res)=>{
 //   Openbid.find({userid:req.user.id}).populate('bookid')
 //   .then(x=>{
