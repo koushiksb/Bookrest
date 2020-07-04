@@ -213,6 +213,30 @@ router.get('/booksBrought',(req,res)=>{
     res.render('booksBrought',{bids:x,layout:'navbar2'});
   })
 })
+
+router.post('/allAuctionFilteredData',(req,res)=>{
+  console.log(req.user.id);
+  var canEdit = true;
+  Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').sort({date:1}).lean()
+  .then(async x=>{
+    console.log(x);
+    await x.forEach((item, i) => {
+      if(new Date() >=item.date  ){
+        item['canEdit'] = false;
+      }
+      item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+      item['actualdate'] = item.date;
+      item.date = item.date.toISOString().slice(0,16)
+    });
+
+    res.json({bids:x})
+
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+
+})
 // router.get('/viewbidding',(req,res)=>{
 //   Openbid.find({userid:req.user.id}).populate('bookid')
 //   .then(x=>{

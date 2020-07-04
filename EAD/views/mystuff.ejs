@@ -361,70 +361,70 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input" onclick="filterData()" id='g-0' type="checkbox" value="" checked="">
                             All
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-1' type="checkbox" value="">
                             Fantasy
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-2' type="checkbox" value="">
                             Fiction
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-3' type="checkbox" value="">
                             FairyTale
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-4' type="checkbox" value="">
                             History
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-5' type="checkbox" value="">
                             Mystery
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-6' type="checkbox" value="">
                             Novel
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-7' type="checkbox" value="">
                             Poetry
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-8' type="checkbox" value="">
                             Romance
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id='g-9' type="checkbox" value="">
                             Thriller
                             <span class="form-check-sign"></span>
                           </label>
@@ -443,49 +443,49 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input" onclick="filterData()" id="p-0" type="checkbox" value="" checked="">
                             All
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id="p-1" type="checkbox" value="">
                             100 and less
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id="p-2" type="checkbox" value="">
                             100 - 500
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id="p-3" type="checkbox" value="">
                             500 - 1000
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id="p-4" type="checkbox" value="">
                             1000-2500
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id="p-5" type="checkbox" value="">
                             2500-5000
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData()" id="p-6" type="checkbox" value="">
                             5000 and above
                             <span class="form-check-sign"></span>
                           </label>
@@ -587,6 +587,67 @@ a:active,a:focus{outline:0;}
         </div>
 
           <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
+
+          <script type="text/javascript">
+            var genreFilters = {
+              all:true,
+              fantasy:false,
+              fiction:false,
+              fairytale:false,
+              history:false,
+              mystery:false,
+              novel:false,
+              poetry:false,
+              romance:false,
+              thriller:false,
+            };
+            var priceFilters={
+              all:true,
+              one:false,
+              two:false,
+              three:false,
+              four:false,
+              five:false,
+              six:false,
+            }
+            var a = '<%-JSON.stringify(mybids)%>';
+            console.log(JSON.parse(a))
+            function filterData(){
+              genreFilters.all=document.getElementById('g-0').checked;
+              genreFilters.fantasy=document.getElementById('g-1').checked;
+              genreFilters.fiction=document.getElementById('g-2').checked;
+              genreFilters.fairytale=document.getElementById('g-3').checked;
+              genreFilters.history=document.getElementById('g-4').checked;
+              genreFilters.mystery=document.getElementById('g-5').checked;
+              genreFilters.novel=document.getElementById('g-6').checked;
+              genreFilters.poetry=document.getElementById('g-7').checked;
+              genreFilters.romance=document.getElementById('g-8').checked;
+              genreFilters.thriller=document.getElementById('g-9').checked;
+              priceFilters.all = document.getElementById('p-0').checked;
+              priceFilters.one = document.getElementById('p-1').checked;
+              priceFilters.two = document.getElementById('p-2').checked;
+              priceFilters.three = document.getElementById('p-3').checked;
+              priceFilters.four = document.getElementById('p-4').checked;
+              priceFilters.five = document.getElementById('p-5').checked;
+              priceFilters.six = document.getElementById('p-6').checked;
+              console.log(genreFilters);
+              console.log(priceFilters);
+              $.ajax({
+                  type:'POST',
+                  url:'/book/filteredData',
+                  data:{
+                    genre:genreFilters,
+                    price:priceFilters
+                  },
+                  success:function(result){
+                    console.log(result)
+                  }
+                });
+
+            }
+
+            // console.log('<%-JSON.stringify(mybids)%>');
+          </script>
 
 
 <script type="text/javascript">
