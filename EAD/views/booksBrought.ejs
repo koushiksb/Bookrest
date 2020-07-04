@@ -649,14 +649,14 @@ a:active,a:focus{outline:0;}
                     var bids = result.bids;
                     if(bids.length>0){
                     for (var i=0;i<bids.length;i++){
-                    document.getElementById('data').innerHTML = '<div class=" card card-plain card-blog"><div class="row"><div class="col-md-4"><div class="card-image"><img style="width:175px;height:auto" class="img" src="'+
+                    document.getElementById('data').innerHTML = '<div class=" card card-plain card-blog"><div class="row"><div class="col-md-3"><div class="card-image"><img style="width:175px;height:auto" class="img" src="'+
                     bids[i].bookid.ImageURLL+
-                    '"></div></div><div class="col-md-8"><div class="card-body"><h6 class="card-category text-info">'+bids[i].bookid.Genre+
+                    '"></div></div><div class="col-md-9"><div class="card-body"><h6 class="card-category text-info">'+bids[i].bookid.Genre+
                     '</h6><h3 style="margin-bottom:1px" class="card-title"><a href="#pablo">'+bids[i].bookid.Title+
-                    '</a></h3 >&nbsp<p class="author">by<a href="#pablo"><b>'+bids[i].bookid.Author+
-                    '</b></a></p><p class="card-description desc">Sold to' +bids[i].username +
-                    '<br>Sold for Amount :'+ bids[i].soldfor+
-                    '<br>E-mail :' +bids[i].userid.email+'<br>Phone Number :'+bids[i].userid.profile.phone+
+                    '</a></h3 >&nbsp<p class="author">by<a href="#pablo"><b>&nbsp'+bids[i].bookid.Author+
+                    '</b></a></p><p class="card-description desc">Sold to&nbsp' +bids[i].username +
+                    '<br>Sold for Amount :&nbsp'+ bids[i].soldfor+
+                    '<br>E-mail :&nbsp' +bids[i].userid.email+'<br>Phone Number :&nbsp'+bids[i].userid.profile.phone+
                     ' <br><br><br></p></div></div></div></div>';
                                                 }
                                                 }else{

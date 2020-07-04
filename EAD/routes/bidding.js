@@ -4,7 +4,7 @@ const Profile = require('../models/Profile')
 const Openbid = require('../models/Openbid')
 const Bidding = require('../models/Bidding')
 var dateFormat = require('dateformat');
-
+var mongoose = require('mongoose')
 router.get('/bidding/:book/:owner/:bidid',(req,res)=>{
 console.log(req.params);
 var k =req.user.email.toString()
@@ -236,6 +236,7 @@ router.post('/allAuctionFilteredData',(req,res)=>{
   //   console.log(err);
   // })
   //
+  console.log(req.body)
   var genreFilters=[];
   if(req.body.genre.all!=='true'){
   Object.entries(req.body.genre).forEach((item, i) => {
@@ -255,12 +256,21 @@ if(item[1]==='true' && item[0]!=='all' ){
                   'Romance',
                   'Thriller'];
 }
+// var priceFilters = [];
+// if(req.body.price.all!=='true'){
+//   Object.entries(req.body.price).forEach((item, i) => {
+// console.log(item)
+// if(item[1]==='true' && item[0]!=='all' ){
+//   console.log(item)
+// }
+//   });
+// }
 console.log(genreFilters)
 
   Openbid.aggregate([
     {
       $match:{
-        userid: { $not: { $eq: req.user.id } },
+        userid: { $not: { $eq: new mongoose.Types.ObjectId(req.user.id.toString()) } },
         status:1
     }
   },

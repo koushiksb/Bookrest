@@ -510,12 +510,12 @@ a:active,a:focus{outline:0;}
     <%for(i=0;i<bids.length;i++){%>
                     <div class=" card card-plain card-blog">
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="card-image">
                             <img style="width:auto;height:100%" class="img" src="<%=bids[i].bookid.ImageURLL%>">
                           </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                           <div class="card-body">
                             <h6 class="card-category text-info"><%=bids[i].bookid.Genre%></h6>
                             <!-- <h6 class="card-category text-info">Enterprise</h6> -->
@@ -647,9 +647,9 @@ a:active,a:focus{outline:0;}
                     var bids = result.bids;
                     if(bids.length>0){
                     for (var i=0;i<bids.length;i++){
-                    document.getElementById('data').innerHTML = '<div class=" card card-plain card-blog"><div class="row"><div class="col-md-4"><div class="card-image"><img style="width:175px;height:auto" class="img" src="'+
+                    document.getElementById('data').innerHTML = '<div class=" card card-plain card-blog"><div class="row"><div class="col-md-3"><div class="card-image"><img style="width:175px;height:auto" class="img" src="'+
                     bids[i].bookid.ImageURLL+
-                    '"></div></div><div class="col-md-8"><div class="card-body"><h6 class="card-category text-info">'+bids[i].bookid.Genre+
+                    '"></div></div><div class="col-md-9"><div class="card-body"><h6 class="card-category text-info">'+bids[i].bookid.Genre+
                     '</h6><h3 style="margin-bottom:1px" class="card-title"><a href="#pablo">'+bids[i].bookid.Title+
                     '</a></h3 >&nbsp<p class="author">by<a href="#pablo"><b>'+bids[i].bookid.Author+
                     '</b></a></p><p class="card-description desc">Sold to' +bids[i].username +
