@@ -27,11 +27,11 @@
                 <h6>Product Image</h6>
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                   <div class="fileinput-new thumbnail img-no-padding" style="max-width: 370px; max-height: 250px;">
-                    <img src="../static/pics/image_placeholder.jpg" alt="...">
+                    <img id="image" src="../static/pics/image_placeholder.jpg" alt="...">
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail img-no-padding" style="max-width: 370px; max-height: 250px;"></div>
                   <div>
-                    <span class="btn btn-outline-default btn-round btn-file">
+                    <span id="imageSelect" class="btn btn-outline-default btn-round btn-file">
                       <span class="fileinput-new">Select image</span>
                       <span class="fileinput-exists">Change</span>
                       <input type="file" name="photo" accept="image/*">
@@ -40,14 +40,14 @@
                     <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                   </div>
                 </div>
-                <h6>Tags</h6>
+                <!-- <h6>Tags</h6>
                 <div id="tags">
                   <input class="tagsinput" data-color="success" type="text" value="Minimal, Light, New, Friends" data-role="tagsinput" />
                 </div>
                 <h6>Categories</h6>
                 <div id="tags-2">
                   <input class="tagsinput" data-color="success" type="text" value="Food, Drink" data-role="tagsinput" />
-                </div>
+                </div> -->
                 <h6>Format
                   <span class="icon-danger">*</span>
                 </h6>
@@ -69,25 +69,30 @@
                   <h6>Title
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="text" name="bookname" class="form-control border-input" placeholder="Enter the book title here...">
+                  <input type="text" list="books" id="bookname" name="bookname" class="form-control border-input" placeholder="Enter the book title here...">
+                  <datalist id="books">
+                    <% for(i=0;i<booksInfo.length; i++) {%>
+                      <option value="<%= booksInfo[i][0] %>"></option>
+                    <% } %>
+                  </datalist>
                 </div>
                 <div class="form-group">
                   <h6>Author
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="text" name="author" class="form-control border-input" placeholder="Enter the Author name here...">
+                  <input type="text" id="author" name="author" class="form-control border-input" placeholder="Enter the Author name here...">
                 </div>
                 <div class="form-group">
                   <h6>Publisher
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="text" name="publisher" class="form-control border-input" placeholder="Enter the publisher name here...">
+                  <input type="text" id="publisher" name="publisher" class="form-control border-input" placeholder="Enter the publisher name here...">
                 </div>
                 <div class="form-group">
                   <h6>Year of Publication
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="number" name="year" class="form-control border-input" placeholder="Enter the Year of Publication...">
+                  <input type="number" id="year" name="year" class="form-control border-input" placeholder="Enter the Year of Publication...">
                 </div>
                 <div class="form-group">
                   <h6>Description</h6>
@@ -112,7 +117,7 @@
         </div>
       </div>
     </div>
-
+  </body>
 </form>
 
 
@@ -125,7 +130,6 @@
 
   <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
   <!-- <script src="../assets/js/plugins/bootstrap-tagsinput.js"></script> -->
-</body>
 
 <!-- <script>
 
@@ -150,7 +154,44 @@
   });
 
 </script> -->
+<script>
+  // console.log('booksInfo',typeof('<%= booksInfo %>'));
+  
+  var booksInfo = <%-JSON.stringify(booksInfo)%>;
+  
+  var booksList = [];
+  for(i=0;i<booksInfo.length;i++){    
+    booksList.push(booksInfo[i][0]);
+  }
+  
+  $(document).ready(function(){
+    $("#bookname").change(function() {
+    var index = booksList.indexOf($("#bookname").val().toString());
+    
+    if(index !== -1) {
+      $("#publisher").val(booksInfo[index][1]);
+      $("#publisher").prop("disabled",true);
+      $("#author").val(booksInfo[index][2]);
+      $("#author").prop("disabled",true);
+      $("#year").val(booksInfo[index][3]);
+      $("#year").prop("disabled",true);
+      $("#image").attr("src",booksInfo[index][4]);
+      $("#imageSelect").hide();
+    }
+    else{
+      $("#publisher").val('');
+      $("#publisher").prop("disabled",false);
+      $("#author").val('');
+      $("#author").prop("disabled",false);
+      $("#year").val('');      
+      $("#year").prop("disabled",false);
+      $("#image").attr("src",'../static/pics/image_placeholder.jpg');
+      $("#imageSelect").show();
+    }
+  });
+});
 
+</script>
 
 
 </html>
