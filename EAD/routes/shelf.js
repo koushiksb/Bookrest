@@ -87,7 +87,7 @@ router.get('/addbook',(req,res)=>{
     }
     console.log('booksInfo',booksInfo.length);
     
-    res.render('addbook',{'booksInfo':booksInfo});    
+    res.render('addbook',{'booksInfo':booksInfo,layout:'navbar2'});    
   });
 
 });
