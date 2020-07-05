@@ -107,7 +107,7 @@
             </div>
             <div class="row buttons-row">
               <div class="col-md-6 col-sm-6">
-                <button class="btn btn-outline-danger btn-block btn-round" type="reset">Cancel</button>
+                <button class="btn btn-outline-danger btn-block btn-round" id="reset" type="reset">Cancel</button>
               </div>
               <div class="col-md-6 col-sm-6">
                 <button class="btn btn-outline-primary btn-block btn-round" type="submit">Save</button>
@@ -188,6 +188,14 @@
       $("#image").attr("src",'../static/pics/image_placeholder.jpg');
       $("#imageSelect").show();
     }
+  });
+
+  $("#reset").click(function(){
+    $("#publisher").prop("disabled",false);
+    $("#author").prop("disabled",false);
+    $("#year").prop("disabled",false);
+    $("#image").attr("src",'../static/pics/image_placeholder.jpg');
+    $("#imageSelect").show();
   });
 });
 
