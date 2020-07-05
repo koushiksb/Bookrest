@@ -237,6 +237,7 @@ router.post('/allAuctionFilteredData',(req,res)=>{
   // })
   //
   console.log(req.body)
+  console.log('api')
   var genreFilters=[];
   if(req.body.genre.all!=='true'){
   Object.entries(req.body.genre).forEach((item, i) => {
@@ -246,25 +247,54 @@ if(item[1]==='true' && item[0]!=='all' ){
 }
   });
 }else{
-    genreFilters = ['Fantasy',
-                  'Fiction',
-                  'Fairytale',
-                  'History',
-                  'Mystery',
-                  'Novel',
-                  'Poetry',
-                  'Romance',
-                  'Thriller'];
+var genreFilters =[];
+genreFilters.push('Fantasy'.toString());
+genreFilters.push('Fiction'.toString());
+genreFilters.push('Fairytale'.toString());
+genreFilters.push('History'.toString());
+genreFilters.push('Mystery'.toString());
+genreFilters.push('Novel'.toString());
+genreFilters.push('Poetry'.toString());
+genreFilters.push('Romance'.toString());
+genreFilters.push('Thriller'.toString());
+
+console.log('here')
+console.log(genreFilters)
 }
-// var priceFilters = [];
-// if(req.body.price.all!=='true'){
-//   Object.entries(req.body.price).forEach((item, i) => {
-// console.log(item)
-// if(item[1]==='true' && item[0]!=='all' ){
-//   console.log(item)
-// }
-//   });
-// }
+var priceFilters = 0;
+var isPriceFilter = false;
+var isAbove = false;
+if(req.body.price.all!=='true'){
+  isPriceFilter = true;
+  Object.entries(req.body.price).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  if(item[0]==='one'){
+    priceFilters=100;
+  }
+  else if(item[0]==='two'){
+    priceFilters=500;
+  }
+  else if(item[0]==='three'){
+    priceFilters=1000;
+  }
+  else if(item[0]==='four'){
+    priceFilters=2500;
+  }
+  else if(item[0]==='five'){
+    priceFilters=5000;
+  }
+  else{
+    priceFilters=5000;
+    isAbove = true;
+  }
+
+}
+  });
+}else{
+  isPriceFilter=false;
+
+}
 console.log(genreFilters)
 
   Openbid.aggregate([
@@ -312,6 +342,24 @@ console.log(genreFilters)
 ]).exec(function (err,bids){
   console.log('aggregate');
   if(bids){
+    var finaldata=[];
+  if(isPriceFilter){
+    bids.forEach((item, i) => {
+      if(isAbove){
+        if(item.baseamount>=priceFilters){
+          finaldata.push(item)
+        }
+
+      }else{
+      if(item.baseamount<=priceFilters){
+        finaldata.push(item)
+      }
+      }
+    });
+    finaldata.sort((a,b)=>(a.baseamount>b.baseamount)?1:-1);
+
+bids = finaldata;
+  }
 
   bids.forEach((item, i) => {
         if(new Date() >=item.date  ){
@@ -325,6 +373,7 @@ console.log(genreFilters)
   res.json({bids:bids})
 
   }
+  console.log('asdfgh')
   console.log(bids)
 
 })
@@ -341,17 +390,43 @@ if(item[1]==='true' && item[0]!=='all' ){
 }
   });
 }else{
-    genreFilters = ['Fantasy',
-                  'Fiction',
-                  'Fairytale',
-                  'History',
-                  'Mystery',
-                  'Novel',
-                  'Poetry',
-                  'Romance',
-                  'Thriller'];
+    genreFilters = ['Fantasy','Fiction','Fairytale','History','Mystery','Novel','Poetry','Romance','Thriller'];
 }
+var priceFilters = 0;
+var isPriceFilter = false;
+var isAbove = false;
+if(req.body.price.all!='true'){
+  console.log('shit');
+  isPriceFilter = true;
+  Object.entries(req.body.price).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  if(item[0]==='one'){
+    priceFilters=100;
+  }
+  else if(item[0]==='two'){
+    priceFilters=500;
+  }
+  else if(item[0]==='three'){
+    priceFilters=1000;
+  }
+  else if(item[0]==='four'){
+    priceFilters=2500;
+  }
+  else if(item[0]==='five'){
+    priceFilters=5000;
+  }
+  else{
+    priceFilters=5000;
+    isAbove = true;
+  }
 
+}
+  });
+}else{
+  isPriceFilter=false;
+
+}
   Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
               await x.forEach((item, i) => {
@@ -368,7 +443,32 @@ if(item[1]==='true' && item[0]!=='all' ){
           finaldata.push(item)
         }
       });
+      console.log('lkjhg')
       console.log(finaldata)
+      var prefinaldata=[];
+    if(isPriceFilter){
+      finaldata.forEach((item, i) => {
+        if(isAbove){
+          if(item.baseamount>=priceFilters){
+            prefinaldata.push(item)
+          }
+
+        }else{
+        if(item.baseamount<=priceFilters){
+          prefinaldata.push(item)
+        }
+        }
+      });
+      console.log('came')
+  finaldata = prefinaldata;
+  finaldata.sort((a,b)=>(a.baseamount>b.baseamount)?1:-1);
+
+    }
+    console.log('prefilandata');
+    console.log(finaldata);
+
+    console.log('final')
+    console.log(finaldata)
     return res.send({mybids:finaldata,today:new Date().toISOString().slice(0,16)})
   })
   .catch(err=>{
@@ -386,17 +486,43 @@ if(item[1]==='true' && item[0]!=='all' ){
 }
   });
 }else{
-    genreFilters = ['Fantasy',
-                  'Fiction',
-                  'Fairytale',
-                  'History',
-                  'Mystery',
-                  'Novel',
-                  'Poetry',
-                  'Romance',
-                  'Thriller'];
+  genreFilters = ['Fantasy','Fiction','Fairytale','History','Mystery','Novel','Poetry','Romance','Thriller'];
 }
+var priceFilters = 0;
+var isPriceFilter = false;
+var isAbove = false;
+if(req.body.price.all!='true'){
+  console.log('shit');
+  isPriceFilter = true;
+  Object.entries(req.body.price).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  if(item[0]==='one'){
+    priceFilters=100;
+  }
+  else if(item[0]==='two'){
+    priceFilters=500;
+  }
+  else if(item[0]==='three'){
+    priceFilters=1000;
+  }
+  else if(item[0]==='four'){
+    priceFilters=2500;
+  }
+  else if(item[0]==='five'){
+    priceFilters=5000;
+  }
+  else{
+    priceFilters=5000;
+    isAbove = true;
+  }
 
+}
+  });
+}else{
+  isPriceFilter=false;
+
+}
   Openbid.find({userid:req.user.id,status:0}).populate({path:'soldto',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
     if(x){
     for (var i = 0; i < x.length; i++) {
@@ -412,6 +538,25 @@ if(item[1]==='true' && item[0]!=='all' ){
         finaldata.push(item)
       }
     });
+    var prefinaldata=[];
+  if(isPriceFilter){
+    finaldata.forEach((item, i) => {
+      if(isAbove){
+        if(item.baseamount>=priceFilters){
+          prefinaldata.push(item)
+        }
+
+      }else{
+      if(item.baseamount<=priceFilters){
+        prefinaldata.push(item)
+      }
+      }
+    });
+    console.log('came')
+finaldata = prefinaldata;
+finaldata.sort((a,b)=>(a.baseamount>b.baseamount)?1:-1);
+
+  }
 
     // res.sendStatus(200)
     res.send({bids:finaldata});
@@ -429,15 +574,42 @@ if(item[1]==='true' && item[0]!=='all' ){
 }
   });
 }else{
-    genreFilters = ['Fantasy',
-                  'Fiction',
-                  'Fairytale',
-                  'History',
-                  'Mystery',
-                  'Novel',
-                  'Poetry',
-                  'Romance',
-                  'Thriller'];
+  genreFilters = ['Fantasy','Fiction','Fairytale','History','Mystery','Novel','Poetry','Romance','Thriller'];
+}
+var priceFilters = 0;
+var isPriceFilter = false;
+var isAbove = false;
+if(req.body.price.all!='true'){
+  console.log('shit');
+  isPriceFilter = true;
+  Object.entries(req.body.price).forEach((item, i) => {
+console.log(item)
+if(item[1]==='true' && item[0]!=='all' ){
+  if(item[0]==='one'){
+    priceFilters=100;
+  }
+  else if(item[0]==='two'){
+    priceFilters=500;
+  }
+  else if(item[0]==='three'){
+    priceFilters=1000;
+  }
+  else if(item[0]==='four'){
+    priceFilters=2500;
+  }
+  else if(item[0]==='five'){
+    priceFilters=5000;
+  }
+  else{
+    priceFilters=5000;
+    isAbove = true;
+  }
+
+}
+  });
+}else{
+  isPriceFilter=false;
+
 }
   Openbid.find({soldto:req.user.id,status:0}).populate({path:'userid',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
     if(x){
@@ -454,6 +626,26 @@ if(item[1]==='true' && item[0]!=='all' ){
         finaldata.push(item)
       }
     });
+    var prefinaldata=[];
+  if(isPriceFilter){
+    finaldata.forEach((item, i) => {
+      if(isAbove){
+        if(item.baseamount>=priceFilters){
+          prefinaldata.push(item)
+        }
+
+      }else{
+      if(item.baseamount<=priceFilters){
+        prefinaldata.push(item)
+      }
+      }
+    });
+    console.log('came')
+    finaldata.sort((a,b)=>(a.baseamount>b.baseamount)?1:-1);
+    
+finaldata = prefinaldata;
+  }
+
 
     // res.sendStatus(200)
     res.send({bids:finaldata});

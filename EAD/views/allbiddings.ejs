@@ -374,7 +374,7 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(true,false,false)" id='g-0' type="checkbox" value="" checked="">
+                            <input class="form-check-input" onclick="filterData(true,true,false)" id='g-0' type="checkbox" value="" checked="">
                             All
                             <span class="form-check-sign"></span>
                           </label>
@@ -653,7 +653,7 @@ a:active,a:focus{outline:0;}
                     var bids = result.bids;
                     if(bids.length>0){
                     for (var i=0;i<bids.length;i++){
-                    document.getElementById('data').innerHTML ='<div class=" card card-plain card-blog">'+
+                    document.getElementById('data').innerHTML +='<div class=" card card-plain card-blog">'+
                                           '<div class="row">'
                                             +'<div class="col-md-3">'
                                               +'<div class="card-image">'

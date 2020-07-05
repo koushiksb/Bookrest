@@ -372,7 +372,7 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(true,false,false)" id='g-0' type="checkbox" value="" checked="">
+                            <input class="form-check-input" onclick="filterData(true,true,false)" id='g-0' type="checkbox" value="" checked="">
                             All
                             <span class="form-check-sign"></span>
                           </label>
@@ -686,7 +686,7 @@ a:active,a:focus{outline:0;}
                     var today=result.today;
                     if(mybids.length>0){
                     for (var i=0;i<mybids.length;i++){
-                    document.getElementById('data').innerHTML = '<div class=" card card-plain card-blog"><div class="row"><div class="col-md-3"><div class="card-image"><img style="width:100%;" class="img" src="'
+                    document.getElementById('data').innerHTML += '<div class=" card card-plain card-blog"><div class="row"><div class="col-md-3"><div class="card-image"><img style="width:100%;" class="img" src="'
                                                 +mybids[i].bookid.ImageURLL +
                                                 '"></div></div><div class="col-md-8"><div class="card-body"><h6 class="card-category text-info">'+
 mybids[i].bookid.Genre+
