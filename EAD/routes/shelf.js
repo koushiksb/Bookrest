@@ -74,8 +74,21 @@ return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
 });
 
 router.get('/addbook',(req,res)=>{
-
-  res.render('addbook');
+  Book.find({}).then((books)=>{
+    var booksInfo = [];
+    for(i=0;i<books.length;i++) {
+      var inf = [];
+      inf.push(books[i].Title);
+      inf.push(books[i].Publisher);
+      inf.push(books[i].Author);
+      inf.push(books[i].YearOfPublication);
+      inf.push(books[i].ImageURLL)
+      booksInfo.push(inf);
+    }
+    console.log('booksInfo',booksInfo.length);
+    
+    res.render('addbook',{'booksInfo':booksInfo});    
+  });
 
 });
 
