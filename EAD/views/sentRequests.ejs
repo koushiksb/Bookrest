@@ -363,7 +363,7 @@ console.log('asdfgh');
 
         }
 
-deleteRequest(id){
+function deleteRequest(id){
   $.ajax({
       type:'POST',
       url:'/my/deleterequest',
@@ -372,7 +372,7 @@ deleteRequest(id){
       },
       success:function(result){
         alert('Request Deleted');
-        return false;
+
         location.reload()
       }
     });
