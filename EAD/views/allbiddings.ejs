@@ -361,7 +361,24 @@ a:active,a:focus{outline:0;}
 <div class="row">
   <div class="col-md-3">
     <div class="card card-refine">
+
                   <div class="panel-group" id="accordion" aria-multiselectable="true" aria-expanded="true">
+                    <div class="card-header card-collapse" role="tab" id="datefilter">
+                      <h5 class="mb-0 panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#datefiled" aria-expanded="false" aria-controls="collapseThree">
+                          Date
+                          <i class="nc-icon nc-minimal-down"></i>
+                        </a>
+                      </h5>
+
+                      </div>
+                      <div id="datefiled" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="">
+                        <div class="form-group">
+                          <input type="date" onchange="filterData(false,false,false,true)" id="datepicker" value=false  name="biddingtime" class="form-control border-input">
+                        </div>
+
+                      </div>
+
                     <div class="card-header card-collapse" role="tab" id="designer">
                       <h5 class="mb-0 panel-title">
                         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#refineDesigner" aria-expanded="false" aria-controls="collapseThree">
@@ -374,70 +391,70 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(true,true,false)" id='g-0' type="checkbox" value="" checked="">
+                            <input class="form-check-input" onclick="filterData(true,true,false,false)" id='g-0' type="checkbox" value="" checked="">
                             All
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-1' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-1' type="checkbox" value="">
                             Fantasy
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-2' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-2' type="checkbox" value="">
                             Fiction
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-3' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-3' type="checkbox" value="">
                             FairyTale
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-4' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-4' type="checkbox" value="">
                             History
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-5' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-5' type="checkbox" value="">
                             Mystery
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-6' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-6' type="checkbox" value="">
                             Novel
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-7' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-7' type="checkbox" value="">
                             Poetry
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-8' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-8' type="checkbox" value="">
                             Romance
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,true,false)" id='g-9' type="checkbox" value="">
+                            <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-9' type="checkbox" value="">
                             Thriller
                             <span class="form-check-sign"></span>
                           </label>
@@ -456,49 +473,49 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,true)" id="p-0" type="radio" value="" checked="">
+                            <input class="form-check-input" onclick="filterData(false,false,true,false)" id="p-0" type="radio" value="" checked="">
                             All
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,false)" id="p-1" name='pf' type="radio" value="">
+                            <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-1" name='pf' type="radio" value="">
                             100 and Less
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,false)" id="p-2" name='pf' type="radio" value="">
+                            <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-2" name='pf' type="radio" value="">
                             500 and Less
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,false)" id="p-3" name='pf' type="radio" value="">
+                            <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-3" name='pf' type="radio" value="">
                             1000 and Less
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,false)" id="p-4" name='pf' type="radio" value="">
+                            <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-4" name='pf' type="radio" value="">
                             2500 and Less
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,false)" id="p-5" name='pf' type="radio" value="">
+                            <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-5" name='pf' type="radio" value="">
                             5000 and Less
                             <span class="form-check-sign"></span>
                           </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" onclick="filterData(false,false,false)" id="p-6" name='pf' type="radio" value="">
+                            <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-6" name='pf' type="radio" value="">
                             5000 and Above
                             <span class="form-check-sign"></span>
                           </label>
@@ -524,7 +541,7 @@ a:active,a:focus{outline:0;}
 
                             <!-- <h6 class="card-category text-info">Enterprise</h6> -->
                             <h3 style="margin-bottom:1px" class="card-title">
-                              <a href="#pablo"><%=bids[i].bookid.Title%></a>
+                              <a href="/shelf/viewbk/<%=bids[i].bookid.Title%>"><%=bids[i].bookid.Title%></a>
                             </h3 >&nbsp
                             <p class="author">
                               by
@@ -588,10 +605,10 @@ a:active,a:focus{outline:0;}
               four:false,
               five:false,
               six:false,
-            }
+            };
             var a = '<%-JSON.stringify(bids)%>';
             console.log(JSON.parse(a))
-            function filterData(isgA,isgC,ispA){
+            function filterData(isgA,isgC,ispA,isDate){
               if(isgA){
                 if(document.getElementById('g-0').checked){
                   document.getElementById('g-1').checked = false;
@@ -618,7 +635,7 @@ a:active,a:focus{outline:0;}
                   document.getElementById('p-6').checked = false;
                 }
 
-              }else if(!isgC){
+              }else if(!isgC && !isDate){
                 document.getElementById('p-0').checked=false;
               }
               genreFilters.all=document.getElementById('g-0').checked;
@@ -645,7 +662,8 @@ a:active,a:focus{outline:0;}
                   url:'/book/allAuctionFilteredData',
                   data:{
                     genre:genreFilters,
-                    price:priceFilters
+                    price:priceFilters,
+                    date:document.getElementById('datepicker').value,
                   },
                   success:function(result){
                     console.log(result)
@@ -716,6 +734,7 @@ a:active,a:focus{outline:0;}
               document.getElementById("nav2").classList.remove('active')
 
               document.getElementById("nav1").classList.add('active')
+
             }
             function redirect(url,id){
               console.log('asdfgh')

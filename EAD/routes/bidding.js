@@ -264,6 +264,7 @@ console.log(genreFilters)
 var priceFilters = 0;
 var isPriceFilter = false;
 var isAbove = false;
+var datefilter = req.body.date;
 if(req.body.price.all!=='true'){
   isPriceFilter = true;
   Object.entries(req.body.price).forEach((item, i) => {
@@ -370,10 +371,28 @@ bids = finaldata;
         item.date = item.date.toISOString().slice(0,16)
 
   });
+  if(datefilter!==false && datefilter!==''){
+    var datedata = [];
+    console.log('datefiletr active')
+    var tomorrow = new Date(datefilter);
+    tomorrow.setDate(new Date(datefilter).getDate()+1);
+    bids.forEach((item, i) => {
+      console.log(new Date(item.actualdate))
+      console.log(new Date(datefilter))
+      console.log(tomorrow)
+      if(new Date(item.actualdate)>=new Date(datefilter) && new Date(item.actualdate)<tomorrow){
+        datedata.push(item);
+      }
+    });
+    bids=datedata ;
+  }
+
+
   res.json({bids:bids})
 
   }
   console.log('asdfgh')
+  console.log(datefilter);
   console.log(bids)
 
 })
@@ -395,6 +414,7 @@ if(item[1]==='true' && item[0]!=='all' ){
 var priceFilters = 0;
 var isPriceFilter = false;
 var isAbove = false;
+var datefilter = req.body.date;
 if(req.body.price.all!='true'){
   console.log('shit');
   isPriceFilter = true;
@@ -466,9 +486,25 @@ if(item[1]==='true' && item[0]!=='all' ){
     }
     console.log('prefilandata');
     console.log(finaldata);
-
+  var bids=finaldata;
     console.log('final')
     console.log(finaldata)
+    if(datefilter!==false && datefilter!==''){
+      var datedata = [];
+      console.log('datefiletr active')
+      var tomorrow = new Date(datefilter);
+      tomorrow.setDate(new Date(datefilter).getDate()+1);
+      bids.forEach((item, i) => {
+        console.log(new Date(item.actualdate))
+        console.log(new Date(datefilter))
+        console.log(tomorrow)
+        if(new Date(item.actualdate)>=new Date(datefilter) && new Date(item.actualdate)<tomorrow){
+          datedata.push(item);
+        }
+      });
+      bids=datedata ;
+    }
+    finaldata = bids;
     return res.send({mybids:finaldata,today:new Date().toISOString().slice(0,16)})
   })
   .catch(err=>{
@@ -491,6 +527,7 @@ if(item[1]==='true' && item[0]!=='all' ){
 var priceFilters = 0;
 var isPriceFilter = false;
 var isAbove = false;
+var datefilter = req.body.date;
 if(req.body.price.all!='true'){
   console.log('shit');
   isPriceFilter = true;
@@ -557,7 +594,23 @@ finaldata = prefinaldata;
 finaldata.sort((a,b)=>(a.baseamount>b.baseamount)?1:-1);
 
   }
-
+  var bids = finaldata;
+  if(datefilter!==false && datefilter!==''){
+    var datedata = [];
+    console.log('datefiletr active')
+    var tomorrow = new Date(datefilter);
+    tomorrow.setDate(new Date(datefilter).getDate()+1);
+    bids.forEach((item, i) => {
+      console.log(new Date(item.date))
+      console.log(new Date(datefilter))
+      console.log(tomorrow)
+      if(new Date(item.date)>=new Date(datefilter) && new Date(item.date)<tomorrow){
+        datedata.push(item);
+      }
+    });
+    bids=datedata ;
+  }
+finaldata = bids;
     // res.sendStatus(200)
     res.send({bids:finaldata});
   })
@@ -579,6 +632,7 @@ if(item[1]==='true' && item[0]!=='all' ){
 var priceFilters = 0;
 var isPriceFilter = false;
 var isAbove = false;
+var datefilter = req.body.date;
 if(req.body.price.all!='true'){
   console.log('shit');
   isPriceFilter = true;
@@ -642,11 +696,26 @@ if(item[1]==='true' && item[0]!=='all' ){
     });
     console.log('came')
     finaldata.sort((a,b)=>(a.baseamount>b.baseamount)?1:-1);
-    
+
 finaldata = prefinaldata;
   }
-
-
+var bids = finaldata;
+  if(datefilter!==false && datefilter!==''){
+    var datedata = [];
+    console.log('datefiletr active')
+    var tomorrow = new Date(datefilter);
+    tomorrow.setDate(new Date(datefilter).getDate()+1);
+    bids.forEach((item, i) => {
+      console.log(new Date(item.date))
+      console.log(new Date(datefilter))
+      console.log(tomorrow)
+      if(new Date(item.date)>=new Date(datefilter) && new Date(item.date)<tomorrow){
+        datedata.push(item);
+      }
+    });
+    bids=datedata ;
+  }
+finaldata = bids
     // res.sendStatus(200)
     res.send({bids:finaldata});
   })
