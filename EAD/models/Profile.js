@@ -22,6 +22,7 @@ const ProfileSchema = new mongoose.Schema({
     type:String
   },
   favouriteGenre:[{type:String}],
+  profilepic:{type:String}
 
 })
 const Profile = mongoose.model('Profile',ProfileSchema);
