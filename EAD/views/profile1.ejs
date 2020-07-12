@@ -56,9 +56,73 @@ color: white;
 .btn-danger.btn-link{
   color:#f5593d !important;
 }
+.triple-spinner {
+  display: block;
+  position: relative;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top: 4px solid #FF5722;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.triple-spinner::before,
+.triple-spinner::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid transparent;
+}
+.triple-spinner::before {
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-top-color: #FF9800;
+  -webkit-animation: spin 3s linear infinite;
+  animation: spin 3.5s linear infinite;
+}
+.triple-spinner::after {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-top-color: #FFC107;
+  -webkit-animation: spin 1.5s linear infinite;
+  animation: spin 1.75s linear infinite;
+}
+
+
+
+@-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+
+@keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
   </style>
 </head>
 <body style='height:500px'>
+
   <div  class="wrapper">
     <div class="profile-content section">
       <div  class="container">
@@ -68,45 +132,52 @@ color: white;
         <p class='text-center' style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;color:#66615b">Find the hidden</p>
 <br>
 <br>
-  <%if(pro!==null && pro!==undefined){%>
-<div class="row">
-          <div class="profile-picture">
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-              <div class="fileinput-new img-no-padding">
-                <img src="/static/pics/person.svg" alt="...">
-              </div>
-              <div class="fileinput-preview fileinput-exists img-no-padding" style=""></div>
-              <div>
-                <span class="btn btn-outline-default btn-file btn-round"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name="profilepic"></span>
-                <br>
-                <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <%}else{%>
-          <div class="row">
-                    <div class="profile-picture">
-                      <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-new img-no-padding">
-                          <img src="/static/pics/person.svg" alt="...">
-                        </div>
-                        <div class="fileinput-preview fileinput-exists img-no-padding" style=""></div>
-                        <div>
-                          <span class="btn btn-outline-default btn-file btn-round"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name="profilepic"></span>
-                          <br>
-                          <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <form class="settings-form" enctype="multipart/form-data" method='post' action='profile'>
+              <%if(pro!==null && pro!==undefined){%>
+            <div class="row">
+                      <div class="profile-picture">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                          <div class="fileinput-new img-no-padding">
+                            <%if(pro.profilepic){%>
+                              <img src="/<%=pro.profilepic%>" alt="...">
+
+                              <%}else{%>
+                                <img src="/static/pics/person.svg" alt="...">
+
+                                <%}%>
+                          </div>
+                          <div class="fileinput-preview fileinput-exists img-no-padding" style="display:flex;justify-content:center"></div>
+                          <div style="display:flex">
+                            <span class="btn btn-outline-default btn-file btn-round"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name="profilepic"></span>
+                            <br>
+                            <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    <%}else{%>
+                      <div class="row">
+                                <div class="profile-picture">
+                                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new img-no-padding">
+                                      <img src="/static/pics/person.svg" alt="...">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists img-no-padding" style=""></div>
+                                    <div>
+                                      <span class="btn btn-outline-default btn-file btn-round"><span class="fileinput-new">Change Photo</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name="profilepic"></span>
+                                      <br>
+                                      <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-          <%}%>
-        <br>
-        <br>
-        <div class="row">
-          <div class="col-md-6 ml-auto mr-auto">
-            <form class="settings-form" method='post' action='profile'>
+                      <%}%>
+                    <br>
+                    <br>
+
               <%if(pro!==null && pro!==undefined){%>
               <div class="row">
                 <div class="col-md-6 col-sm-6">
@@ -293,7 +364,6 @@ color: white;
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/plugins/jasny-bootstrap.min.js"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/paper-kit.min.js?v=2.3.1" type="text/javascript"></script>
-
 
 </body>
 </html>

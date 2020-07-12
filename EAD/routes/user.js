@@ -15,6 +15,37 @@ const Profile=require('../models/Profile')
 const Review=require('../models/Review')
 var urlencodedparser=bodyparser.urlencoded({extended:true});
 bodyParser = require('body-parser').json();
+const multer = require('multer');
+const gpath = require('path');
+
+
+const userimageconf = {
+  storage:multer.diskStorage({
+    destination:function(req,file,next){
+      // const ext = file.mimetype.split('/')[0];
+      // if(ext === 'image'){
+        next(null,gpath.join(__dirname,'../static/pics/'));
+      // }
+      // else{
+      //   next(null,'./static/pdf');
+      // }
+    },
+    filename:function(req,file,next){
+      const ext = file.mimetype.split('/')[1];
+      next(null,file.fieldname+'.'+Date.now()+'.'+ext)
+    }
+  }),
+}
+
+function path(req){
+  if(req.file){
+    return 'static/pics/'+req.file.filename;
+  }
+  else{
+    return '';
+  }
+}
+
 
 
 function isLoggedIn(req, res, next) {
@@ -158,7 +189,7 @@ passport.authenticate('local',{
 
 router.get('/logout',(req,res)=>{
   req.logout()
-  res.redirect('/users/signup')
+  res.redirect('/users/login')
 })
 
 router.get('/dashboard',async (req,res)=>{
@@ -173,7 +204,7 @@ console.log(req.isAuthenticated());
           Mystery:false,
           Fiction:false,
           Poetry:false,
-          fantasy:false
+          Fantasy:false
 
         }
 
@@ -247,7 +278,7 @@ router.get('/profile',(req,res)=>{
       Mystery:false,
       Fiction:false,
       Poetry:false,
-      fantasy:false
+      Fantasy:false
 
     }
     x.favouriteGenre.forEach((item, i) => {
@@ -260,7 +291,8 @@ router.get('/profile',(req,res)=>{
 
 })
 
-router.post('/profile',(req,res)=>{
+router.post('/profile',multer(userimageconf).single('profilepic'),(req,res)=>{
+  console.log('posted');
 
   var fname=req.body.fname;
   var lname=req.body.lname;
@@ -268,6 +300,7 @@ router.post('/profile',(req,res)=>{
   var location = req.body.location
   var address = req.body.address
   var favouriteGenre = req.body.Genre;
+  var propic = path(req)
 // Object.keys(req.body).forEach((item, i) => {
 //   if(req.body[item]==='on'){
 //     favouriteGenre.push(item);
@@ -275,7 +308,7 @@ router.post('/profile',(req,res)=>{
 // });
 
 console.log(req.body);
-
+console.log(req.file)
 
 if(req.user.profile==undefined){  new Profile({
   fname:fname,
@@ -284,6 +317,7 @@ if(req.user.profile==undefined){  new Profile({
   location:location,
   address:address,
   favouriteGenre:favouriteGenre,
+  profilepic:propic
 }).save().then(x=>{
    User.findOne({_id:req.user.id}).then(u=>{
      u.profile = x.id
@@ -302,6 +336,7 @@ else{
     x.phone = phone
     x.address = address
     x.favouriteGenre=favouriteGenre,
+    x.profilepic=propic
     x.save().then(z=>{
       return res.redirect('/users/dashboard')
     })

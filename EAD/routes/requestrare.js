@@ -108,8 +108,9 @@ router.get('/oldrequests',(req,res)=>{
 
 })
 
-router.post('deleterequest',(req,res)=>{
-  RareRequest.findOneAndDelete({_id:req.body._id}).then(x=>{
+router.post('/deleterequest',(req,res)=>{
+
+  RareRequest.findOneAndDelete({_id:req.body.id}).then(x=>{
     res.sendStatus(200);
   })
   .catch(err=>{

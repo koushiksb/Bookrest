@@ -48,35 +48,43 @@ const bookUploadConf = {
 
 router.get('/view',(req,res)=>{
 
-  Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).populate('book','Title ImageURLM').then(x=>{
+  Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).populate('book','Title ImageURLM').then(async(x)=>{
     // console.log('check1',x);
-    Shelf.find({user:req.user._id}).then(async (y)=>{
+    Shelf.find({user:req.user._id}).lean().then(async(y)=>{
       // console.log('check2',y);
 
-      await   y.forEach((item,index)=>{
-          if(item.owner === '1'){
-            Payment.find({purchaser:item.user,book:item.book}).then((z)=>{
-              // console.log('z1',z);
-              if(z.length > 0){
-                // console.log('amount',z[0]['amount']);
-                y[index].amount = z[0]['amount'];
-                // console.log('huhujnuhy',y);
-              }
-
-
-            });
-          }
-        });
-        console.log(x)
-return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
+      for(i=0;i<y.length;i++) {
+        if(y[i].owner === '1') {
+          await Payment.find({purchaser:y[i].user,book:y[i].book._id}).then((z)=>{
+            console.log('z1',z);
+            if(z.length > 0) {
+              y[i].amount = z[0].amount;
+            }
+          });
+        }
+      }
+      return res.render('shelf1',{book:x,layout:'navbar2',owner:y});
     });
   })
 
 });
 
 router.get('/addbook',(req,res)=>{
-
-  res.render('addbook');
+  Book.find({}).then((books)=>{
+    var booksInfo = [];
+    for(i=0;i<books.length;i++) {
+      var inf = [];
+      inf.push(books[i].Title);
+      inf.push(books[i].Publisher);
+      inf.push(books[i].Author);
+      inf.push(books[i].YearOfPublication);
+      inf.push(books[i].ImageURLL)
+      booksInfo.push(inf);
+    }
+    console.log('booksInfo',booksInfo.length);
+    
+    res.render('addbook',{'booksInfo':booksInfo,layout:'navbar2'});    
+  });
 
 });
 
