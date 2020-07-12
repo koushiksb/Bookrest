@@ -207,7 +207,7 @@ router.get('/accept/:id',(req,res)=>{
 
 
 router.get('/trail',(req,res)=>{
-  Shelf.find({}).then(x=>{
+  Book.find({}).then(x=>{
     for (var i=0; i<x.length; i++){
       // var b_id = x[i]._id;
       // var rate = 0;
@@ -221,7 +221,7 @@ router.get('/trail',(req,res)=>{
       //   sum = (sum/z.length);
       //   rate =  sum;
       // })
-      x[i].readRequestAmount = 5;
+      x[i]["Hardcopy"] = undefined;
       // x[i].Rating = rate;
       // x[i].Treviews = t_r;
       console.log(x[i])

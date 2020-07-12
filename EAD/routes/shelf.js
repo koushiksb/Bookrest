@@ -8,6 +8,7 @@ const Profile = require('../models/Profile')
 const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
+var Classify = require("../models/Classify")
 var Review = require("../models/Review")
 const isLoggedIn = require('../utils/isLoggedIn');
 // const s3 = require('../config/aws');
@@ -274,10 +275,24 @@ router.get('/viewbk/:title',async (req,res)=>{
     console.log('yay')
   }
   Book.findOne({Title:req.params.title}).then(async (x)=>{
+    var given = {} ;
+    Review.find({book:x._id,user:req.user.id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (l)=>{
+      given = l;
+      console.log(given.length)
+      if(given.length >0){
+      given[0].rating = Number(given[0].rating)*10
+    }
+      });
+    var suggest = false;
+    Classify.find({book:x._id,user:req.user.id}).then(c=>{
+      if(c.length===0){
+        suggest = true;
+      }
+    });
    Review.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (y)=>{
         await y.forEach(review => {
           review.rating = Number(review.rating)*10;
-    });
+        });
     var otherUsers=[];
     var col1 = 0;
     var col2=0;
@@ -325,11 +340,84 @@ router.get('/viewbk/:title',async (req,res)=>{
     }
 
     console.log(otherUsers)
-    res.render('viewbk',{image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:navbar});
+    res.render('viewbk',{suggest:suggest,given: given,image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:navbar});
 
     })
+    })
   });
-});
+
+
+router.get('/classify/:title/:interest',(req,res)=>{
+  var sug = req.params.interest;
+  Book.find({Title:req.params.title}).then(x=>{
+    new Classify({
+      book:x[0]._id,
+      user:req.user.id,
+      know:false
+    }).save()
+  return res.redirect('/shelf/viewbk/'+req.params.title)
+  });
+})
+
+router.post('/classify/:title/:interest',(req,res)=>{
+  var sug = req.params.interest;
+  Book.find({Title:req.params.title}).then(x=>{
+    if(sug){
+      var cla = req.body.Class;
+     new Classify({
+      book:x[0]._id,
+      user:req.user.id,
+      know:true,
+      opinion:cla
+    }).save()
+    }
+  return res.redirect('/shelf/viewbk/'+req.params.title)
+  });
+})
+
+router.post('/addreview/:title',(req,res)=>{
+  var rev = req.body.review;
+  var rate = req.body.rate;
+  Book.find({Title:req.params.title}).then(x=>{
+    Review.find({book:x[0]._id,user:req.user.id}).then(y=>{
+      // console.log(y.length)
+      if(y.length>0){
+        y[0].rating=rate;
+        y[0].review=rev;
+        y[0].save()
+        // console.log(y)
+      }
+      else{
+        new Review({
+        book:x[0]._id,
+        user:req.user.id,
+        rating:rate,
+        review:rev,
+      }).save()
+      var te = (x[0].Rating*x[0].Treviews)+rate
+      x[0].Treviews = x[0].Treviews+1
+      x[0].Rating = te/x[0].Treviews
+      x[0].save()
+      }
+    })
+  })
+  return res.redirect('/shelf/viewbk/'+req.params.title)
+})
+
+
+router.get('/deletereview/:title',(req,res)=>{
+  var rev = req.params.title;
+  Book.find({Title:req.params.title}).then(x=>{
+    Review.findOneAndRemove({book:x[0]._id,user:req.user.id}).then(y=>{
+      var te = (x[0].Rating*x[0].Treviews)-y.rating
+      x[0].Treviews = x[0].Treviews-1
+      x[0].Rating = te/x[0].Treviews
+      x[0].save()
+      return res.redirect('/shelf/viewbk/'+req.params.title)
+    })
+  })
+})
+
 
 router.get('/deletebook/:title',isLoggedIn.isLoggedIn,(req,res)=>{
   Book.findOne({Title:req.params.title}).then(x=>{
