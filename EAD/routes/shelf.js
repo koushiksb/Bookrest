@@ -9,6 +9,12 @@ const Openbid = require('../models/Openbid')
 const multer = require('multer');
 var stripe = require("stripe")("sk_test_HjrHIdQ8B5TgrtyYDRHETh9c00FoxUGVPv");
 var Review = require("../models/Review")
+const isLoggedIn = require('../utils/isLoggedIn');
+// const s3 = require('../config/aws');
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3-v2');
+
+var s3 = new aws.S3();
 // store and validation
 const multerconf = {
   storage:multer.diskStorage({
@@ -44,8 +50,18 @@ const bookUploadConf = {
     }
   }),
 }
+// const awsbookupload = multer({
+//     storage: multerS3({
+//         s3: s3,
+//         bucket: 'bookrest',
+//         key: function (req, file, cb) {
+//             console.log(file);
+//             cb(null, file.originalname); //use Date.now() for unique file keys
+//         }
+//     })
+// });
 
-router.get('/view',(req,res)=>{
+router.get('/view',isLoggedIn.isLoggedIn,(req,res)=>{
 
   Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).populate('book','Title ImageURLM').then(async(x)=>{
     // console.log('check1',x);
@@ -68,7 +84,7 @@ router.get('/view',(req,res)=>{
 
 });
 
-router.get('/addbook',(req,res)=>{
+router.get('/addbook',isLoggedIn.isLoggedIn,(req,res)=>{
   Book.find({}).then((books)=>{
     var booksInfo = [];
     for(i=0;i<books.length;i++) {
@@ -81,8 +97,8 @@ router.get('/addbook',(req,res)=>{
       booksInfo.push(inf);
     }
     console.log('booksInfo',booksInfo.length);
-    
-    res.render('addbook',{'booksInfo':booksInfo,layout:'navbar2'});    
+
+    res.render('addbook',{'booksInfo':booksInfo,layout:'navbar2'});
   });
 
 });
@@ -154,7 +170,7 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 
 });
 
-router.get('/viewbook/:title',(req,res)=>{
+router.get('/viewbook/:title',isLoggedIn.isLoggedIn,(req,res)=>{
   var inbidding=0
   Book.findOne({Title:req.params.title}).then(async (x)=>{
     var owner = '0';
@@ -247,6 +263,16 @@ router.get('/otherUserShelf/:userid',(req,res)=>{
 
 
 router.get('/viewbk/:title',async (req,res)=>{
+  var navbar;
+  console.log('fine')
+  console.log(req.isAuthenticated())
+  if(req.isAuthenticated()){
+    navbar = 'navbar2.ejs'
+    console.log('wrong')
+  }else{
+    navbar = 'navbar.ejs'
+    console.log('yay')
+  }
   Book.findOne({Title:req.params.title}).then(async (x)=>{
    Review.find({book:x._id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (y)=>{
         await y.forEach(review => {
@@ -255,33 +281,57 @@ router.get('/viewbk/:title',async (req,res)=>{
     var otherUsers=[];
     var col1 = 0;
     var col2=0;
-  await  Shelf.find({book:x._id,softcopy:{$exists:true},owner:{$exists:false},user:{$ne:req.user._id}}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
-      await shelfs.forEach((item, i) => {
-        if(item.softcopy){
-          otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
+    if(req.user){
+      await  Shelf.find({book:x._id,softcopy:{$exists:true},owner:{$exists:false},user:{$ne:req.user._id}}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
+          await shelfs.forEach((item, i) => {
+            if(item.softcopy){
+              otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
 
-        }
-      });
-      if(otherUsers.length%2===0){
-        console.log('here')
-          col1=otherUsers.length/2;
-          col2=otherUsers.length;
-      }else{
-        console.log('not here')
-        col1=(otherUsers.length+1)/2;
-        col2=otherUsers.length;
+            }
+          });
+          if(otherUsers.length%2===0){
+            console.log('here')
+              col1=otherUsers.length/2;
+              col2=otherUsers.length;
+          }else{
+            console.log('not here')
+            col1=(otherUsers.length+1)/2;
+            col2=otherUsers.length;
 
-      }
-      console.log(col1,col2)
-    })
+          }
+          console.log(col1,col2)
+        })
+    }else{
+      await  Shelf.find({book:x._id,softcopy:{$exists:true},owner:{$exists:false}}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
+          await shelfs.forEach((item, i) => {
+            if(item.softcopy){
+              otherUsers.push({_id:item.user._id,name:item.user.profile.fname+' '+item.user.profile.lname})
+
+            }
+          });
+          if(otherUsers.length%2===0){
+            console.log('here')
+              col1=otherUsers.length/2;
+              col2=otherUsers.length;
+          }else{
+            console.log('not here')
+            col1=(otherUsers.length+1)/2;
+            col2=otherUsers.length;
+
+          }
+          console.log(col1,col2)
+        })
+
+    }
+
     console.log(otherUsers)
-    res.render('viewbk',{image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:'navbar2.ejs'});
+    res.render('viewbk',{image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:navbar});
 
     })
   });
 });
 
-router.get('/deletebook/:title',(req,res)=>{
+router.get('/deletebook/:title',isLoggedIn.isLoggedIn,(req,res)=>{
   Book.findOne({Title:req.params.title}).then(x=>{
     Shelf.findOneAndRemove({user:req.user._id,book:x._id}).then(y=>{
       res.redirect('/shelf/view');
@@ -315,12 +365,13 @@ router.post('/charge',(req,res)=>{
 });
 });
 
-router.post('/uploadSoftCopy',multer(bookUploadConf).single('bookSoftCopy'),(req,res)=>{
-  Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:[req.file.path]}).then(book=>{
+router.post('/uploadSoftCopy',[isLoggedIn.isLoggedIn,multer(bookUploadConf).single('bookSoftCopy')],(req,res)=>{
+  console.log(req.file)
+  Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:req.file.location}).then(book=>{
     res.redirect('/shelf/view');
   });
 })
-router.get('/readbook/:bookid',(req,res)=>{
+router.get('/readbook/:bookid',isLoggedIn.isLoggedIn,(req,res)=>{
   Shelf.findOne({user:req.user._id,book:req.params.bookid}).then((book)=>{
     console.log(book.softcopy)
     res.render('pdfviewer',{pdfPath:book.softcopy})

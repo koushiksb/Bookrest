@@ -15,22 +15,12 @@ const multer = require('multer');
 var partials      = require('express-partials');
 const Bidding = require('./models/Bidding.js');
 const Openbid = require('./models/Openbid');
-
+const Shelf = require('./models/Shelf')
+const isLoggedIn = require('./utils/isLoggedIn')
 var app=express()
 //EJS
 //
-function isLoggedIn(req, res, next) {
 
-    if (req.isAuthenticated()){
-        return next();
-        console.log('sdfgsd');
-        }
-  else{
-    console.log('sd');
-    return res.redirect('/users/login');
-
-  }
-}
 
 app.use('/uploads',express.static(__dirname + '/uploads'))
 
@@ -65,7 +55,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 var staticMiddleware = express.static(__dirname + '/static');
-app.get('/static/*/:k',isLoggedIn, function(req, res, next){
+app.get('/static/*/:k', function(req, res, next){
   console.log('kjhbvcx');
   console.log(req.params.k);
   console.log(req.query);
@@ -112,6 +102,10 @@ mongoose.connect(db,{   dbName: 'EAD', useNewUrlParser: true,
     //
 
 //Routes
+app.get('/',(req,res)=>{
+  console.log(req.isAuthenticated);
+  res.redirect('/users/dashboard');
+})
  app.use('/users',require('./routes/user'));
   app.use('/test',require('./routes/testing'));
 app.use('/my',require('./routes/requestrare'));
@@ -213,11 +207,24 @@ await Bidding.find({bidid:data.bidid}).sort({amount : -1}).limit(1).then((allbid
    })
  })
 
-//  const job = new CronJob('00 00 00 * * *', function() {
-//  	const d = new Date();
-//  	console.log('Midnight:', d);
-// },null,true,'Asia/Kolkata');
-//  console.log('After job instantiation');
-//  job.start();
+ const staleAuctionRemoveJob = new CronJob('0 */10 * * * *', function() {
+ 	const d = new Date();
+  d.setDate(new Date().getDate()+1);
+  Openbid.deleteMany({status:1,date:{$lt:d}}).then(x=>{
+    console.log('done')
+  })
+ 	console.log('Midnight:', d);
+},null,true,'Asia/Kolkata');
+ console.log('After job instantiation');
 
+ const expiredBooksRemoveJob = new CronJob('0 */10 * * * *', function() {
+   Shelf.deleteMany({period:{$exists:true,$lt: new Date()}}).then(async(x)=>{
+     console.log('removed expired books')
+  })
+
+},null,true,'Asia/Kolkata');
+ console.log('After job instantiation');
+
+ staleAuctionRemoveJob.start();
+ expiredBooksRemoveJob.start();
 console.log('you are listening to port 3000');

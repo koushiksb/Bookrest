@@ -34,12 +34,12 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         <div class="row title-row">
           <div class="col-md-3">
           </div>
-          <div class="col-md-4 ml-auto">
+          <!-- <div class="col-md-4 ml-auto">
             <div class="pull-right">
               <span class="text-muted">Status</span>
               <button class="btn btn-link">Not Requested</button>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="row">
           <div class="col-md-4 col-sm-6">
@@ -66,6 +66,27 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
         This blazer in suede is a must-have of your wardrobe. Team it with a angora blazer and a angora sweater.</p>
 
             <hr />
+            <%if(inbidding==1 || hasHardCopy ){%>
+            <ul>
+            <%if(hasHardCopy){%>
+
+
+                <%if(!softCopy){%>
+                  <li>You have hard copy of this book</li>
+                  <li>Please upload soft copy of this book</li>
+                <%}else{%>
+                <li>you have hard copy of this book too</li>
+                <%}%>
+
+            <%}%>
+            <%if(inbidding){%>
+              <li>This book is currently put for bidding for further details click <a href="/book/mystuff">here</a> </li>
+              <%}%>
+          </ul>
+          <br><br>
+            <%}%>
+
+
             <%if(otherUserShelf){%>
               <div class="row">
                 <p>If you want to read this book send read request to the user. You will be charged Rs <%=readRequestAmount%> per day. You will lose access to the book after selected period of time </p>

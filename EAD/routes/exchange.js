@@ -6,7 +6,7 @@ const Exchange = require('../models/Exchange.js');
 const Profile = require('../models/Profile.js');
 const Shelf = require('../models/Shelf.js');
 const Review = require('../models/Review.js');
-
+const isLoggedIn = require('../utils/isLoggedIn');
 
 router.get('/confirm/:bookReq/:bookSen',(req,res)=>{
 Book.find({Title:req.params.bookReq}).then(x=>{
@@ -18,7 +18,7 @@ Book.find({Title:req.params.bookReq}).then(x=>{
 });
 });
 
-router.get('/require/:title',(req,res)=>{
+router.get('/require/:title',isLoggedIn.isLoggedIn,(req,res)=>{
     Book.findOne({Title:req.params.title}).then(x=>{
       userReq = req.user._id
       Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLM').then(y=>{
@@ -176,7 +176,7 @@ router.get('/tradepage',(req,res)=>{
     }
     console.log(books);
   })
-  
+
   Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL')
   .then(x=>{
     var gen = [];
@@ -223,7 +223,7 @@ router.get('/trail',(req,res)=>{
       // })
       x[i].readRequestAmount = 5;
       // x[i].Rating = rate;
-      // x[i].Treviews = t_r; 
+      // x[i].Treviews = t_r;
       console.log(x[i])
       x[i].save()
     }

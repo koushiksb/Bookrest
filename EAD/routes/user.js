@@ -61,7 +61,7 @@ function IsAuth(req,res,next){
 }
 
 router.get('/login',IsAuth,(req,res)=>{return res.render('login')});
-router.get('/signup',(req,res)=>res.render('signup',{errors:[],check:0}));
+router.get('/signup',IsAuth,(req,res)=>res.render('signup',{errors:[],check:0}));
 
 router.post('/checkemail',function (req,res){
   console.log(';checking');
@@ -194,6 +194,7 @@ router.get('/logout',(req,res)=>{
 
 router.get('/dashboard',async (req,res)=>{
 console.log(req.isAuthenticated());
+if(req.user){
       if(req.user.profile==undefined){
         var genre={
           Romance:false,
@@ -229,6 +230,28 @@ console.log(req.isAuthenticated());
           return res.render('dashboard',{user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
         })  // return res.sendStatus(200)
      }
+   }else{
+     Genre.find({}).then(async(x)=>{
+       // console.log(x[0])
+       var lis_genre = x;
+       var arrayLength = x.length;
+       var gen = {};
+       for (var i = 0; i < arrayLength; i++) {
+         var g = x[i]['Genre'];
+         // console.log(g);
+         await Book.find({Genre:g}).lean().then(y=>{
+           // console.log(y[0])
+           gen[g]=y.slice(0,12);
+           // console.log(gen)
+           // console.log(dic)
+         })
+       }
+       // console.log(gen)
+       return res.render('dashboard',{genre:lis_genre,books:gen,layout:'navbar.ejs'})
+     })  // return res.sendStatus(200)
+
+
+   }
 })
 
 router.get('/seebooks/:genre',(req,res)=>{

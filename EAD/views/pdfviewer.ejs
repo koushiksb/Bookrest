@@ -89,7 +89,8 @@ box-shadow: 0 2px 5px gray;
     </script>
     <script id='onloadfunc'>
   window.onload = () => {
-    initPDFViewer("/<%=pdfPath%>");
+    console.log('<%=pdfPath%>')
+    initPDFViewer("<%=pdfPath%>");
   };
 </script>
     <script>
