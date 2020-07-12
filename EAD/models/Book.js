@@ -32,9 +32,6 @@ const BookSchema = new mongoose.Schema({
   Treviews:{
     type:Number
   },
-  Hardcopy:{
-    type:Boolean
-  },
   Genre:{
     type:String
   }

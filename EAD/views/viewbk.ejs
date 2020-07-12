@@ -171,6 +171,31 @@ display: none;
                 <a href="/exchange/require/<%=title%>"><button class="btn btn-danger btn-block btn-round">Request for trade &nbsp;<i class="fa fa-chevron-right"></i></button></a>
               </div>
             </div>
+                <div class="column2" style="margin-top:30px">
+                      <%if(suggest){%>
+                      <p>Do you Know this Book?</p>
+                      <a href="javascript:openSuggest();">Yes</a> /
+                      <a href="/shelf/classify/<%= title%>/<%= false%>">No</a>
+                      <div class="form-popup" id="sForm" style="display: none;">
+                        <form method="post" action="/shelf/classify/<%= title%>/<%= true%>" class="form-container">
+                          <div class="multiple-option__item" style="top:40%;left:37%" >
+                            <input type="radio" name="Class" value="Popular"/>
+                            <label>Popular</label>
+                          </div>
+                          <div class="multiple-option__item" style="top:40%;left:37%" >
+                            <input type="radio" name="Class" value="Rare"/>
+                            <label>Rare</label>
+                          </div>
+                          <div class="multiple-option__item" style="top:40%;left:37%" >
+                            <input type="radio" name="Class" value="Common"/>
+                            <label>Common</label>
+                          </div>
+                          <button type="submit" class="btn primary" style="margin-left:10px">Suggest</button>
+                          <button type="button" class="btn cancel" onclick="closeSuggest()">Close</button>
+                        </form>
+                      </div>
+                      <%}%>
+                </div>
           </div>
         </div>
         <div class="other-users">
@@ -199,6 +224,54 @@ display: none;
             </div>
 
         </div>
+        <%if(given.length>0){%>
+          <div class="reviews-heading">
+          <h3>Reviewed</h3>
+        </div>
+          <div class="column">
+            <div class="myrow vertical-center">
+              <img class="review-user-image" src="../../static/pics/person.svg" alt="">
+              <div class="col">
+                <div class="review-user-name"><%=given[0].user.profile.fname%>&nbsp;<%=given[0].user.profile.lname%></div>
+                <div class="star-ratings-css">
+                  <div class="star-ratings-css-top" style="width: <%=given[0].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
+                  <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
+                </div>
+
+                <a href="javascript:openForm();">Edit</a>
+                <a href="/shelf/deletereview/<%= title%>">Delete</a>
+
+                <div class="form-popup" id="eForm" style="display: none;">
+                  <form method="post" action="/shelf/addreview/<%= title%>" class="form-container">
+                    <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" value="<%=given[0].review%>" style="width:50%;height:100px;float:left">
+            <!-- <label>Rate from 1-10:</label> -->
+                    <input class="form-control" value="<%=given[0].rating/10%>" type="number" required name="rate" min="1" max="10" style="width:10%;display:inline;float:left">
+                    <button type="submit" class="btn primary" style="margin-left:10px">Change</button>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+            <div class="myrow margin-top-review-box" style="font-weight: 400;">
+              <%=given[0].review%>
+            </div>
+          </div>
+        <%}
+        else{%>
+          <div class="reviews-heading">
+          <h3 >Review this</h3>
+          </div>
+          <form method="post" action="/shelf/addreview/<%= title%>">
+            <!-- <label>Add your Experience:</label> -->
+            <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" style="width:50%;height:100px;float:left">
+            <!-- <label>Rate from 1-10:</label> -->
+            <input class="form-control" type="number" required name="rate" min="1" max="10" style="width:10%;display:inline;float:left">
+            <button type="submit" class="btn primary" style="margin-left:10px">ADD</button>
+          </form>
+        <%}%>
+        <br>
+
 
         <div class="reviews-heading">
           <h3 >Reviews</h3>
@@ -353,8 +426,24 @@ function showless(){
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script>
+function openForm() {
+  document.getElementById("eForm").style.display = "block";
+}
 
+function closeForm() {
+  document.getElementById("eForm").style.display = "none";
+}
+</script>
+<script>
+function openSuggest() {
+  document.getElementById("sForm").style.display = "block";
+}
 
+function closeSuggest() {
+  document.getElementById("sForm").style.display = "none";
+}
+</script>
 </body>
 
 
