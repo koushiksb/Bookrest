@@ -187,7 +187,7 @@ passport.authenticate('local',{
 
 
 
-router.get('/logout',(req,res)=>{
+router.get('/logout',isLoggedIn.isLoggedIn,(req,res)=>{
   req.logout()
   res.redirect('/users/login')
 })

@@ -209,7 +209,7 @@ await Bidding.find({bidid:data.bidid}).sort({amount : -1}).limit(1).then((allbid
 
  const staleAuctionRemoveJob = new CronJob('0 */10 * * * *', function() {
  	const d = new Date();
-  d.setDate(new Date().getDate()+1);
+  d.setDate(new Date().getDate()-1);
   Openbid.deleteMany({status:1,date:{$lt:d}}).then(x=>{
     console.log('done')
   })

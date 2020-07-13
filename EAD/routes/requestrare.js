@@ -6,6 +6,7 @@ const Profile=require('../models/Profile')
 const Shelf=require('../models/Shelf')
 const RareRequest=require('../models/RareRequest')
 const async = require('async')
+const isLoggedIn = require('./utils/isLoggedIn')
 
 router.get('/shelf',(req,res)=>{
   console.log(req.user.email);
@@ -17,7 +18,7 @@ router.get('/shelf',(req,res)=>{
 
 })
 
-router.get('/request',(req,res)=>{
+router.get('/request',isLoggedIn.isLoggedIn,(req,res)=>{
     req.session.name = 'asdfgb'
     Shelf.find({user:req.user.id}).select('book -_id').populate('book','Title').then(x=>{
       console.log(x[0]);
@@ -27,7 +28,7 @@ router.get('/request',(req,res)=>{
 
 })
 
-router.post('/request',(req,res)=>{
+router.post('/request',isLoggedIn.isLoggedIn,(req,res)=>{
 
 console.log('posted');
 console.log(req.body);
@@ -63,7 +64,7 @@ RareRequest.findOne({recipient:req.session.otherUserShelfUserId,book:req.body.bo
 
 })
 
-router.get('/viewrequest',(req,res)=>{
+router.get('/viewrequest',isLoggedIn.isLoggedIn,(req,res)=>{
 
 console.log('found');
 RareRequest.find({recipient:req.user.id,status:0}).populate({path:'requester',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(x=>{
@@ -90,7 +91,7 @@ console.log(x);
 // return res.sendStatus(200)
 })
 })
-router.get('/oldrequests',(req,res)=>{
+router.get('/oldrequests',isLoggedIn.isLoggedIn,(req,res)=>{
   RareRequest.find({requester:req.user.id,status:{$ne:0}}).populate({path:'recipient',model:'User',populate:{path:'profile',model:'Profile'}}).populate('book','Title ImageURLL Author').then(async (x)=>{
   // RareRequest.find({recipient:req.user.id,status:0}).populate('book','Title ImageURLS').then(x=>{
   console.log(x);
@@ -108,7 +109,7 @@ router.get('/oldrequests',(req,res)=>{
 
 })
 
-router.post('/deleterequest',(req,res)=>{
+router.post('/deleterequest',isLoggedIn.isLoggedIn,(req,res)=>{
 
   RareRequest.findOneAndDelete({_id:req.body.id}).then(x=>{
     res.sendStatus(200);
@@ -118,7 +119,7 @@ router.post('/deleterequest',(req,res)=>{
   })
 })
 
-router.post('/viewrequest',(req,res)=>{
+router.post('/viewrequest',isLoggedIn.isLoggedIn,(req,res)=>{
   console.log('posted');
 
   console.log(req.body);

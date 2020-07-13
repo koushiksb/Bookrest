@@ -5,7 +5,8 @@ const Openbid = require('../models/Openbid')
 const Bidding = require('../models/Bidding')
 var dateFormat = require('dateformat');
 var mongoose = require('mongoose')
-router.get('/bidding/:book/:owner/:bidid',(req,res)=>{
+const isLoggedIn = require('./utils/isLoggedIn')
+router.get('/bidding/:book/:owner/:bidid',isLoggedIn.isLoggedIn,(req,res)=>{
 console.log(req.params);
 var k =req.user.email.toString()
 Profile.findOne({_id:req.user.profile})
@@ -104,7 +105,7 @@ router.get('/allbidding',(req,res)=>{
   })
 })
 
-router.post('/openbid',async (req,res)=>{
+router.post('/openbid',isLoggedIn.isLoggedIn,async (req,res)=>{
   var username='Anonymous'
 
   await Profile.findOne({_id:req.user.profile})
@@ -138,7 +139,7 @@ router.post('/openbid',async (req,res)=>{
 
 })
 
-router.get('/mystuff',(req,res)=>{
+router.get('/mystuff',isLoggedIn.isLoggedIn,(req,res)=>{
   Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
               await x.forEach((item, i) => {
@@ -154,7 +155,7 @@ router.get('/mystuff',(req,res)=>{
     console.log(err);
   })
 })
-router.post('/delete',(req,res)=>{
+router.post('/delete',isLoggedIn.isLoggedIn,(req,res)=>{
   console.log('egr');
   console.log(req.body.bidid);
   Openbid.findOneAndDelete({_id:req.body.bidid})
@@ -167,7 +168,7 @@ router.post('/delete',(req,res)=>{
   })
 
 })
-router.post('/updatebid',(req,res)=>{
+router.post('/updatebid',isLoggedIn.isLoggedIn,(req,res)=>{
   Openbid.findOne({_id:req.body.bidid})
   .then(x=>{
     x.date=req.body.date;
@@ -184,7 +185,7 @@ router.post('/updatebid',(req,res)=>{
   })
 res.sendStatus(200)
 })
-router.get('/booksSold',(req,res)=>{
+router.get('/booksSold',isLoggedIn.isLoggedIn,(req,res)=>{
   Openbid.find({userid:req.user.id,status:0}).populate({path:'soldto',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
     if(x){
     for (var i = 0; i < x.length; i++) {
@@ -199,7 +200,7 @@ router.get('/booksSold',(req,res)=>{
   })
 })
 
-router.get('/booksBrought',(req,res)=>{
+router.get('/booksBrought',isLoggedIn.isLoggedIn,(req,res)=>{
   Openbid.find({soldto:req.user.id,status:0}).populate({path:'userid',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookid').lean().then(x=>{
     if(x){
     for (var i = 0; i < x.length; i++) {
