@@ -22,6 +22,11 @@
   .checked {
   color: orange;
 }
+.form-check input[type=radio]{opacity:0;position:absolute;visibility:hidden;}
+.form-check input[type=radio]:checked+.form-check-sign:after{opacity:1;}
+.form-check .form-check-label input[type=radio]:disabled+.form-check-sign{pointer-events:none!important;}
+.form-check-label input[type=radio]:checked+.form-check-sign:before{background-color:#66615b;}
+
   </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -42,36 +47,208 @@
             <br/>
           </div>
         </div>
-<%if(exchange.length){%>
-<% for(i=0;i<exchange.length; i++){%>
-  <div class="card-header moreBox" style="display:none;margin-top:30px">
-    <%=exchange[i].userReq.profile.location %>
-  </div>
-<div class="card">
-  <div class="card-body moreBox" style="display:none">
-    <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].userReq.profile.fname + exchange[i].userReq.profile.lname %></b> would like to make the exchange <b><%= exchange[i].bookSen.Title %></b> for <b><%= exchange[i].bookReq.Title %></b> </h5>
-    <div class="card-image" style="padding-left:10%">
+        <div class="row">
+          <div class="col-3">
+            <div class="card card-refine">
 
-                  <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
-                  <img src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/DoubleArrowLeftRight-512.png" alt="Rounded Image" class="img-responsive" style="width:10%;margin-left:40px;margin-right: 40px">
-                  <img src="<%= exchange[i].bookReq.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
+                          <div class="panel-group" id="accordion" aria-multiselectable="true" aria-expanded="true">
+                            <div class="card-header card-collapse" role="tab" id="datefilter">
+                              <h5 class="mb-0 panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#datefiled" aria-expanded="false" aria-controls="collapseThree">
+                                  Date
+                                  <i class="nc-icon nc-minimal-down"></i>
+                                </a>
+                              </h5>
 
+                              </div>
+                              <div id="datefiled" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="">
+                                <div class="form-group">
+                                  <input type="date" onchange="filterData(false,false,false,true)" id="datepicker" value=false  name="biddingtime" class="form-control border-input">
+                                </div>
+
+                              </div>
+
+                            <div class="card-header card-collapse" role="tab" id="designer">
+                              <h5 class="mb-0 panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#refineDesigner" aria-expanded="false" aria-controls="collapseThree">
+                                  Genre
+                                  <i class="nc-icon nc-minimal-down"></i>
+                                </a>
+                              </h5>
+                            </div>
+                            <div id="refineDesigner" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="">
+                              <div class="card-body">
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(true,true,false,false)" id='g-0' type="checkbox" value="" checked="">
+                                    All
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-1' type="checkbox" value="">
+                                    Fantasy
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-2' type="checkbox" value="">
+                                    Fiction
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-3' type="checkbox" value="">
+                                    FairyTale
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-4' type="checkbox" value="">
+                                    History
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-5' type="checkbox" value="">
+                                    Mystery
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-6' type="checkbox" value="">
+                                    Novel
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-7' type="checkbox" value="">
+                                    Poetry
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-8' type="checkbox" value="">
+                                    Romance
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,true,false,false)" id='g-9' type="checkbox" value="">
+                                    Thriller
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-header card-collapse" role="tab" id="color">
+                              <h5 class="mb-0 panel-title">
+                                <a class="" data-toggle="collapse" data-parent="#accordion" href="#colorMaker" aria-expanded="true" aria-controls="collapseTree">
+                                  Base Amount
+                                  <i class="nc-icon nc-minimal-down"></i>
+                                </a>
+                              </h5>
+                            </div>
+                            <div id="colorMaker" class="collapse show" role="tabpanel" aria-labelledby="headingOne" style="">
+                              <div class="card-body">
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,true,false)" id="p-0" type="radio" value="" checked="">
+                                    All
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-1" name='pf' type="radio" value="">
+                                    100 and Less
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-2" name='pf' type="radio" value="">
+                                    500 and Less
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-3" name='pf' type="radio" value="">
+                                    1000 and Less
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-4" name='pf' type="radio" value="">
+                                    2500 and Less
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-5" name='pf' type="radio" value="">
+                                    5000 and Less
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input class="form-check-input" onclick="filterData(false,false,false,false)" id="p-6" name='pf' type="radio" value="">
+                                    5000 and Above
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+          </div>
+          <div class="col-9">
+            <%if(exchange.length){%>
+            <% for(i=0;i<exchange.length; i++){%>
+              <div class="card-header moreBox" style="display:none;margin-top:30px">
+                <%=exchange[i].userReq.profile.location %>
               </div>
-    <p class="card-text" style="color:black">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="/exchange/viewtrade/<%= exchange[i]._id %>" class="btn btn-primary">View</a>
-  </div>
-</div>
-<div style="margin-left:45%" id="loadMore">
-  <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See All...</button>
-</div>
+            <div class="card">
+              <div class="card-body moreBox" style="display:none">
+                <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].userReq.profile.fname + exchange[i].userReq.profile.lname %></b> would like to make the exchange <b><%= exchange[i].bookSen.Title %></b> for <b><%= exchange[i].bookReq.Title %></b> </h5>
+                <div class="card-image" style="padding-left:10%">
 
- <%}%>
- <%}else{%>
+                              <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
+                              <img src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/DoubleArrowLeftRight-512.png" alt="Rounded Image" class="img-responsive" style="width:10%;margin-left:40px;margin-right: 40px">
+                              <img src="<%= exchange[i].bookReq.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
 
-   <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:30vh;">
-     <h3>Currently No Trade Requests</h3>
-   </div>
-   <%}%>
+                          </div>
+                <p class="card-text" style="color:black">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="/exchange/viewtrade/<%= exchange[i]._id %>" class="btn btn-primary">View</a>
+              </div>
+            </div>
+            <div style="margin-left:45%" id="loadMore">
+              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See All...</button>
+            </div>
+
+             <%}%>
+             <%}else{%>
+
+               <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:30vh;">
+                 <h3>Currently No Trade Requests</h3>
+               </div>
+               <%}%>
+
+          </div>
+
+        </div>
 
 
         </div>
