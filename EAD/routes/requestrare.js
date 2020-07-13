@@ -6,7 +6,7 @@ const Profile=require('../models/Profile')
 const Shelf=require('../models/Shelf')
 const RareRequest=require('../models/RareRequest')
 const async = require('async')
-const isLoggedIn = require('./utils/isLoggedIn')
+const isLoggedIn = require('../utils/isLoggedIn')
 
 router.get('/shelf',(req,res)=>{
   console.log(req.user.email);

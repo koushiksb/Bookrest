@@ -5,7 +5,7 @@ const Openbid = require('../models/Openbid')
 const Bidding = require('../models/Bidding')
 var dateFormat = require('dateformat');
 var mongoose = require('mongoose')
-const isLoggedIn = require('./utils/isLoggedIn')
+const isLoggedIn = require('../utils/isLoggedIn')
 router.get('/bidding/:book/:owner/:bidid',isLoggedIn.isLoggedIn,(req,res)=>{
 console.log(req.params);
 var k =req.user.email.toString()
