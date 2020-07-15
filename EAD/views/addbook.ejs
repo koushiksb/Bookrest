@@ -12,6 +12,22 @@
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
   <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
 
+  <style>
+    .btn-danger1 {
+      color: red;
+    }
+    .btn-danger1:hover {
+      color: white;
+      background-color: red;
+      border-color: red;
+    }
+    .btn-outline-red {
+      border-color:red;
+      color:red;
+      opacity:1;
+      filter:alpha(opacity=100);
+    }
+  </style>
 
 </head>
 
@@ -20,7 +36,7 @@
     <div class="main">
       <div class="section">
         <div class="container">
-          <h3>Add Product</h3>
+          <h3>Add Book</h3>
           <div>
             <div class="row">
               <div class="col-md-5 col-sm-5">
@@ -37,7 +53,7 @@
                       <input type="file" name="photo" accept="image/*">
                       <!-- <input type="file" name="pdf" > -->
                     </span>
-                    <a href="#paper-kit" class="btn btn-link btn-danger fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                    <a href="#paper-kit" class="btn btn-outline-red btn-round btn-danger1 fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                   </div>
                 </div>
                 <!-- <h6>Tags</h6>
