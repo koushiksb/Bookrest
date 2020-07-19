@@ -16,11 +16,13 @@ const isLoggedIn = require('../utils/isLoggedIn');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3-v2');
 const AWS = require('aws-sdk');
-// var s3 = new aws.S3({
+var s3 = new aws.S3(
+// {
 //   accessKeyId: '',
 //   secretAccessKey: ''
 //
-// });
+// }
+);
 // store and validation
 const multerconf = {
   storage:multer.diskStorage({
