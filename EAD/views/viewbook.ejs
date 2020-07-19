@@ -79,18 +79,21 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
                 <%}%>
 
             <%}%>
-            <%if(inbidding){%>
+            <%if(inbidding && !otherUserShelf){%>
               <li>This book is currently put for bidding for further details click <a href="/book/mystuff">here</a> </li>
-              <%}%>
+              <%}else if(inbidding && otherUserShelf){%>
+                <li>This book is currently put for bidding for further details click <a href="/book/">here</a> </li>
+                <%}%>
           </ul>
-          <br><br>
+
             <%}%>
 
 
             <%if(otherUserShelf){%>
-              <div class="row">
+              <div class="row" style="margin-left:1rem;">
                 <p>If you want to read this book send read request to the user. You will be charged Rs <%=readRequestAmount%> per day. You will lose access to the book after selected period of time </p>
               </div>
+              <br>
               <div class="row">
                 <div class="col-md-4  col-sm-8">
                   <button class="btn btn-danger btn-block btn-round" data-toggle="modal"  data-target="#readrequest" >Send Read Request &nbsp;<i class="fa fa-chevron-right"></i></button>
@@ -229,9 +232,9 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
     <div class="modal fade" id="readrequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div  class="modal-content">
-          <div class="modal-header">
-            <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;margin-left:35%;color:#66615b'>Bookrest</h3><br>
-            <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-left:39%;margin-top:-5% ;color:#66615b">Find the hidden</p>
+          <div class="modal-header" style="display:flex;flex-direction:row;justify-content:center;align-items:center">
+            <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>Bookrest</h3><br>
+            <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">Find the hidden</p>
           </div>
           <div class="modal-body">
             <div class="form-group">
@@ -242,7 +245,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             </div>
             <div class="form-group">
               <h6>Leave a note to the owner</h6>
-              <textarea name="notetoowner" id="notetoowner" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150"></textarea>
+              <textarea name="notetoowner" id="notetoowner" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="5" maxlength="150">lend me this book...</textarea>
               <h5>
                 <small>
                   <span id="textarea-limited-message" class="pull-right">150 characters only</span>

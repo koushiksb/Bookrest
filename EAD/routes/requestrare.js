@@ -2,7 +2,7 @@ const express=require('express');
 const router = express.Router();
 const User=require('../models/User')
 const Profile=require('../models/Profile')
-
+const Payment = require('../models/Payment')
 const Shelf=require('../models/Shelf')
 const RareRequest=require('../models/RareRequest')
 const async = require('async')
@@ -123,21 +123,32 @@ router.post('/viewrequest',isLoggedIn.isLoggedIn,(req,res)=>{
   console.log('posted');
 
   console.log(req.body);
-
+  var noOfDays=0;
   RareRequest.find({book:req.body.bookid,recipient:req.user._id}).then(async x=>{
     x = x[x.length-1]
     console.log(x);
     console.log(req.body.status);
     var till_date = new Date();
+    noOfDays = x.period;
     till_date.setDate(till_date.getDate() + x.period);
     x.status=Number(req.body.status)
   await  x.save()
     var softcopylink = '';
-
+    var amoutPerDay = 5;
   await  Shelf.findOne({user:req.user.id,book:req.body.bookid}).then(softCopy=>{
-      softcopylink = softCopy.softcopy
+      softcopylink = softCopy.softcopy;
+      amountPerDay = softCopy.readRequestAmount;
     })
     if(req.body.status == 1){
+      var payinfo = new Payment({
+        owner:req.user.id,
+        purchaser:req.body.requester,
+        book:req.body.bookid,
+        status:false,
+        amount:amountPerDay*noOfDays
+
+      })
+      await payinfo.save();
       var add  = new Shelf({
         book:req.body.bookid,
         user:req.body.requester,

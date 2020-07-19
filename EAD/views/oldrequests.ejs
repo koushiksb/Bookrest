@@ -305,7 +305,7 @@ a:active,a:focus{outline:0;}
                         <p class="card-description desc">
                           No of Days <%=requests[i].period%> <br>
                           Requested from <%=requests[i].requester.profile.fname%> <br>
-                          Status : <%if(requests[i].status==='1'){%><span style="color:#13bf33">Accepted</span><%}else{%><span style="color:red">Declined</span><%}%>
+                          Status : <%if(requests[i].status===1){%><span style="color:#13bf33">Accepted</span><%}else{%><span style="color:red">Declined</span><%}%>
                         <br>
 
                         </p>
@@ -317,7 +317,7 @@ a:active,a:focus{outline:0;}
                 </div>
 <%}%>
 <%}else{%>
-  <p style="text-align:center;margin-top:10px;font-size:1.5rem">Currently No Read Requests</p>
+  <p style="text-align:center;margin-top:10px;font-size:1.5rem">Currently No Old Requests</p>
   <br><br>
   <%}%>
               </div>
@@ -365,7 +365,7 @@ console.log('asdfgh');
 
         }
 
-deleteRequest(id){
+function deleteRequest(id){
   $.ajax({
       type:'POST',
       url:'/my/deleterequest',

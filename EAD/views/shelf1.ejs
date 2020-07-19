@@ -37,6 +37,7 @@
       .af-explames-demo-img{max-height:185px;max-width:150px;position:relative;}
       .af-explames-demo-mask{position:absolute;width:100%;height:100%;background:#fff;z-index:1;opacity:0;left:0%;-webkit-transition:all .5s;-o-transition:all .5s;transition:all .5s;}
       .af-explame-demo > div:hover .af-explames-demo-mask{opacity:0.4;}
+      .stripe-button-el span{display: none !important}
       /* .grey-button{
         overflow:hidden;
         display:inline-block;
@@ -103,10 +104,7 @@
                                   data-currency = "inr"
                                   >
                                   </script>
-                                  <script>
-                                    document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                                  </script>
-                                  <button type="submit" class="b btn btn-round" style="color:white;background-color:#66615B;border:1px solid white">Pay to unlock</button>                                  
+                                  <button type="submit" class="b btn btn-round" style="color:white;background-color:#66615B;border:1px solid white">Pay to unlock</button>
                                   <input type="hidden" name="chargeAmount" value="<%= owner[i].amount %>">
                                   <input type="hidden" name="id" value="<%=book[i].book._id%>">
                                 </form>

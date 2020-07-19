@@ -240,7 +240,7 @@ router.get('/otherUserShelfviewbook/:title/:userid',(req,res)=>{
       }
     });
 console.log(owner);
-    res.render('viewbook',{image:x.ImageURLL,readRequestAmount:readRequestAmount,title:x.Title,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
+    res.render('viewbook',{image:x.ImageURLL,readRequestAmount:readRequestAmount,title:x.Title,hasHardCopy:false,otherUserShelf:true,author:x.Author,inbidding:inbidding,id:x._id,owner:owner,softCopy:softCopy,layout:'navbar2.ejs'});
   });
 });
 
@@ -462,7 +462,7 @@ router.post('/charge',(req,res)=>{
 
 router.post('/uploadSoftCopy',[isLoggedIn.isLoggedIn,multer(bookUploadConf).single('bookSoftCopy')],(req,res)=>{
   console.log(req.file)
-  Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:req.file.location}).then(book=>{
+  Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:'/'+req.file.path}).then(book=>{
     res.redirect('/shelf/view');
   });
 })
