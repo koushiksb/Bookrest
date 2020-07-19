@@ -15,8 +15,12 @@ const isLoggedIn = require('../utils/isLoggedIn');
 // const s3 = require('../config/aws');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3-v2');
+const AWS = require('aws-sdk');
+var s3 = new aws.S3({
+  accessKeyId: 'AKIAJTI5ZL5OQUOVXQHQ',
+  secretAccessKey: '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'
 
-var s3 = new aws.S3();
+});
 // store and validation
 const multerconf = {
   storage:multer.diskStorage({
@@ -52,16 +56,16 @@ const bookUploadConf = {
     }
   }),
 }
-// const awsbookupload = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         bucket: 'bookrest',
-//         key: function (req, file, cb) {
-//             console.log(file);
-//             cb(null, file.originalname); //use Date.now() for unique file keys
-//         }
-//     })
-// });
+const awsbookupload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'bookrest',
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+});
 
 router.get('/view',isLoggedIn.isLoggedIn,(req,res)=>{
 
@@ -454,7 +458,7 @@ router.post('/charge',(req,res)=>{
 });
 });
 
-router.post('/uploadSoftCopy',[isLoggedIn.isLoggedIn,multer(bookUploadConf).single('bookSoftCopy')],(req,res)=>{
+router.post('/uploadSoftCopy',[isLoggedIn.isLoggedIn,awsbookupload.single('bookSoftCopy')],(req,res)=>{
   console.log(req.file)
   Shelf.findOneAndUpdate({user:req.user._id,book:req.body.bookid},{softcopy:req.file.location}).then(book=>{
     res.redirect('/shelf/view');

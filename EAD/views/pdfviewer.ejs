@@ -5,6 +5,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 
     <style media="screen">
+    *{
+      outline:none;
+    }
     body {
 margin: 0;
 font-family: sans-serif;
@@ -35,7 +38,8 @@ padding: 0.25em 0.5em;
 #toolbar button:focus,
 #page-mode input:hover,
 #page-mode input:focus {
-color: lightGreen;
+color: #f5593d;
+background-color: white;
 }
 #page-mode {
 display: flex;
@@ -69,20 +73,25 @@ box-shadow: 0 2px 5px gray;
   <body>
 
         <div id="app">
-          <div role="toolbar" id="toolbar">
-            <div id="pager">
-              <button data-pager="prev">prev</button>
-              <button data-pager="next">next</button>
-
-            </div>
+          <div role="toolbar" id="toolbar" style="position:relative" >
             <div id="page-mode">
               <label>Page Mode <input type="number" value="1" min="1"/></label>
             </div>
-            <div style="margin-left:auto">
+            <div id="pager" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)" >
+              <button onclick="zoomIn()">zoomIn</button>
+              <button data-pager="prev">prev</button>
+
+              <button data-pager="next">next</button>
+
+              <button onclick="zoomOut()">zoomOut</button>
+
+            </div>
+
+            <div style="margin-left:auto;margin-right:3rem;">
               <a style="color:white" href="/shelf/view"><button>Back</button></a>
             </div>
           </div>
-          <div id="viewport-container"><div role="main" id="viewport"></div></div>
+          <div id="viewport-container"><div role="main" style="width:500px" id="viewport"></div></div>
         </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.453/pdf.js">
 
@@ -184,6 +193,9 @@ box-shadow: 0 2px 5px gray;
         const container =
           viewport.children[page.pageIndex - cursorIndex * pageMode];
         pdfViewport = page.getViewport(container.offsetWidth / pdfViewport.width);
+        console.log(pdfViewport.height);
+        console.log(pdfViewport.width);
+
         const canvas = container.children[0];
         const context = canvas.getContext("2d");
         canvas.height = pdfViewport.height;
@@ -195,6 +207,14 @@ box-shadow: 0 2px 5px gray;
         });
       }
 
+      function zoomIn() {
+        $("#viewport").width($("#viewport").width() + 100);
+          console.log(document.getElementById('viewport').style.width);
+      }
+      function zoomOut() {
+        $("#viewport").width($("#viewport").width() - 100);
+          console.log(document.getElementById('viewport').style.width);
+      }
 
 </script>
 <!-- <script>

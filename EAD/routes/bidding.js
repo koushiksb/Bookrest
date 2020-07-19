@@ -580,12 +580,12 @@ if(item[1]==='true' && item[0]!=='all' ){
   if(isPriceFilter){
     finaldata.forEach((item, i) => {
       if(isAbove){
-        if(item.baseamount>=priceFilters){
+        if(item.soldfor>=priceFilters){
           prefinaldata.push(item)
         }
 
       }else{
-      if(item.baseamount<=priceFilters){
+      if(item.soldfor<=priceFilters){
         prefinaldata.push(item)
       }
       }
@@ -685,12 +685,12 @@ if(item[1]==='true' && item[0]!=='all' ){
   if(isPriceFilter){
     finaldata.forEach((item, i) => {
       if(isAbove){
-        if(item.baseamount>=priceFilters){
+        if(item.soldfor>=priceFilters){
           prefinaldata.push(item)
         }
 
       }else{
-      if(item.baseamount<=priceFilters){
+      if(item.soldfor<=priceFilters){
         prefinaldata.push(item)
       }
       }

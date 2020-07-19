@@ -361,7 +361,7 @@ else{
     x.favouriteGenre=favouriteGenre,
     x.profilepic=propic
     x.save().then(z=>{
-      return res.redirect('/users/dashboard')
+      return res.redirect('/users/profile')
     })
   })
 }
