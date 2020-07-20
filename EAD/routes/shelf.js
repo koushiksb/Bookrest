@@ -244,7 +244,13 @@ console.log(owner);
   });
 });
 
-router.get('/otherUserShelf/:userid',(req,res)=>{
+router.get('/otherUserShelf/:userid',async (req,res)=>{
+  var ownername = '';
+  await User.findOne({_id:req.params.userid}).populate('profile').then(s=>{
+    console.log('ysy')
+    console.log(s);
+    ownername = s.profile.fname;
+  })
   Shelf.find({user:req.params.userid,softcopy:{$exists:true},owner:{$exists:false}}).select('book -_id').populate('book','Title ImageURLM').then(x=>{
     // console.log(x);
     var owner = '0';
@@ -261,7 +267,7 @@ router.get('/otherUserShelf/:userid',(req,res)=>{
 
       }
 
-      return res.render('otherUserShelf',{book:x,layout:'navbar2',owner:y,readRequestAmount:readRequestAmount,userid:req.params.userid});
+      return res.render('otherUserShelf',{book:x,layout:'navbar2',owner:y,readRequestAmount:readRequestAmount,userid:req.params.userid,ownername:ownername});
     });
   })
 
@@ -281,7 +287,7 @@ router.get('/viewbk/:title',async (req,res)=>{
     navbar = 'navbar.ejs'
     console.log('yay')
   }
-  Book.findOne({Title:req.params.title}).then(async (x)=>{
+  Book.findOne({Title:req.params.title.toString()}).then(async (x)=>{
     var given = {} ;
     Review.find({book:x._id,user:req.user.id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (l)=>{
       given = l;

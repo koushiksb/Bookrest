@@ -304,7 +304,7 @@ a:active,a:focus{outline:0;}
 
                         <p class="card-description desc">
                           No of Days <%=requests[i].period%> <br>
-                          Requested from <%=requests[i].requester.profile.fname%> <br>
+                          Requested from <a href="/shelf/otherUserShelf/<%=requests[i].requester._id%>"><%=requests[i].requester.profile.fname%></a> <br>
                         <br>
 <a class="b btn btn-round" style="color:red;background-color:#fff;border:1px solid red" id='but' onclick="deleteRequest('<%=requests[i]._id%>')" >Delete</a>
 

@@ -304,7 +304,7 @@ a:active,a:focus{outline:0;}
 
                         <p class="card-description desc">
                           No of Days <%=requests[i].period%> <br>
-                          <%=requests[i].requester.profile.fname%> says <%=requests[i].notetoowner%> <br>
+                          <a href="/shelf/otherUserShelf/<%=requests[i].requester._id%>"><%=requests[i].requester.profile.fname%></a> says <%=requests[i].notetoowner%> <br>
                         <br>
 <a class="btn btn-rose btn-round" style="color:white" id='but' onclick="Update('<%=requests[i].book.id%>','<%= requests[i].requester.id%>',1,'<%=i%>')" >Accept</a>
 &nbsp&nbsp&nbsp&nbsp

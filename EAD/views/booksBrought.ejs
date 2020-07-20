@@ -552,7 +552,7 @@ a:active,a:focus{outline:0;}
                             </p>
 
                             <p class="card-description desc">
-                              Brought from <%=bids[i].username%>  <br>
+                              Brought from <a href="/shelf/otherUserShelf/<%=bids[i].userid._id%>"><%=bids[i].username%></a>  <br>
                               Brought for Amount : <%=bids[i].soldfor%><br>
                               E-mail : <%=bids[i].userid.email%><br>
                               Phone Number :<%=bids[i].userid.profile.phone%> <br>
@@ -677,8 +677,8 @@ a:active,a:focus{outline:0;}
                     '"></div></div><div class="col-md-9"><div class="card-body"><h6 class="card-category text-info">'+bids[i].bookid.Genre+
                     '</h6><h3 style="margin-bottom:1px" class="card-title"><a href="#pablo">'+bids[i].bookid.Title+
                     '</a></h3 >&nbsp<p class="author">by<a href="#pablo"><b>&nbsp'+bids[i].bookid.Author+
-                    '</b></a></p><p class="card-description desc">Sold to&nbsp' +bids[i].username +
-                    '<br>Sold for Amount :&nbsp'+ bids[i].soldfor+
+                    '</b></a></p><p class="card-description desc">Sold to&nbsp' + `<a href="/shelf/otherUserShelf/${bids[i].userid._id%>}">`+bids[i].username +
+                    '</a><br>Sold for Amount :&nbsp'+ bids[i].soldfor+
                     '<br>E-mail :&nbsp' +bids[i].userid.email+'<br>Phone Number :&nbsp'+bids[i].userid.profile.phone+
                     ' <br><br><br></p></div></div></div></div>';
                                                 }

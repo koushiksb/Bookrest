@@ -555,7 +555,7 @@ a:active,a:focus{outline:0;}
                             </p>
 
                             <p class="card-description desc">
-                              By <%=bids[i].username%>  <br>
+                              By <a href="/shelf/otherUserShelf/<%=bids[i].userid%>"><%=bids[i].username%></a>  <br>
                               Base Amount : <%=bids[i].baseamount%><br>
                               Starts On : <%=bids[i].formatDate%>
                               <input type="hidden" id="#b<%=i%>" value="<%=bids[i].actualdate%>">
@@ -724,7 +724,7 @@ a:active,a:focus{outline:0;}
                                                 '</p>'+
 
                                                 '<p class="card-description desc">'+
-                                                  'By&nbsp'+ bids[i].username +' <br>'
+                                                  'By&nbsp'+`<a href="/shelf/otherUserShelf/${bids[i].userid}">`+ bids[i].username +' </a><br>'
                                                   + 'Base Amount :&nbsp'+ bids[i].baseamount+'<br>'+
                                                   'Starts On :&nbsp'+ bids[i].formatDate+
                                                   '<input type="hidden" id="#b'+i+'" value="'+bids[i].actualdate+'">'+
