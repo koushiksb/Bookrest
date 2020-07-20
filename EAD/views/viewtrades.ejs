@@ -177,7 +177,7 @@
               </div>
             <div class="card">
               <div class="card-body moreBox" style="display:none">
-                <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].userReq.profile.fname + exchange[i].userReq.profile.lname %></b> would like to make the exchange <b><%= exchange[i].bookSen.Title %></b> for <b><%= exchange[i].bookReq.Title %></b> </h5>
+                <h5 class="card-title" style="margin-bottom:1rem">  <b><%= exchange[i].userReq.profile.fname + exchange[i].userReq.profile.lname %></b> would like to make the exchange <a href="/shelf/viewbk/<%= exchange[i].bookSen.Title %>"><b><%= exchange[i].bookSen.Title %></b></a> for <a href="/shelf/viewbk/<%= exchange[i].bookReq.Title %>"><b><%= exchange[i].bookReq.Title %></b></a> </h5>
                 <div class="card-image" style="padding-left:10%">
 
                               <img src="<%= exchange[i].bookSen.ImageURLL %>" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
@@ -323,7 +323,7 @@
                               </div>
                             <div class="card">
                               <div class="card-body moreBox" >
-                                <h5 class="card-title" style="margin-bottom:1rem">  <b>${exchange[i].userReq.profile.fname+' '+exchange[i].userReq.profile.lname}</b> would like to make the exchange <b>${exchange[i].bookSen.Title}</b> for <b>${exchange[i].bookReq.Title}</b> </h5>
+                                <h5 class="card-title" style="margin-bottom:1rem">  <b>${exchange[i].userReq.profile.fname+' '+exchange[i].userReq.profile.lname}</b> would like to make the exchange <a href="/shelf/viewbk/${exchange[i].bookSen.Title}"><b>${exchange[i].bookSen.Title}</b></a> for <a href="/shelf/viewbk/${exchange[i].bookReq.Title}"><b>${exchange[i].bookReq.Title}</b></a> </h5>
                                 <div class="card-image" style="padding-left:10%">
 
                                               <img src="${exchange[i].bookSen.ImageURLL}" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
