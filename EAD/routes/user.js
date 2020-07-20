@@ -189,7 +189,7 @@ passport.authenticate('local',{
 
 router.get('/logout',isLoggedIn,(req,res)=>{
   req.logout()
-  res.redirect('/users/login')
+  res.redirect('/users/dashboard')
 })
 
 router.get('/dashboard',async (req,res)=>{
