@@ -181,13 +181,55 @@ router.get('/tradepage',(req,res)=>{
   .then(x=>{
     var gen = [];
     for(var i=0;i<x.length;i++){
-      if (books.includes(x[i].bookReq.id)){
+      // if (books.includes(x[i].bookReq.id)){
         gen.push(x[i]);
-      }
+      // }
     }
     return res.render('viewtrades',{exchange:gen,layout:"navbar2"})
   })
 })
+
+router.post('/filtertradepage',(req,res)=>{
+  console.log(req.body.genre)
+  var genreFilters=[];
+  if(req.body.genre.all!=='true'){
+    Object.entries(req.body.genre).forEach((item, i) => {
+    console.log(item)
+    if(item[1]==='true' && item[0]!=='all' ){
+      genreFilters.push(item[0])
+    }
+    })
+  }else{
+    genreFilters = ['Fantasy','Fiction','Fairytale','History','Mystery','Novel','Poetry','Romance','Thriller'];
+  }
+  console.log(req.body.location)
+  var location=[];
+  if(req.body.location.all!=='true'){
+    Object.entries(req.body.location).forEach((item, i) => {
+    console.log(item)
+    if(item[1]==='true' && item[0]!=='all' ){
+      location.push(item[0])
+    }
+    })
+  }else{
+    location = ['Bangalore','Bhuvaneshwar','Chennai','Delhi','Goa','Hyderabad','Jabalpur','Kolkatta','Lucknow','Mumbai',
+    'Munnar','Mysore','Nagpur','Noida','Patna','Pondicherry','Pune','Raipur','Shimla','Trichy','Vijayawada','Vishakhapatnam',
+    'Warangal','Tirupati'];
+  }
+  Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Genre')
+  .then(x=>{
+    var gen = [];
+    for(var i=0;i<x.length;i++){
+      if (location.includes(x[i].userReq.profile.location)){
+        if (genreFilters.includes(x[i].bookReq.Genre) || genreFilters.includes(x[i].bookSen.Genre)){
+          gen.push(x[i]);
+        }
+      }
+    }
+    return res.send({exchange:gen})
+})
+})
+
 
 router.get('/viewtrade/:id',(req,res)=>{
   Exchange.findOne({_id:req.params.id}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')

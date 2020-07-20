@@ -114,7 +114,7 @@ app.use('/shelf',require('./routes/shelf'));
 app.use('/book',require('./routes/bidding'));
 
 app.use('/exchange',require('./routes/exchange'));
-
+app.use('/payments',require('./routes/payments'));
 
 
 app.get("*", function(req, res){
