@@ -185,7 +185,10 @@ router.get('/tradepage',(req,res)=>{
         gen.push(x[i]);
       // }
     }
-    return res.render('viewtrades',{exchange:gen,layout:"navbar2"})
+    var locations = ['Bangalore','Bhuvaneshwar','Chennai','Delhi','Goa','Hyderabad','Jabalpur','Kolkatta','Lucknow','Mumbai',
+    'Munnar','Mysore','Nagpur','Noida','Patna','Pondicherry','Pune','Raipur','Shimla','Trichy','Vijayawada','Vishakhapatnam',
+    'Warangal','Tirupati'];
+    return res.render('viewtrades',{exchange:gen,locations:locations,layout:"navbar2"})
   })
 })
 
@@ -212,15 +215,17 @@ router.post('/filtertradepage',(req,res)=>{
     }
     })
   }else{
-    location = ['Bangalore','Bhuvaneshwar','Chennai','Delhi','Goa','Hyderabad','Jabalpur','Kolkatta','Lucknow','Mumbai',
-    'Munnar','Mysore','Nagpur','Noida','Patna','Pondicherry','Pune','Raipur','Shimla','Trichy','Vijayawada','Vishakhapatnam',
-    'Warangal','Tirupati'];
+    location = ['bangalore','bhuvaneshwar','chennai','delhi','goa','hyderabad','jabalpur','kolkatta','lucknow','mumbai',
+    'munnar','mysore','nagpur','noida','patna','pondicherry','pune','raipur','shimla','trichy','vijayawada','vishakhapatnam',
+    'warangal','tirupati'];
   }
   Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Genre')
   .then(x=>{
     var gen = [];
+    console.log(x);
     for(var i=0;i<x.length;i++){
-      if (location.includes(x[i].userReq.profile.location)){
+      console.log(x[i].userReq.profile.location)
+      if (location.includes(x[i].userReq.profile.location.toLowerCase())){
         if (genreFilters.includes(x[i].bookReq.Genre) || genreFilters.includes(x[i].bookSen.Genre)){
           gen.push(x[i]);
         }
