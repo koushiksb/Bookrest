@@ -445,7 +445,7 @@ router.post('/charge',(req,res)=>{
   // add bookid to the users subscription list
   // console.log(bookid);
   Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
-    Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true}).then(d=>{
+    Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
       User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
         res.redirect('/shelf/view');
       });
