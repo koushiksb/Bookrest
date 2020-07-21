@@ -21,7 +21,7 @@ Book.find({Title:req.params.bookReq}).then(x=>{
 router.get('/require/:title',isLoggedIn.isLoggedIn,(req,res)=>{
     Book.findOne({Title:req.params.title}).then(x=>{
       userReq = req.user._id
-      Shelf.find({user:req.user._id}).select('book -_id').populate('book','Title ImageURLM').then(y=>{
+      Shelf.find({user:req.user._id,owner:{$exists:false}}).select('book -_id').populate('book','Title ImageURLM').then(y=>{
     // console.log(x[0]);
     return res.render('exchangeshelf',{bookSen:y,bookReq:x});
     });
