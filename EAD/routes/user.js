@@ -17,7 +17,7 @@ var urlencodedparser=bodyparser.urlencoded({extended:true});
 bodyParser = require('body-parser').json();
 const multer = require('multer');
 const gpath = require('path');
-
+const MiniSearch = require('minisearch')
 
 const userimageconf = {
   storage:multer.diskStorage({
@@ -265,24 +265,32 @@ router.post('/search',(req,res)=>{
   var str = req.body.search;
   var arr = str.split(" ");
   arr = arr.toLocaleString().toLowerCase().split(',');
-  Book.find({}).then(async(x)=>{
+  var gen=[];
+  Book.find({}).lean().then(async(x)=>{
     var gen = [];
-    for(var i=0;i<x.length;i++){
-      var quer = x[i]['Publisher']+' '+x[i]['Title']+' '+x[i]['Author']+' '+x[i]['YearOfPublication'];
-      var quer = quer.toLowerCase()
-      var query = quer.toLowerCase().split(" ");
-      if(arr.some(item => quer.includes(item))){
-        gen.push(x[i])
-      }
-    }
-    if(gen.length===0){
-      // console.log('no items')
-      return res.sendStatus(200)
-    }
-    else{
+    x.forEach((item, i) => {
+      item['id'] = i+1;
+    });
+
+    console.log(x[0])
+    let miniSearch = new MiniSearch({
+  fields: ['Title', 'Author'], // fields to index for full-text search
+  storeFields: ['Title','Author','ImageURLM'] // fields to return with search results
+
+})
+  miniSearch.addAll(x);
+  gen = miniSearch.search(str);
+
+    // for(var i=0;i<x.length;i++){
+    //   var quer = x[i]['Publisher']+' '+x[i]['Title']+' '+x[i]['Author']+' '+x[i]['YearOfPublication'];
+    //   var quer = quer.toLowerCase()
+    //   var query = quer.toLowerCase().split(" ");
+    //   if(arr.some(item => quer.includes(item))){
+    //     gen.push(x[i])
+    //   }
+
     // console.log(gen[0])
-    return res.render('search',{books:gen,layout:'navbar2.ejs',query:str})
-    }
+    return res.render('search',{books:gen,layout:'navbar2.ejs',query:str,allbooks:x})
   })
 })
 

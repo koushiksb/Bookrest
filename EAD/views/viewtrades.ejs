@@ -41,6 +41,20 @@
 
     <div class="main">
       <div class="container">
+        <!-- <div class="row" style="margin-top:3rem;justify-content:center;align-items:center">
+          <form method="post" action="/exchange/search" style="width:60%">
+           <input class="form-control" list="books" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
+           <datalist id='books'>
+             <% for(i=0;i<exchange.length; i++){%>
+             <option value="<%=exchange[i].Title%>"></option>
+             <option value="<%=allbooks[i].Author%>"></option>
+             <%}%>
+           </datalist>
+           <button type="submit" class="btn primary" style="margin-left:10px">Search</button>
+           </form>
+
+        </div> -->
+
         <div class="row">
           <div class="col-md-12">
             <h2 style="color:black">Exchange Requests</h2>
@@ -210,6 +224,7 @@
 
         </div>
       </div>
+      <br><br>
 
       <script type="text/javascript">
         var genreFilters = {

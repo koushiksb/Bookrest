@@ -35,6 +35,20 @@
 
     <div class="main">
       <div class="container">
+        <div class="row" style="margin-top:3rem;justify-content:center;align-items:center">
+          <form method="post" action="/users/search" style="width:60%">
+           <input class="form-control" list="books" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
+           <datalist id='books'>
+             <%for(var i=0;i<allbooks.length;i++){%>
+             <option value="<%=allbooks[i].Title%>"></option>
+             <option value="<%=allbooks[i].Author%>"></option>
+             <%}%>
+           </datalist>
+           <button type="submit" class="btn primary" style="margin-left:10px">Search</button>
+           </form>
+
+        </div>
+
         <div class="row">
 
           <div class="col-md-12">
@@ -50,8 +64,8 @@
                 </a>
                 <div class="card-body">
                   <div class="card-description">
-                    <h5 class="card-title"><%= books[i].Tilte%></h5>
-                    <p class="card-description"><%= books[i].Author%></p>
+                    <h5 class="card-title"><%= books[i].Title%></h5>
+                    <p class="card-description" style="margin-top:-0.4rem"><%= books[i].Author%></p>
                     <% for(var m=0; m<Math.round(books[i].Rating/2) ;m++){%>
                     <span class="fa fa-star checked"></span>
                     <%}%>
