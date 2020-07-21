@@ -128,8 +128,8 @@ function path(req){
 router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
 
   console.log(req.file);
-
-  Book.findOne({Title:req.body.bookname}).then(re=>{
+    
+  Book.findOne({Title:req.body.bookname}).then(re=>{    
     if(re === null){
       console.log('in NUll');
       var n = new Book({
@@ -144,7 +144,8 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
         // console.log(x);
         var m = new Shelf({
           user:req.user._id,
-          book:x._id
+          book:x._id,
+          hasHardCopy: req.body.hasHardCopy
         });
         m.save().then(y=>{
           console.log('saved to Shelves collection successfully');
@@ -158,7 +159,8 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
         if(sh === null){
           var m = new Shelf({
             user:req.user._id,
-            book:re._id
+            book:re._id,
+            hasHardCopy: req.body.hasHardCopy
           });
           m.save().then(y=>{
             console.log('saved to Shelves collection successfully');
