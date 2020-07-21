@@ -94,9 +94,27 @@ router.get('/allbidding',(req,res)=>{
       }
       item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
       item['actualdate'] = item.date;
+      item['fromTime'] = item.date.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+      toTime = new Date(item.date.getTime() + 1000*60*60*1);                
+      item['toTime'] = toTime.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+      item['eventName'] = 
+      "Auction of " +
+      item.bookid.Title;
+
+      item['details'] = 
+      "Book Name      : " + 
+      item.bookid.Title + 
+      " by " + 
+      item.bookid.Author +
+      "<br>Base Amount : " +
+      item.baseamount +
+      "<br>Bidding Starts on : " +
+      item.formatDate;
+      
       item.date = item.date.toISOString().slice(0,16)
     });
-
+    console.log('here',x);
+    
     res.render('allbiddings',{bids:x,layout:"navbar2.ejs"})
 
   })
@@ -145,10 +163,27 @@ router.get('/mystuff',isLoggedIn.isLoggedIn,(req,res)=>{
               await x.forEach((item, i) => {
                 item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT",true);
                 item['actualdate'] = item.date;
+                item['fromTime'] = item.date.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+                toTime = new Date(item.date.getTime() + 1000*60*60*1);                
+                item['toTime'] = toTime.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+                item['eventName'] = 
+                "Auction of " +
+                item.bookid.Title;
+
+                item['details'] = 
+                "Book Name      : " + 
+                item.bookid.Title + 
+                " by " + 
+                item.bookid.Author +
+                "<br>Base Amount : " +
+                item.baseamount +        
+                "<br>Bidding Starts on : " +
+                item.formatDate;
+                
                 item.date = item.date.toISOString().slice(0,16);
 
               });
-      console.log(x)
+      console.log(x);
     return res.render('mystuff',{mybids:x,layout:'navbar2',today:new Date().toISOString().slice(0,16)})
   })
   .catch(err=>{
@@ -369,6 +404,23 @@ bids = finaldata;
         }
         item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM TT");
         item['actualdate'] = item.date;
+        item['fromTime'] = item.date.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+        toTime = new Date(item.date.getTime() + 1000*60*60*1);                
+        item['toTime'] = toTime.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+        item['eventName'] = 
+        "Auction of " +
+        item.bookid.Title;
+
+        item['details'] = 
+        "Book Name      : " + 
+        item.bookid.Title + 
+        " by " + 
+        item.bookid.Author +
+        "<br>Base Amount : " +
+        item.baseamount +          
+        "<br>Bidding Starts on : " +
+        item.formatDate;
+        
         item.date = item.date.toISOString().slice(0,16)
 
   });
@@ -453,6 +505,23 @@ if(item[1]==='true' && item[0]!=='all' ){
               await x.forEach((item, i) => {
                 item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT",true);
                 item['actualdate'] = item.date;
+                item['fromTime'] = item.date.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+                toTime = new Date(item.date.getTime() + 1000*60*60*1);                
+                item['toTime'] = toTime.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
+                item['eventName'] = 
+                "Auction of " +
+                item.bookid.Title;
+
+                item['details'] = 
+                "Book Name      : " + 
+                item.bookid.Title + 
+                " by " + 
+                item.bookid.Author +
+                "<br>Base Amount : " +
+                item.baseamount +
+                "<br>Bidding Starts on : " +
+                item.formatDate;
+                
                 item.date = item.date.toISOString().slice(0,16);
 
 
