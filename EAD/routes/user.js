@@ -211,6 +211,13 @@ if(req.user){
 
        return res.render('profile1',{user:req.user.email,pro:null,genre:genre})
      }else{
+        var pop = {};
+        Book.find({Class:"Rare"}).lean().then(f=>{
+          pop['Rare']=f.slice(0,8);
+        })
+        Book.find({Class:"Popular"}).lean().then(f=>{
+          pop['Popular']=f.slice(0,8);
+        })
         Genre.find({}).then(async(x)=>{
           // console.log(x[0])
           var lis_genre = x;
@@ -227,10 +234,17 @@ if(req.user){
             })
           }
           // console.log(gen)
-          return res.render('dashboard',{user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
+          return res.render('dashboard',{pop:pop,user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
         })  // return res.sendStatus(200)
      }
    }else{
+      var pop = {};
+        Book.find({Class:"Rare"}).lean().then(f=>{
+          pop['Rare']=f;
+        })
+        Book.find({Class:"Popular"}).lean().then(f=>{
+          pop['Popular']=f;
+        })
      Genre.find({}).then(async(x)=>{
        // console.log(x[0])
        var lis_genre = x;
@@ -247,7 +261,7 @@ if(req.user){
          })
        }
        // console.log(gen)
-       return res.render('dashboard',{genre:lis_genre,books:gen,layout:'navbar.ejs'})
+       return res.render('dashboard',{pop:pop,genre:lis_genre,books:gen,layout:'navbar.ejs'})
      })  // return res.sendStatus(200)
 
 
@@ -258,6 +272,13 @@ router.get('/seebooks/:genre',(req,res)=>{
   Book.find({Genre:req.params.genre}).then(x=>{
     // console.log(x[0])
     return res.render('genrebooks',{books:x,layout:'navbar2.ejs'})
+  })
+})
+
+router.get('/seebks/:pop',(req,res)=>{
+  Book.find({Class:req.params.pop}).then(x=>{
+    // console.log(x[0])
+    return res.render('popbooks',{books:x,layout:'navbar2.ejs'})
   })
 })
 

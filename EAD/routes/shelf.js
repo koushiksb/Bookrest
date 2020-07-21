@@ -289,11 +289,11 @@ router.get('/viewbk/:title',async (req,res)=>{
     navbar = 'navbar.ejs'
     console.log('yay')
   }
-  Book.findOne({Title:req.params.title.toString()}).then(async (x)=>{
+  Book.findOne({Title:req.params.title.toString()}).populate({path:'Similar',model:'Book'}).then(async (x)=>{
     var given = {} ;
     Review.find({book:x._id,user:req.user.id}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (l)=>{
       given = l;
-      console.log(given.length)
+      // console.log(given.length)
       if(given.length >0){
       given[0].rating = Number(given[0].rating)*10
     }
@@ -329,7 +329,7 @@ router.get('/viewbk/:title',async (req,res)=>{
             col2=otherUsers.length;
 
           }
-          console.log(col1,col2)
+          // console.log(col1,col2)
         })
     }else{
       await  Shelf.find({book:x._id,softcopy:{$exists:true},owner:{$exists:false}}).populate({path:'user',model:'User',populate:{path:'profile',model:'Profile'}}).then(async (shelfs)=>{
@@ -340,22 +340,22 @@ router.get('/viewbk/:title',async (req,res)=>{
             }
           });
           if(otherUsers.length%2===0){
-            console.log('here')
+            // console.log('here')
               col1=otherUsers.length/2;
               col2=otherUsers.length;
           }else{
-            console.log('not here')
+            // console.log('not here')
             col1=(otherUsers.length+1)/2;
             col2=otherUsers.length;
 
           }
-          console.log(col1,col2)
+          // console.log(col1,col2)
         })
 
     }
 
-    console.log(otherUsers)
-    res.render('viewbk',{suggest:suggest,given: given,image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:navbar});
+    console.log(x)
+    res.render('viewbk',{similar:x.Similar,suggest:suggest,given: given,image:x.ImageURLL,genre:x.Genre,rating:(x.Rating/2).toFixed(1),title:x.Title,author:x.Author,reviews:y,col1:col1,col2:col2,otherUsers:otherUsers,layout:navbar});
 
     })
     })

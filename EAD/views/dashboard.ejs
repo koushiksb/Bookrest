@@ -20,6 +20,33 @@
 .checked {
   color: orange;
 }
+.star-ratings-css {
+  unicode-bidi: bidi-override;
+  color: #c5c5c5;
+  font-size: 16px;
+  height: 25px;
+  width: 100px;
+
+  position: relative;
+  padding: 0;
+  text-shadow: 0px 1px 0 #a2a2a2;
+
+}
+.star-ratings-css-top {
+    color: #fc0324;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  .star-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }
 </style>
 
   </head>
@@ -37,60 +64,46 @@
      </div>
 
      <div class="container">
-       <h3 class="section-title" style="color:white;margin-bottom:10px"><b>Top Trending Books</b></h3>
-       <div class="row">
-         <div class="col-md-4">
-           <div class="card card-product card-plain">
-             <div class="card-image">
-               <a href="#paper-kit">
-                 <img src="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" alt="Rounded Image" class="img-rounded img-responsive">
-               </a>
-               <div class="card-body">
-                 <div class="card-description">
-                   <h5 class="card-title" style="color:white"><b>Green Velvet Dress</b></h5>
-                   <p class="card-description" style="color:white">This is a limited edition dress for the fall collection. Comes in 3 colours.</p>
-                 </div>
+       <% for(var i in pop){%>
+          <!-- <div id=> -->
+          <b><h3><%= i %> Books</h3></b><!-- </div> --><br>
+          <div class="col-md-12">
+           <div class="products">
+             <div class="row">
+              <% for (j=0;j<pop[i].length ;j++){%>
+               <div class="col-md-3 col-sm-3" >
+                 <div class="card card-product card-plain">
+                   <div class="card-image">
+                     <a href="/shelf/viewbk/<%=pop[i][j].Title%>"><img class="af-explames-demo-img" style="width:104px;height:160px" src="<%=pop[i][j].ImageURLM%>"
+                  alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
+                     <div class="card-body">
+                       <div class="card-description">
+                         <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= pop[i][j].Title%></p>
+                         <p class="card-description" style="color:white;font-weight: normal"><%= pop[i][j].Author%></p>
+                         <!-- here we need to keep a loop for displayin the rating -->
+                          <% for(var m=0; m<Math.round(pop[i][j].Rating/2)+1 ;m++){%>
+                          <span class="fa fa-star checked"></span>
+                          <%}%>
+                          <% for(var m=4; m>Math.round(pop[i][j].Rating/2) ;m--){%>
+                          <span class="fa fa-star"></span>
+                          <%}%>
+                       </div>
 
+                     </div>
+                   </div>
+                 </div>
                </div>
-             </div>
+                <%} %>
+               <br>
+               </div>
+             <div class="col-md-3 offset-md-4">
+              <a href="/users/seebks/<%= i %>">
+                <button rel="tooltip" class="btn btn-round btn-outline-default" id="successBtn" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+              </a>
+              </div>
            </div>
          </div>
-                   <div class="col-md-4">
-           <div class="card card-product card-plain">
-             <div class="card-image">
-               <a href="#paper-kit">
-                 <img src="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" alt="Rounded Image" class="img-rounded img-responsive">
-               </a>
-               <div class="card-body">
-                 <div class="card-description">
-                   <h5 class="card-title" style="color:white"><b>Green Velvet Dress</b></h5>
-                   <p class="card-description" style="color:white">This is a limited edition dress for the fall collection. Comes in 3 colours.</p>
-                 </div>
-
-               </div>
-             </div>
-           </div>
-         </div>
-                   <div class="col-md-4">
-           <div class="card card-product card-plain">
-             <div class="card-image">
-               <a href="#paper-kit">
-                 <img src="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" alt="Rounded Image" class="img-rounded img-responsive">
-               </a>
-               <div class="card-body">
-                 <div class="card-description">
-                   <h5 class="card-title" style="color:white"><b>Green Velvet Dress</b></h5>
-                   <p class="card-description" style="color:white">This is a limited edition dress for the fall collection. Comes in 3 colours.</p>
-                 </div>
-
-               </div>
-             </div>
-           </div>
-         </div>
-               <div class="col-md-3 offset-md-4">
-                 <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
-               </div>
-       </div>
+         <%}%>
      </div>
    </div>
    <!-- section -->
@@ -122,10 +135,10 @@
                          <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= books[i][j].Title%></p>
                          <p class="card-description" style="color:white;font-weight: normal"><%= books[i][j].Author%></p>
                          <!-- here we need to keep a loop for displayin the rating -->
-                          <% for(var m=0; m<Math.round(books[i][j].Rating/2) ;m++){%>
+                          <% for(var m=0; m<Math.round(books[i][j].Rating/2)+1 ;m++){%>
                           <span class="fa fa-star checked"></span>
                           <%}%>
-                          <% for(var m=5; m>Math.round(books[i][j].Rating/2) ;m--){%>
+                          <% for(var m=4; m>Math.round(books[i][j].Rating/2) ;m--){%>
                           <span class="fa fa-star"></span>
                           <%}%>
                        </div>
