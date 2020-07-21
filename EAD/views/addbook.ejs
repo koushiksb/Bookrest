@@ -123,7 +123,7 @@
             </div>
             <div class="row buttons-row">
               <div class="col-md-6 col-sm-6">
-                <button class="btn btn-outline-danger btn-block btn-round" id="reset" type="reset">Cancel</button>
+                <button class="btn btn-outline-danger btn-block btn-round" id="reset" type="reset">Reset</button>
               </div>
               <div class="col-md-6 col-sm-6">
                 <button class="btn btn-outline-primary btn-block btn-round" type="submit">Save</button>
@@ -172,18 +172,18 @@
 </script> -->
 <script>
   // console.log('booksInfo',typeof('<%= booksInfo %>'));
-  
+
   var booksInfo = <%-JSON.stringify(booksInfo)%>;
-  
+
   var booksList = [];
-  for(i=0;i<booksInfo.length;i++){    
+  for(i=0;i<booksInfo.length;i++){
     booksList.push(booksInfo[i][0]);
   }
-  
+
   $(document).ready(function(){
     $("#bookname").change(function() {
     var index = booksList.indexOf($("#bookname").val().toString());
-    
+
     if(index !== -1) {
       $("#publisher").val(booksInfo[index][1]);
       $("#publisher").prop("disabled",true);
@@ -199,7 +199,7 @@
       $("#publisher").prop("disabled",false);
       $("#author").val('');
       $("#author").prop("disabled",false);
-      $("#year").val('');      
+      $("#year").val('');
       $("#year").prop("disabled",false);
       $("#image").attr("src",'../static/pics/image_placeholder.jpg');
       $("#imageSelect").show();
