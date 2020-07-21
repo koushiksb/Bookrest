@@ -60,11 +60,11 @@
             <div class="card card-product card-plain">
               <div class="card-image">
                 <a href="/shelf/viewbk/<%=books[i].Title%>">
-                  <img src="<%=books[i].ImageURLM%>" alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" class="img-rounded img-responsive">
+                  <img src="<%=books[i].ImageURLM%>" style="width:104px !important;height:160px !important" alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" class="img-rounded img-responsive">
                 </a>
                 <div class="card-body">
                   <div class="card-description">
-                    <h5 class="card-title"><%= books[i].Title%></h5>
+                    <p class="card-title" style="width:20ch"><%= books[i].Title%></p>
                     <p class="card-description" style="margin-top:-0.4rem"><%= books[i].Author%></p>
                     <% for(var m=0; m<Math.round(books[i].Rating/2) ;m++){%>
                     <span class="fa fa-star checked"></span>
