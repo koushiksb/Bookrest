@@ -576,6 +576,8 @@ a:active,a:focus{outline:0;}
     <button type="button" class="btn btn-rose btn-round" style="color:white" data-toggle="modal" data-target="#smallAlertModal">
                     Bid Here
                   </button>
+                  &nbsp&nbsp&nbsp&nbsp
+                  <a class="btn btn-rose btn-round" style="color:white" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=bids[i].eventName%>&dates=<%=bids[i].fromTime%>/<%=bids[i].toTime%>&details=<%=bids[i].details%>&location=&output=xml">Add to Calendar</a>              
                             </p>
                           </div>
 
@@ -757,6 +759,17 @@ a:active,a:focus{outline:0;}
                         bids[i]._id
                         +"'"+','+"'"+"#b"+i+"'"+')"' + '>Bid Here</a>'+
                         '&nbsp&nbsp&nbsp&nbsp'+
+                        '<a class="btn btn-rose btn-round" style="color:white" target="_blank" href="'+
+                        'https://www.google.com/calendar/render?action=TEMPLATE&text=' + 
+                        bids[i].eventName + 
+                        '&dates='+ 
+                        bids[i].fromTime + 
+                        '/' + 
+                        bids[i].toTime + 
+                        '&details=' + 
+                        bids[i].details + 
+                        '&location=&output=xml' + 
+                        '">Add to Calendar</a>' +
 
                                                 '</p>'+
                                               '</div>'+

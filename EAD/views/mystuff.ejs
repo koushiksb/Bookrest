@@ -556,6 +556,8 @@ a:active,a:focus{outline:0;}
     <a class="btn btn-rose btn-round" style="color:white" id='but' href="/book/bidding/<%=mybids[i].bookid._id%>/<%=mybids[i].userid%>/<%=mybids[i]._id%>"  >View auction</a>
     &nbsp&nbsp&nbsp&nbsp
     <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" data-toggle="modal" data-target='#x<%=i.toString()%>'  >Edit details</a>
+    &nbsp&nbsp&nbsp&nbsp
+    <a class="btn btn-rose btn-round" style="color:white" target="_blank" id='but' href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=mybids[i].eventName%>&dates=<%=mybids[i].fromTime%>/<%=mybids[i].toTime%>&details=<%=mybids[i].details%>&location=&output=xml">Add to Calendar</a>
 
                             </p>
                           </div>
@@ -728,6 +730,18 @@ mybids[i].bookid.Genre+
                         '&nbsp&nbsp&nbsp&nbsp'+
                         '<a class="btn btn-rose btn-round" style="color:white"  href="#" data-toggle="modal" data-target="'+
                         '#x'+i.toString()+ '" >Edit details</a>'+
+                        '&nbsp&nbsp&nbsp&nbsp'+
+                        '<a class="btn btn-rose btn-round" style="color:white" target="_blank" href="'+
+                        'https://www.google.com/calendar/render?action=TEMPLATE&text=' + 
+                        mybids[i].eventName + 
+                        '&dates='+ 
+                        mybids[i].fromTime + 
+                        '/' + 
+                        mybids[i].toTime + 
+                        '&details=' + 
+                        mybids[i].details + 
+                        '&location=&output=xml' + 
+                        '">Add to Calendar</a>' +
 
                                                 '</p></div></div></div></div>'
                                         '<div class="modal fade" id="'+"x"+i.toString() +  '">'+
