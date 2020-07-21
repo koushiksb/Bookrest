@@ -161,7 +161,7 @@ router.post('/viewrequest',isLoggedIn.isLoggedIn,(req,res)=>{
 
       });
       add.save().then(async a=>{
-        await User.findOne(id:req.body.requester).then(d=>{
+        await User.findOne({id:req.body.requester}).then(d=>{
                   var transporter = nodemailer.createTransport({
           host: 'smtp.gmail.com',
           port: 465,
