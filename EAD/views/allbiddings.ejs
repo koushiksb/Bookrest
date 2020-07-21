@@ -356,7 +356,7 @@ a:active,a:focus{outline:0;}
             <div class="container">
               <div class="row">
                 <div class="col-md-12 ml-auto mr-auto">
-                  <h2 class="title">Bid For The Book</h2>
+                  <h2 class="title" style="margin-left:5rem">Bid For The Book</h2>
                   <br>
 
                   <div class="row" style="justify-content:center">
@@ -577,7 +577,7 @@ a:active,a:focus{outline:0;}
                     Bid Here
                   </button>
                   &nbsp&nbsp&nbsp&nbsp
-                  <a class="btn btn-rose btn-round" style="color:white" target="_blank" onclick="downloadIcs('<%-bids[i].eventName%>','<%-bids[i].fromTime%>','<%-bids[i].toTime%>','<%-bids[i].details%>')" href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=bids[i].eventName%>&dates=<%=bids[i].fromTime%>/<%=bids[i].toTime%>&details=<%=bids[i].details%>&location=&output=xml">Add to Calendar</a>              
+                  <a class="btn btn-rose btn-round" style="color:white" target="_blank" onclick="downloadIcs('<%-bids[i].eventName%>','<%-bids[i].fromTime%>','<%-bids[i].toTime%>','<%-bids[i].details%>')" href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=bids[i].eventName%>&dates=<%=bids[i].fromTime%>/<%=bids[i].toTime%>&details=<%=bids[i].details%>&location=&output=xml">Add to Calendar</a>
                             </p>
                           </div>
 
@@ -770,15 +770,15 @@ a:active,a:focus{outline:0;}
                         bids[i].details +
                         '\'' +
                         ')" target="_blank" href="'+
-                        'https://www.google.com/calendar/render?action=TEMPLATE&text=' + 
-                        bids[i].eventName + 
-                        '&dates='+ 
-                        bids[i].fromTime + 
-                        '/' + 
-                        bids[i].toTime + 
-                        '&details=' + 
-                        bids[i].details + 
-                        '&location=&output=xml' + 
+                        'https://www.google.com/calendar/render?action=TEMPLATE&text=' +
+                        bids[i].eventName +
+                        '&dates='+
+                        bids[i].fromTime +
+                        '/' +
+                        bids[i].toTime +
+                        '&details=' +
+                        bids[i].details +
+                        '&location=&output=xml' +
                         '">Add to Calendar</a>' +
 
                                                 '</p>'+
@@ -885,15 +885,15 @@ document.getElementById('data').innerHTML +='<div class=" card card-plain card-b
                         bids[i].details +
                         '\'' +
                         ')" target="_blank" href="'+
-                        'https://www.google.com/calendar/render?action=TEMPLATE&text=' + 
-                        bids[i].eventName + 
-                        '&dates='+ 
-                        bids[i].fromTime + 
-                        '/' + 
-                        bids[i].toTime + 
-                        '&details=' + 
-                        bids[i].details + 
-                        '&location=&output=xml' + 
+                        'https://www.google.com/calendar/render?action=TEMPLATE&text=' +
+                        bids[i].eventName +
+                        '&dates='+
+                        bids[i].fromTime +
+                        '/' +
+                        bids[i].toTime +
+                        '&details=' +
+                        bids[i].details +
+                        '&location=&output=xml' +
                         '">Add to Calendar</a>' +
 
                             '</p>'+
@@ -917,7 +917,7 @@ document.getElementById('data').innerHTML +='<div class=" card card-plain card-b
               eventDetails = eventDetails.replace(/<br>/g,'\\n');
               var blob = new Blob(["BEGIN:VCALENDAR\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nPRODID:iCalendar-Ruby\nVERSION:2.0\nBEGIN:VEVENT\nDESCRIPTION:" + eventDetails + "\nDTEND:" + toTime + "\nDTSTART:" + fromTime + "\nLOCATION:" + "\nSEQUENCE:0\nSUMMARY:" + eventName + "\nEND:VEVENT\nEND:VCALENDAR"], { type: 'text/plain;charset=utf-8' });
               saveAs(blob,'event.ics');
-            }                        
+            }
           </script>
           <script type="text/javascript">
             function nav() {

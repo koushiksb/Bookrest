@@ -673,6 +673,13 @@ a:active,a:focus{outline:0;}
       </div>
     </div>
   </nav>
+  <div onclick="goBack()" style="position:absolute;top:16%;left:5%;font-size:16px;cursor:pointer;z-index:100" id="backbutton"><i class="fa fa-chevron-left" aria-hidden="true"></i>Back</div>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
   <!-- End Navbar -->
   <!-- <div class="triple-spinner" style="position:absolute;top:50%;left:50%;z-index:100;transform:translate(-50%,-50%)"></div> -->
   <%-body%>
@@ -723,6 +730,7 @@ $(window).keyup(function(e){
   }, 1000);
 </script> -->
   <!--   Core JS Files   -->
+  <br><br><br><br><br>
   <footer class="footer footer-big" style="background-color: black;width: 100%;">
 
         <div class="col-md-4 ml-auto ">
