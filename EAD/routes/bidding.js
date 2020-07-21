@@ -143,7 +143,7 @@ router.get('/mystuff',isLoggedIn.isLoggedIn,(req,res)=>{
   Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
               await x.forEach((item, i) => {
-                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT",true);
+                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT");
                 item['actualdate'] = item.date;
                 item.date = item.date.toISOString().slice(0,16);
 
