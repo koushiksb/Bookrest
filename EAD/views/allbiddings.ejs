@@ -775,6 +775,9 @@ a:active,a:focus{outline:0;}
 
             }
 
+
+
+
             function search() {
               console.log(document.getElementById('search').value==='')
               if(document.getElementById('search').value===''){
@@ -787,7 +790,12 @@ a:active,a:focus{outline:0;}
               console.log(dataOnPage);
               let miniSearch = new MiniSearch({
   fields: ['bookid.Title', 'bookid.Author'],
-  storeFields: ['baseamount', 'bookid','actualdate','date','formatDate','status','userid','username','_id'], // fields to return with search results
+  storeFields: ['baseamount', 'bookid','actualdate','date','formatDate','status','userid','username','_id'],
+  searchOptions:{
+    fuzzy:0.4,
+    prefix:true
+  }, // fields to return with search results
+ // fields to return with search results
 
   extractField: (document, fieldName) => {
     return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)

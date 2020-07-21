@@ -41,19 +41,11 @@
 
     <div class="main">
       <div class="container">
-        <!-- <div class="row" style="margin-top:3rem;justify-content:center;align-items:center">
-          <form method="post" action="/exchange/search" style="width:60%">
-           <input class="form-control" list="books" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
-           <datalist id='books'>
-             <% for(i=0;i<exchange.length; i++){%>
-             <option value="<%=exchange[i].Title%>"></option>
-             <option value="<%=allbooks[i].Author%>"></option>
-             <%}%>
-           </datalist>
-           <button type="submit" class="btn primary" style="margin-left:10px">Search</button>
-           </form>
+        <div class="row" style="margin-top:3rem;justify-content:center;align-items:center">
+           <input class="form-control" list="books" name="search" id='search' type="text" placeholder="Search" aria-label="Search" style="width:50%;display:inline;float:left">
+           <button type="button" class="btn primary" style="margin-left:10px" onclick="search()">Search</button>
 
-        </div> -->
+        </div>
 
         <div class="row">
           <div class="col-md-12">
@@ -225,8 +217,13 @@
         </div>
       </div>
       <br><br>
+      <script src="https://cdn.jsdelivr.net/npm/minisearch@2.4.1/dist/umd/index.min.js"></script>
+
 
       <script type="text/javascript">
+      var dataOnPage='<%-JSON.stringify(exchange)%>';
+      var dataOnPage = JSON.parse(dataOnPage);
+
         var genreFilters = {
           all:true,
           Fantasy:false,
@@ -330,6 +327,11 @@
                 console.log(result)
                 document.getElementById('data').innerHTML ='';
                 var exchange = result.exchange;
+                dataOnPage = result.bids;
+                if(document.getElementById('search')!==''){
+                  return search();
+                }
+
                 if(exchange.length>0){
                   console.log('cool')
                 for (var i=0;i<exchange.length;i++){
@@ -362,6 +364,69 @@
                                                   }
             });
 
+        }
+
+        function search() {
+          console.log('search');
+          console.log(document.getElementById('search').value==='')
+          if(document.getElementById('search').value===''){
+            var exchange = dataOnPage;
+          }else{
+
+          for (var i = 0; i < dataOnPage.length; i++) {
+            dataOnPage[i]['id']=i+1;
+          }
+          console.log(dataOnPage);
+          let miniSearch = new MiniSearch({
+fields: ['bookSen.Title', 'bookReq.Title'],
+storeFields: ['status', 'bookSen','bookReq','_id','userReq'],
+searchOptions:{
+  fuzzy:0.4,
+  prefix:true
+}, // fields to return with search results
+ // fields to return with search results
+
+extractField: (document, fieldName) => {
+return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
+} // fields to index for full-text search
+})
+
+// Index all documents
+miniSearch.addAll(dataOnPage);
+let results=miniSearch.search(document.getElementById('search').value)
+var exchange = results;
+console.log(results)
+}
+document.getElementById('data').innerHTML ='';
+if(exchange.length>0){
+  console.log('cool')
+for (var i=0;i<exchange.length;i++){
+document.getElementById('data').innerHTML +=`<div class="card-header moreBox" style="margin-top:30px">
+                ${exchange[i].userReq.profile.location}
+              </div>
+            <div class="card">
+              <div class="card-body moreBox" >
+                <h5 class="card-title" style="margin-bottom:1rem">  <b>${exchange[i].userReq.profile.fname+' '+exchange[i].userReq.profile.lname}</b> would like to make the exchange <a href="/shelf/viewbk/${exchange[i].bookSen.Title}"><b>${exchange[i].bookSen.Title}</b></a> for <a href="/shelf/viewbk/${exchange[i].bookReq.Title}"><b>${exchange[i].bookReq.Title}</b></a> </h5>
+                <div class="card-image" style="padding-left:10%">
+
+                              <img src="${exchange[i].bookSen.ImageURLL}" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
+                              <img src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/DoubleArrowLeftRight-512.png" alt="Rounded Image" class="img-responsive" style="width:10%;margin-left:40px;margin-right: 40px">
+                              <img src="${exchange[i].bookReq.ImageURLL}" alt="Rounded Image" class="img-responsive" style="width:17%;height:200px">
+
+                          </div>
+                <br>
+                <a href="/exchange/viewtrade/${exchange[i]._id}" class="btn btn-primary">View</a>
+              </div>
+            </div>
+            <div style="margin-left:45%" id="loadMore">
+              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See All...</button>
+            </div>`;
+                            }
+                            }else{
+                          document.getElementById('data').innerHTML=    '<div style="display:flex;flex-direction:row;justify-content:center;align-items:center;width:100%;height:30vh;">'+
+                              '  <h3>No books found</h3>'+
+                              '</div>';
+                            }
         }
 
       </script>

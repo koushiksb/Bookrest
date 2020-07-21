@@ -275,7 +275,11 @@ router.post('/search',(req,res)=>{
     console.log(x[0])
     let miniSearch = new MiniSearch({
   fields: ['Title', 'Author'], // fields to index for full-text search
-  storeFields: ['Title','Author','ImageURLM'] // fields to return with search results
+  storeFields: ['Title','Author','ImageURLM'],
+  searchOptions:{
+    fuzzy:0.4,
+    prefix:true
+  } // fields to return with search results
 
 })
   miniSearch.addAll(x);

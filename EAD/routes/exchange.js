@@ -188,6 +188,7 @@ router.get('/tradepage',(req,res)=>{
     var locations = ['Bangalore','Bhuvaneshwar','Chennai','Delhi','Goa','Hyderabad','Jabalpur','Kolkatta','Lucknow','Mumbai',
     'Munnar','Mysore','Nagpur','Noida','Patna','Pondicherry','Pune','Raipur','Shimla','Trichy','Vijayawada','Vishakhapatnam',
     'Warangal','Tirupati'];
+    console.log(gen)
     return res.render('viewtrades',{exchange:gen,locations:locations,layout:"navbar2"})
   })
 })
