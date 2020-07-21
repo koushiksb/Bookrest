@@ -557,7 +557,8 @@ a:active,a:focus{outline:0;}
     &nbsp&nbsp&nbsp&nbsp
     <a class="btn btn-rose btn-round" style="color:white" id='but' href="#" data-toggle="modal" data-target='#x<%=i.toString()%>'  >Edit details</a>
     &nbsp&nbsp&nbsp&nbsp
-    <a class="btn btn-rose btn-round" style="color:white" target="_blank" id='but' href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=mybids[i].eventName%>&dates=<%=mybids[i].fromTime%>/<%=mybids[i].toTime%>&details=<%=mybids[i].details%>&location=&output=xml">Add to Calendar</a>
+    <!-- <a class="btn btn-rose btn-round" style="color:white" onclick="downloadIcs()" target="_blank" id='but' href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=mybids[i].eventName%>&dates=<%=mybids[i].fromTime%>/<%=mybids[i].toTime%>&details=<%=mybids[i].details%>&location=&output=xml">Add to Calendar</a> -->
+    <a class="btn btn-rose btn-round" style="color:white" href="https://www.google.com/calendar/render?action=TEMPLATE&text=<%=mybids[i].eventName%>&dates=<%=mybids[i].fromTime%>/<%=mybids[i].toTime%>&details=<%=mybids[i].details%>&location=&output=xml" target="_blank" onclick="downloadIcs('<%-mybids[i].eventName%>','<%-mybids[i].fromTime%>','<%-mybids[i].toTime%>','<%-mybids[i].details%>')" id='but'>Add to Calendar</a>
 
                             </p>
                           </div>
@@ -731,7 +732,17 @@ mybids[i].bookid.Genre+
                         '<a class="btn btn-rose btn-round" style="color:white"  href="#" data-toggle="modal" data-target="'+
                         '#x'+i.toString()+ '" >Edit details</a>'+
                         '&nbsp&nbsp&nbsp&nbsp'+
-                        '<a class="btn btn-rose btn-round" style="color:white" target="_blank" href="'+
+                        '<a class="btn btn-rose btn-round" style="color:white" onclick="downloadIcs(' +
+                        '\'' +
+                        mybids[i].eventName +
+                        '\',\'' +
+                        mybids[i].fromTime+
+                        '\',\'' +
+                        mybids[i].toTime+
+                        '\',\'' +
+                        mybids[i].details +
+                        '\'' +
+                        ')" target="_blank" href="'+
                         'https://www.google.com/calendar/render?action=TEMPLATE&text=' + 
                         mybids[i].eventName + 
                         '&dates='+ 
@@ -770,8 +781,16 @@ mybids[i].bookid.Genre+
 
           </script>
 
-
+<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
 <script type="text/javascript">
+function downloadIcs(eventName,fromTime,toTime,eventDetails) {
+  // var eventData = JSON.stringify(eventData)
+  // console.log('eventData',eventData);
+  eventDetails = eventDetails.replace(/<br>/g,'\\n');
+  var blob = new Blob(["BEGIN:VCALENDAR\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nPRODID:iCalendar-Ruby\nVERSION:2.0\nBEGIN:VEVENT\nDESCRIPTION:" + eventDetails + "\nDTEND:" + toTime + "\nDTSTART:" + fromTime + "\nLOCATION:" + "\nSEQUENCE:0\nSUMMARY:" + eventName + "\nEND:VEVENT\nEND:VCALENDAR"], { type: 'text/plain;charset=utf-8' });
+  saveAs(blob,'event.ics');
+}
+
 function deletebid(bidid,bookname,actualdate) {
   if(new Date(actualdate)>new Date()){
   console.log('delete');
