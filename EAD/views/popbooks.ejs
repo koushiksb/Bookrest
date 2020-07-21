@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
+  <!--  Social tags      -->
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- End Google Tag Manager -->
+  <style>
+  .checked {
+  color: orange;
+}
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="load-more-button.js"></script>
+</head>
+
+<body class="product-page sidebar-collapse">
+
+
+  <!-- End Navbar -->
+  <div class="page-header page-header-xs" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1153&q=80');">
+  </div>
+
+    <div class="main">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-12">
+            <h2 style="color:black"><%= books[0].Class%> Books</h2>
+            <br/>
+          </div>
+          <% for(i=0;i<books.length; i++){%>
+          <div class="col-md-3 col-sm-3 moreBox" style="display:none">
+            <div class="card card-product card-plain">
+              <div class="card-image">
+                <a href="/shelf/viewbk/<%=books[i].Title%>">
+                  <img src="<%=books[i].ImageURLM%>" style="width:104px !important;height:160px !important" alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg" class="img-rounded img-responsive">
+                </a>
+                <div class="card-body">
+                  <div class="card-description">
+                    <p class="card-title" style="font-family:400"><%= books[i].Title%></p>
+                    <p class="card-description"><%= books[i].Author%></p>
+                    <div >
+                      <span class="fa fa-star checked"></span>
+                      <span class="fa fa-star checked"></span>
+                      <span class="fa fa-star checked"></span>
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star"></span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </div>
+      </div>
+    </div>
+<br>
+<div style="margin-left:45%" id="loadMore">
+              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See More...</button>
+          </div>
+          <script>
+   $( document ).ready(function () {
+  $(".moreBox").slice(0, 16).show();
+    if ($(".blogBox:hidden").length != 0) {
+      $("#loadMore").show();
+    }
+    $("#loadMore").on('click', function (e) {
+      e.preventDefault();
+      $(".moreBox:hidden").slice(0, 16).slideDown();
+      if ($(".moreBox:hidden").length == 0) {
+        $("#loadMore").fadeOut('slow');
+      }
+    });
+  });
+</script>
+
+  <!--   Core JS Files   -->
+</body>
+</html>
