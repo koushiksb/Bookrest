@@ -7,6 +7,8 @@ const Shelf=require('../models/Shelf')
 const RareRequest=require('../models/RareRequest')
 const async = require('async')
 const isLoggedIn = require('../utils/isLoggedIn')
+var nodemailer = require('nodemailer');
+
 
 router.get('/shelf',(req,res)=>{
   console.log(req.user.email);
@@ -158,7 +160,23 @@ router.post('/viewrequest',isLoggedIn.isLoggedIn,(req,res)=>{
         period:till_date
 
       });
-      add.save().then(a=>{
+      add.save().then(async a=>{
+        await User.findOne(id:req.body.requester).then(d=>{
+                  var transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true, // use SSL
+          auth: {
+              user: 'bookrest.com@gmail.com',
+              pass: 'ead@0139'
+          }
+          });
+                  var mailOptions = { from: 'no-reply@Bookrest.com', to: newUser.email, subject: 'Lend Request Status', text: 'Hello,\n\n' + 'Your lend request is accepted, Please finish payment to read the book: \nhttp:\/\/' + req.headers.host + '\/payments/pending' + '.\n' };
+                  transporter.sendMail(mailOptions, function (err) {
+                      if (err) { return res.status(500).send({ msg: err.message }); }
+
+        })
+
         return res.sendStatus(200)
 
       })
