@@ -176,10 +176,11 @@ router.post('/viewrequest',isLoggedIn.isLoggedIn,(req,res)=>{
                       if (err) { return res.status(500).send({ msg: err.message }); }
 
         })
-
+});
+});
         return res.sendStatus(200)
 
-      })
+
     }else{
       console.log('jhgfdsa');
       return res.sendStatus(200)
