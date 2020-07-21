@@ -503,7 +503,7 @@ if(item[1]==='true' && item[0]!=='all' ){
   Openbid.find({userid:req.user.id,status:1}).populate('bookid').sort({date:1}).lean()
   .then(async x=>{
               await x.forEach((item, i) => {
-                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT",true);
+                item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, hh:MM TT");
                 item['actualdate'] = item.date;
                 item['fromTime'] = item.date.toISOString().replace(/\-/g,'').replace(/\:/g,'').replace(/\..+/,'') + 'Z'
                 toTime = new Date(item.date.getTime() + 1000*60*60*1);                
