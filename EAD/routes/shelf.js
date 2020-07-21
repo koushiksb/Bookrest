@@ -435,9 +435,24 @@ router.get('/deletereview/:title',(req,res)=>{
 
 
 router.get('/deletebook/:title',isLoggedIn.isLoggedIn,(req,res)=>{
-  Book.findOne({Title:req.params.title}).then(x=>{
-    Shelf.findOneAndRemove({user:req.user._id,book:x._id}).then(y=>{
-      res.redirect('/shelf/view');
+  Book.findOne({Title:req.params.title}).then(async(x)=>{
+    await Shelf.findOneAndRemove({user:req.user._id,book:x._id}).then(y=>{
+      // res.redirect('/shelf/view');
+    });
+    await Shelf.find({book:x._id}).then(y=> {
+      
+      if(y.length === 0) {
+        console.log('no one have these');
+
+        Book.findOneAndRemove({_id:x._id}).then(z=> {
+          res.redirect('/shelf/view');
+        })        
+      }
+      else {
+        console.log('some one else have these');
+        
+        res.redirect('/shelf/view');
+      }
     });
   })
 });
