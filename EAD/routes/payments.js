@@ -1,99 +1,104 @@
-const express = require('express');
-const router = express.Router();
-const isLoggedIn = require('../utils/isLoggedIn');
-const Payment = require('../models/Payment')
-const User = require('../models/User');
-const Profile = require('../models/Profile')
-const dateFormat = require('dateformat');
+  /*
+  All payment related logic goes here
+  */
 
-router.get('', isLoggedIn.isLoggedIn, (req, res) => {
-    return res.render('payments', { layout: 'navbar2' });
-})
+  const Payment = require('../models/Payment')
+  const User = require('../models/User');
+  const Profile = require('../models/Profile')
+  const express = require('express');
+  const router = express.Router();
+  const dateFormat = require('dateformat');
+  const isLoggedIn = require('../utils/isLoggedIn');
 
-router.get('/history', isLoggedIn.isLoggedIn, async (req, res) => {
-    var paid;
-    var received;
-    var allPayments;
-    await Payment.find({ purchaser: req.user._id, status: true }).populate({ path: 'owner', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((x) => {
-        paid = x;
-        console.log('paid', paid);
-    });
-
-    await Payment.find({ owner: req.user._id, status: true }).populate({ path: 'purchaser', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((y) => {
-        received = y;
-        // console.log('received', received);
-    });
-
-    allPayments = paid.concat(received);
-    await allPayments.forEach((item, i) => {
-        item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+  router.get('', isLoggedIn.isLoggedIn, (req, res) => {
+      return res.render('payments', { layout: 'navbar2' });
+  })
+  /*Api to view payment history of the user*/
+  router.get('/history', isLoggedIn.isLoggedIn, async (req, res) => {
+      var paid;
+      var received;
+      var allPayments;
+      await Payment.find({ purchaser: req.user._id, status: true }).populate({ path: 'owner', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((x) => {
+          paid = x;
+          console.log('paid', paid);
       });
 
-    await User.findOne({ _id: req.user._id }).then((z)=> {
-        if(z.walletBalance) {
-            allPayments.walletBalance = z.walletBalance;
-        }
-        else {
-            allPayments.walletBalance = 0;
-        }
-    });
-      
-    console.log('all Payments', allPayments);
-    allPayments.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-    })
-    // await Payment.find({ owner: req.user._id }).then((received) => {
-    //     p2 = received;
-    //     console.log('gotpaid', received);
-    // });
+      await Payment.find({ owner: req.user._id, status: true }).populate({ path: 'purchaser', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((y) => {
+          received = y;
+          // console.log('received', received);
+      });
 
-    // for (i = 0; i < p1.length; i++) {
-    //     await User.findOne({_id:p1[i].owner}).select('profile -_id').populate('profile','fname lname').then((paidto)=> {
-    //         console.log('paid to',paidto);
-    //         p1[i].profile = paidto;                 
-    //     });
-    // }
+      allPayments = paid.concat(received);
+      await allPayments.forEach((item, i) => {
+          item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+        });
 
-    // for (i = 0; i < p2.length; i++) {
-    //     await User.findOne({_id:p1[i].purchaser}).select('profile -_id').populate('profile','fname lname').then((receivedfrom)=> {
-    //         console.log('paid to',receivedfrom);
-    //         p2[i].profile = receivedfrom;                 
-    //     });
-    // }
+      await User.findOne({ _id: req.user._id }).then((z)=> {
+          if(z.walletBalance) {
+              allPayments.walletBalance = z.walletBalance;
+          }
+          else {
+              allPayments.walletBalance = 0;
+          }
+      });
 
-    return res.render('paymentshistory', { paid: paid, layout: 'navbar2', received: received, allPayments: allPayments });
-})
+      console.log('all Payments', allPayments);
+      allPayments.sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+      })
+      // await Payment.find({ owner: req.user._id }).then((received) => {
+      //     p2 = received;
+      //     console.log('gotpaid', received);
+      // });
 
-router.get('/pending', isLoggedIn.isLoggedIn, async(req, res) => {
-    var getPaid;
-    var pay;
-    var allPayments;
-    await Payment.find({ purchaser: req.user._id, status: false }).populate({ path: 'owner', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((x) => {
-        pay = x;
-        // console.log('paid', pay);
-    });
+      // for (i = 0; i < p1.length; i++) {
+      //     await User.findOne({_id:p1[i].owner}).select('profile -_id').populate('profile','fname lname').then((paidto)=> {
+      //         console.log('paid to',paidto);
+      //         p1[i].profile = paidto;
+      //     });
+      // }
 
-    await Payment.find({ owner: req.user._id, status: false }).populate({ path: 'purchaser', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((y) => {
-        getPaid = y;
-        // console.log('received', getPaid);
-    });
+      // for (i = 0; i < p2.length; i++) {
+      //     await User.findOne({_id:p1[i].purchaser}).select('profile -_id').populate('profile','fname lname').then((receivedfrom)=> {
+      //         console.log('paid to',receivedfrom);
+      //         p2[i].profile = receivedfrom;
+      //     });
+      // }
 
-    allPayments = pay.concat(getPaid);
+      return res.render('paymentshistory', { paid: paid, layout: 'navbar2', received: received, allPayments: allPayments });
+  })
 
-    await User.findOne({ _id: req.user._id }).then((z)=> {
-        if(z.walletBalance) {
-            allPayments.walletBalance = z.walletBalance;
-        }
-        else {
-            allPayments.walletBalance = 0;
-        }
-    });
+  /*Api to view pending payments of the user*/
+  router.get('/pending', isLoggedIn.isLoggedIn, async(req, res) => {
+      var getPaid;
+      var pay;
+      var allPayments;
+      await Payment.find({ purchaser: req.user._id, status: false }).populate({ path: 'owner', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((x) => {
+          pay = x;
+          // console.log('paid', pay);
+      });
 
-    console.log('all Payments', allPayments);
-    allPayments.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-    })
-    return res.render('pendingpayments', { layout: 'navbar2',allPayments:allPayments });
-})
+      await Payment.find({ owner: req.user._id, status: false }).populate({ path: 'purchaser', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((y) => {
+          getPaid = y;
+          // console.log('received', getPaid);
+      });
 
-module.exports = router;
+      allPayments = pay.concat(getPaid);
+
+      await User.findOne({ _id: req.user._id }).then((z)=> {
+          if(z.walletBalance) {
+              allPayments.walletBalance = z.walletBalance;
+          }
+          else {
+              allPayments.walletBalance = 0;
+          }
+      });
+
+      console.log('all Payments', allPayments);
+      allPayments.sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+      })
+      return res.render('pendingpayments', { layout: 'navbar2',allPayments:allPayments });
+  })
+
+  module.exports = router;

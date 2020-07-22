@@ -1,12 +1,20 @@
-const mongoose = require('mongoose');
+  /*
+
+  User email verification tokens are stored here
+
+  */
 
 
-const tokenSchema = new mongoose.Schema({
-    _userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-    token: { type: String, required: true },
-    createdAt: { type: Date, required: true, default: Date.now, expires: 43200 }
-});
 
-const Token = mongoose.model('token',tokenSchema);
+  const mongoose = require('mongoose');
 
-module.exports=Token;
+
+  const tokenSchema = new mongoose.Schema({
+      _userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+      token: { type: String, required: true },
+      createdAt: { type: Date, required: true, default: Date.now, expires: 43200 }
+  });
+
+  const Token = mongoose.model('token',tokenSchema);
+
+  module.exports=Token;
