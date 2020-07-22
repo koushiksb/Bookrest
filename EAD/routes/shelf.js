@@ -73,11 +73,17 @@ router.get('/view',isLoggedIn.isLoggedIn,(req,res)=>{
 
   Shelf.find({user:req.user._id,$or:[{period:{$exists:true,$gte: new Date()}},{period:{$exists:false}}]}).populate('book','Title ImageURLM').then(async(x)=>{
     // console.log('check1',x);
-    Shelf.find({user:req.user._id}).lean().then(async(y)=>{
+    Shelf.find({user:req.user._id}).lean().populate({path:'user',model:'User'}).then(async(y)=>{
       // console.log('check2',y);
 
       for(i=0;i<y.length;i++) {
         if(y[i].owner === '1') {
+          if(y[i].user.walletBalance >= 0) {
+            y[i].user.walletBalance = y[i].user.walletBalance
+          }
+          else {
+            y[i].user.walletBalance = 0
+          }
           await Payment.find({purchaser:y[i].user,book:y[i].book._id}).then((z)=>{
             console.log('z1',z);
             if(z.length > 0) {
@@ -461,26 +467,43 @@ router.get('/deletebook/:title',isLoggedIn.isLoggedIn,(req,res)=>{
 router.post('/charge',(req,res)=>{
   var token = req.body.stripeToken;
   var chargeAmount = req.body.chargeAmount;
-  var bookid = req.body.id;
-  var charge = stripe.charges.create({
-    amount : chargeAmount,
-    currency : "inr",
-    source : token,
-  }, function(err,charge){
-    if(err){
-      console.log("Your card was declined");
-    }
-}).then((hh)=>{
-  // add bookid to the users subscription list
-  // console.log(bookid);
-  Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
-    Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
-      User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
-        res.redirect('/shelf/view');
+  var bookid = req.body.id;  
+  if(token) {
+    var charge = stripe.charges.create({
+      amount : chargeAmount,
+      currency : "inr",
+      source : token,
+    }, function(err,charge){
+      if(err){
+        console.log("Your card was declined");
+      }
+  }).then((hh)=>{
+    // add bookid to the users subscription list
+    // console.log(bookid);
+    Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
+      Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
+        User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+          res.redirect('/shelf/view');
+        });
       });
     });
-  });
-});
+  });  
+  }
+  else {
+    console.log('working fine');
+    Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
+      Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
+        console.log('d',d);
+        
+        User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+          chargeAmount = -1*chargeAmount;
+          User.findOneAndUpdate({_id:d.purchaser},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+            res.redirect('/shelf/view');
+          });
+        });
+      });
+    });
+  }
 });
 
 router.post('/uploadSoftCopy',[isLoggedIn.isLoggedIn,multer(bookUploadConf).single('bookSoftCopy')],(req,res)=>{

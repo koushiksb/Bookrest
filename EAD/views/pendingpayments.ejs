@@ -1227,21 +1227,115 @@
                                             <% } else { %>
                                             Pay Now to <b
                                                 style="color: black;"><%=allPayments[i].owner.profile.fname%></b> <br>
-                                            <form action="/shelf/charge" method="post">
-                                                <script src="https://checkout.stripe.com/checkout.js"
-                                                    class="stripe-button"
-                                                    data-key="pk_test_51Gtt6XLG3iR3WbW87jLGZqAHKPibjAmJeK4dqHoVPVsGMA2RVOP1Vjk2GYYgpOTUtTOSGAAXzQKUx5RKZvETBfkC00mH6pT7Wp"
-                                                    data-amount="<%= allPayments[i].amount*100 %>"
-                                                    data-name="<%= allPayments[i].book.Title %>" data-description=""
-                                                    data-locale="auto" data-currency="inr">
-                                                    </script>
-                                                <button type="submit" class="b btn btn-round"
-                                                    style="color:white;background-color:#66615B;border:1px solid white">Pay
-                                                    to unlock</button>
-                                                <input type="hidden" name="chargeAmount"
-                                                    value="<%= allPayments[i].amount %>">
-                                                <input type="hidden" name="id" value="<%=allPayments[i].book._id%>">
-                                            </form>
+
+                                            <a class="btn btn-rose btn-round" style="color:white" id='but' href="#"
+                                                data-toggle="modal" data-target='#payoptions'>Pay to unlock</a>
+
+                                            <div class="modal fade" id="payoptions">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="border-bottom:0px !important">
+                                                            <h3
+                                                                style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>
+                                                                Bookrest</h3><br>
+                                                            <p
+                                                                style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">
+                                                                Find the hidden</p>
+                                                        </div>
+
+                                                        <div class="modal-body">
+
+
+                                                            <div class="form-group">
+                                                                <h6 style="text-align:center">Wallet Balance :
+                                                                    <%= allPayments.walletBalance %></h6>
+                                                                <h6 style="text-align:center">Amount To be paid :
+                                                                    <%= allPayments[i].amount %></h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer"
+                                                            style="border-top:0px !important;padding:1rem 5rem !important">
+                                                            <% if( allPayments.walletBalance >= allPayments[i].amount) { %>
+                                                            <button type="button" class="b btn btn-round"
+                                                                style="float: left" data-toggle="modal"
+                                                                data-target='#confirmation'>Pay from wallet</button>
+                                                            <% } else { %>
+                                                            <button type="button" class="b btn btn-round"
+                                                                style="float: left" data-toggle="modal"
+                                                                data-target='#confirmation' disabled>Pay from
+                                                                wallet</button>
+                                                            <% } %>
+                                                            <form action="/shelf/charge" method="post">
+                                                                <script src="https://checkout.stripe.com/checkout.js"
+                                                                    class="stripe-button"
+                                                                    data-key="pk_test_51Gtt6XLG3iR3WbW87jLGZqAHKPibjAmJeK4dqHoVPVsGMA2RVOP1Vjk2GYYgpOTUtTOSGAAXzQKUx5RKZvETBfkC00mH6pT7Wp"
+                                                                    data-amount="<%= allPayments[i].amount*100 %>"
+                                                                    data-name="<%= allPayments[i].book.Title %>"
+                                                                    data-description="" data-locale="auto"
+                                                                    data-currency="inr">
+                                                                    </script>
+                                                                <button type="submit" class="b btn btn-round"
+                                                                    style="color:white;background-color:#66615B;border:1px solid white">Pay
+                                                                    to unlock</button>
+                                                                <input type="hidden" id="chargeAmount" name="chargeAmount"
+                                                                    value="<%= allPayments[i].amount %>">
+                                                                <input type="hidden" id="id" name="id"
+                                                                    value="<%=allPayments[i].book._id%>">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="confirmation">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="border-bottom:0px !important">
+                                                            <h3
+                                                                style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>
+                                                                Bookrest</h3><br>
+                                                            <p
+                                                                style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">
+                                                                Find the hidden</p>
+                                                        </div>
+
+                                                        <div class="modal-body">
+
+
+                                                            <div class="form-group">
+                                                                <h6 style="text-align:center">Are you sure you want to
+                                                                    pay from the wallet?</h6>
+                                                                <br>
+                                                                <h6 style="text-align:center">Current Balance
+                                                                    &nbsp;&nbsp;&nbsp; =
+                                                                    <%= allPayments.walletBalance %></h6>
+                                                                <h6 style="text-align:center">Book Cost
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    = <%= allPayments[i].amount %></h6>
+                                                                <h6 style="text-align:center">
+                                                                    ============================</h6>
+                                                                <h6 style="text-align:center">Remaining Balance =
+                                                                    <%- allPayments.walletBalance - allPayments[i].amount %>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer"
+                                                            style="border-top:0px !important;padding:1rem 8rem !important">
+                                                            <div id="changeButton">
+                                                                <button type="button" id="showSuccess"
+                                                                    class="b btn btn-round"
+                                                                    style="float: left">Confirm</button>
+                                                            </div>
+                                                            <button type="button" class="b btn btn-round"
+                                                                style="color: red;background-color: white;border: 1px solid red;"
+                                                                data-dismiss="modal">Go Back</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
 
                                             <% } %>
                                         </p>
@@ -1268,6 +1362,29 @@
             document.getElementById("nav2").classList.add('active')
         }
     </script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#showSuccess").click(function () {
+            // alert($(this).val());
+            $(this).css('background', 'green');
+            // $("#changeButton").hide();
+            $("#changeButton").html("<button type='button' id='showSuccess' class='b btn btn-round' style='float: left;background-color:green' >Paid <span class='fa fa-check'></span></button>");
+            $.ajax({
+                type: 'POST',
+                url: '/shelf/charge',
+                data: {
+                    chargeAmount: $("#chargeAmount").val(),
+                    id: $("#id").val(),
+                },
+                success: function (response) {
+                    window.location.replace('/payments/pending');
+                }
+            });
+        });
+    })
+</script>
 
   </body>
 

@@ -1183,10 +1183,20 @@
           <div class="col-md-10 ml-auto mr-auto">
             <h2 class="title">Payments</h2>
             <br>
-            <div style="justify-content:center;color: black;">
-              <b>Wallet Balance : <%= allPayments.walletBalance %></b>
+            <div class="row">
+              <div class="col-md-4">
+                <div style="float:left;color: black;">
+                  <b>Wallet Balance : <%= allPayments.walletBalance %></b>
+                </div>    
+              </div>
+              <div class="col-md-8">
+                <div style="float:right;">
+                  <button type="submit" class="b btn btn-round" style="color:white;background-color:#66615B;border:1px solid white">Add money to wallet</button>
+                </div>    
+              </div>
             </div>
             <br>
+              <br>
             <div class="row" style="justify-content:center">
               <%- include ("./payments.ejs") %>
             </div>
