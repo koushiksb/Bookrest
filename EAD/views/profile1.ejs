@@ -138,6 +138,7 @@ color: white;
           <div class="col-md-6 ml-auto mr-auto">
             <form class="settings-form" enctype="multipart/form-data" method='post' action='profile'>
               <%if(pro!==null && pro!==undefined){%>
+                
             <div class="row">
                       <div class="profile-picture">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -160,6 +161,11 @@ color: white;
                       </div>
                     </div>
                     <%}else{%>
+                      <style media="screen">
+                        #backbutton{
+                          display: none !important;
+                        }
+                      </style>
                       <div class="row">
                                 <div class="profile-picture">
                                   <div class="fileinput fileinput-new" data-provides="fileinput">
