@@ -7,7 +7,9 @@ const BookSchema = new mongoose.Schema({
   Title:{
     type:String
   },
-
+  Class:{
+    type:String
+  },
   Author:{
     type:String
   },
@@ -34,7 +36,9 @@ const BookSchema = new mongoose.Schema({
   },
   Genre:{
     type:String
-  }
+  },
+  Similar:[{type:mongoose.Schema.Types.ObjectId,
+    ref:'Book'}]
 })
 const Book = mongoose.model('Book',BookSchema);
 

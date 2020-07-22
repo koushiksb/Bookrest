@@ -8,6 +8,8 @@
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0" rel="stylesheet">
   <link rel="canonical" href="https://www.creative-tim.com/product/paper-kit-2-pro" />
+  <link rel="icon" type="image/png" href="static/pics/icon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style media="screen">
 h3{margin-top:0;margin-bottom:.5rem;}
 h3{margin-bottom:.5rem;font-weight:500;line-height:1.2;}
@@ -277,8 +279,32 @@ display: none;
           </form>
         <%}%>
         <br>
-
-
+        <div class="reviews-heading">
+          <h3>Similar Books</h3>
+        </div>
+        <% for (j=0;j<similar.length ;j++){%>
+        <div class="col-md-3 col-sm-3" >
+                 <div class="card card-product card-plain">
+                   <div class="card-image">
+                     <a href="/shelf/viewbk/<%=similar[j].Title%>"><img class="af-explames-demo-img" style="width:104px;height:160px" src="<%=similar[j].ImageURLM%>"
+                  alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
+                     <div class="card-body">
+                       <div class="card-description">
+                         <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= similar[j].Title%></p>
+                         <p class="card-description" style="color:white;font-weight: normal"><%= similar[j].Author%></p>
+                         <!-- here we need to keep a loop for displayin the rating -->
+                          <% for(var m=0; m<Math.round(similar[j].Rating/2)+1 ;m++){%>
+                          <span class="fa fa-star checked"></span>
+                          <%}%>
+                          <% for(var m=4; m>Math.round(similar[j].Rating/2) ;m--){%>
+                          <span class="fa fa-star"></span>
+                          <%}%>
+                       </div>
+             </div>
+           </div>
+         </div>
+       </div> 
+       <%} %>
         <div class="reviews-heading">
           <h3 >Reviews</h3>
         </div>
