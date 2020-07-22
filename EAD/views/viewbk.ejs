@@ -123,6 +123,9 @@ display: none;
   margin-top: 2rem;
 
 }
+.checked {
+    color: orange;
+}
 
 </style>
 <style media="screen">
@@ -232,6 +235,36 @@ display: none;
             </div>
 
         </div>
+        <div class="reviews-heading" style="margin-top:4rem;margin-bottom:2rem">
+          <h3>Similar Books</h3>
+        </div>
+        <div class="row">
+
+
+        <% for (j=0;j<similar.length ;j++){%>
+        <div class="col-md-3 col-sm-3" >
+                 <div class="card card-product card-plain">
+                   <div class="card-image">
+                     <a href="/shelf/viewbk/<%=similar[j].Title%>"><img class="af-explames-demo-img" style="width:104px;height:160px" src="<%=similar[j].ImageURLM%>"
+                  alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
+                     <div class="card-body">
+                       <div class="card-description">
+                         <p class="card-title" style="font-weight: normal;width:20ch"><%= similar[j].Title%></p>
+                         <p class="card-description" style="font-weight: normal"><%= similar[j].Author%></p>
+                         <!-- here we need to keep a loop for displayin the rating -->
+                          <% for(var m=0; m<Math.round(similar[j].Rating/2)+1 ;m++){%>
+                          <span class="fa fa-star checked"></span>
+                          <%}%>
+                          <% for(var m=4; m>Math.round(similar[j].Rating/2) ;m--){%>
+                          <span class="fa fa-star"></span>
+                          <%}%>
+                       </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <%} %>
+       </div>
         <%if(given.length>0){%>
           <div class="reviews-heading">
           <h3>Reviewed</h3>
@@ -267,44 +300,24 @@ display: none;
           </div>
         <%}
         else{%>
-          <div class="reviews-heading">
+          <div class="reviews-heading" style="margin-bottom:2rem">
           <h3 >Review this</h3>
           </div>
-          <form method="post" action="/shelf/addreview/<%= title%>">
-            <!-- <label>Add your Experience:</label> -->
-            <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" style="width:50%;height:100px;float:left">
-            <!-- <label>Rate from 1-10:</label> -->
-            <input class="form-control" type="number" required name="rate" min="1" max="10" style="width:10%;display:inline;float:left">
-            <button type="submit" class="btn primary" style="margin-left:10px">ADD</button>
-          </form>
+
+            <form method="post" action="/shelf/addreview/<%= title%>" style="width:100%">
+              <!-- <label>Add your Experience:</label> -->
+              <div class="row justify-content-center align-items-center" >
+              <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" style="width:50%;height:100px;float:left">
+              <!-- <label>Rate from 1-10:</label> -->
+              <input class="form-control" type="number" required name="rate" min="1" max="10" style="width:10%;display:inline;float:left">
+              <button type="submit" class="btn primary" style="margin-left:10px">ADD</button>
+              </div>
+            </form>
+
+
         <%}%>
         <br>
-        <div class="reviews-heading">
-          <h3>Similar Books</h3>
-        </div>
-        <% for (j=0;j<similar.length ;j++){%>
-        <div class="col-md-3 col-sm-3" >
-                 <div class="card card-product card-plain">
-                   <div class="card-image">
-                     <a href="/shelf/viewbk/<%=similar[j].Title%>"><img class="af-explames-demo-img" style="width:104px;height:160px" src="<%=similar[j].ImageURLM%>"
-                  alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
-                     <div class="card-body">
-                       <div class="card-description">
-                         <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= similar[j].Title%></p>
-                         <p class="card-description" style="color:white;font-weight: normal"><%= similar[j].Author%></p>
-                         <!-- here we need to keep a loop for displayin the rating -->
-                          <% for(var m=0; m<Math.round(similar[j].Rating/2)+1 ;m++){%>
-                          <span class="fa fa-star checked"></span>
-                          <%}%>
-                          <% for(var m=4; m>Math.round(similar[j].Rating/2) ;m--){%>
-                          <span class="fa fa-star"></span>
-                          <%}%>
-                       </div>
-             </div>
-           </div>
-         </div>
-       </div> 
-       <%} %>
+
         <div class="reviews-heading">
           <h3 >Reviews</h3>
         </div>
