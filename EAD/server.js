@@ -111,7 +111,7 @@
     res.redirect('/users/dashboard');
   })
   app.use('/users',require('./routes/user'));
-  app.use('/test',require('./routes/testing'));
+  // app.use('/test',require('./routes/testing'));
   app.use('/my',require('./routes/requestrare'));
   app.use('/shelf',require('./routes/shelf'));
   app.use('/book',require('./routes/bidding'));
