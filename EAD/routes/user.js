@@ -371,7 +371,7 @@ dashboard search api
       console.log(x[0])
       let miniSearch = new MiniSearch({
           fields: ['Title', 'Author'], // fields to index for full-text search
-          storeFields: ['Title','Author','ImageURLM'],
+          storeFields: ['Title','Author','ImageURLM','Rating'],
           searchOptions:{
               fuzzy:0.4,
               prefix:true

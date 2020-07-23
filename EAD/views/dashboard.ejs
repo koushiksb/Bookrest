@@ -112,10 +112,10 @@
                          <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= books[i][j].Title%></p>
                          <p class="card-description" style="color:white;font-weight: normal"><%= books[i][j].Author%></p>
                          <!-- here we need to keep a loop for displayin the rating -->
-                          <% for(var m=0; m<Math.round(books[i][j].Rating/2)+1 ;m++){%>
+                          <% for(var m=0; m<Math.round(books[i][j].Rating/2) ;m++){%>
                           <span class="fa fa-star checked"></span>
                           <%}%>
-                          <% for(var m=4; m>Math.round(books[i][j].Rating/2) ;m--){%>
+                          <% for(var m=4; m>Math.round(books[i][j].Rating/2)-1 ;m--){%>
                           <span class="fa fa-star"></span>
                           <%}%>
                        </div>
