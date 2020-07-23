@@ -150,9 +150,9 @@ display: none;
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                 <div class="col">
-                  <div class="review-user-name"><%=unseen[not].Type%></div>
+                  <a href="/exchange/ongoing"><div class="review-user-name"><%=unseen[not].Type%></div></a>
                   <div class="myrow margin-top-review-box" style="font-weight: 400;">
-                    <%= unseen[not].User.profile.fname%>&nbsp;<%=unseen[not].User.profile.lname%>&nbsp;<%=unseen[not].Message%>
+                    <%=unseen[not].Message%>
                   </div>
                 </div>
               </div>
@@ -163,9 +163,9 @@ display: none;
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                 <div class="col">
-                  <div class="review-user-name"><%=seen[not].Type%></div>
+                  <a href="/exchange/ongoing"><div class="review-user-name"><%=seen[not].Type%></div></a>
                   <div class="myrow margin-top-review-box" style="font-weight: 400;">
-                    <%= seen[not].User.profile.fname%>&nbsp;<%=seen[not].User.profile.lname%>&nbsp;<%=seen[not].Message%>
+                    <%=seen[not].Message%>
                   </div>
                 </div>
               </div>

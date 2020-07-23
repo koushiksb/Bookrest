@@ -141,20 +141,24 @@
   router.post('/ongoing',(req,res)=>{
     Exchange.findOne({_id:req.body.id}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}})
     .then(x=>{
-      if(x.userReq == req.user.id){
+      console.log(req.user.id)
+      console.log(x.userReq._id)
+      if(x.userReq._id == req.user.id){
         x.exchangeReq = true
+        console.log('bskjs')
         var n = new Notify({
           User:x.userAcc,
           Type:'Book Received',
           Message:x.userReq.profile.fname+' '+x.userReq.profile.lname+' has received the book you sent.'
         }).save()
       }else{
-          x.exchangeSen = true
+        x.exchangeSen = true
           var n = new Notify({
           User:x.userReq,
           Type:'Book Received',
           Message:x.userAcc.profile.fname+' '+x.userAcc.profile.lname+' has received the book you sent.'
         }).save()
+        console.log('hhknjn')
       }
       x.save()
       .then(a=>{
@@ -308,15 +312,18 @@
   Api to accept the exchange requests
   */
   router.get('/accept/:id',isLoggedIn.isLoggedIn,(req,res)=>{
-    Exchange.findOneAndUpdate({_id:req.params.id},{status:true,userAcc:req.user.id}).then(x=>{
+    Exchange.findOneAndUpdate({_id:req.params.id},{status:true,userAcc:req.user.id}).then(async(x)=>{
       console.log(x);
-      var n = new Notify({
-        User:x.userReq,
+    await Exchange.findOne({_id:req.params.id}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}})
+    .then(async(y)=>{
+        var n = new Notify({
+        User:y.userReq,
         Type:'Exchange Accepted',
-        Message:' has accepted to exchange the book that you offered.'
+        Message:y.userAcc.profile.fname+' '+y.userAcc.profile.lname+' has accepted to exchange the book that you offered.'
       }).save()
-      return res.redirect('/exchange/ongoing')
-    });
+       return res.redirect('/exchange/ongoing')
+    })
+  })
   })
 
   //

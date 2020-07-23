@@ -241,7 +241,7 @@ notification
 router.get('/notify',isLoggedIn,(req,res)=>{
   var unseen=[]
   var seen = []
-  Notify.find({User:req.user.id}).populate({path:'User',model:'User',populate:{path:'profile',model:'Profile'}}).then(y=>{
+  Notify.find({User:req.user.id}).then(y=>{
     // console.log(y)
     for (i=0;i<y.length;i++){
       if(y[i].Status){
