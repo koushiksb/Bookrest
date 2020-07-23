@@ -42,7 +42,9 @@
     .form-check input[type=radio]:checked+.form-check-sign:after{opacity:1;}
     .form-check .form-check-label input[type=radio]:disabled+.form-check-sign{pointer-events:none!important;}
     .form-check-label input[type=radio]:checked+.form-check-sign:before{background-color:#66615b;}
-
+    #backbutton{
+      display: none
+    }
   </style>
 
 </head>
@@ -53,6 +55,10 @@
       <div class="section">
         <div class="container">
           <h3>Add Book</h3>
+          <div onclick="goBack()" style="position:absolute;top:12%;right:7%;cursor:pointer">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            back
+          </div>
           <div>
             <div class="row">
               <div class="col-md-5 col-sm-5">
@@ -219,7 +225,7 @@
             },
             success:function(result){
               window.location.replace('/shelf/view')
-            }            
+            }
           });
         });
 
@@ -307,7 +313,7 @@
   });
 
 };
-      
+
     })
 
 

@@ -20,6 +20,7 @@ const isLoggedIn = require('../utils/isLoggedIn');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3-v2');
 const AWS = require('aws-sdk');
+const gpath = require('path');
 var s3 = new aws.S3(
   // {
   //   accessKeyId: '',
@@ -35,7 +36,7 @@ const multerconf = {
     destination: function (req, file, next) {
       // const ext = file.mimetype.split('/')[0];
       // if(ext === 'image'){
-      next(null, './static/coverimages');
+      next(null, gpath.join(__dirname,'../static/coverimages/'));
       // }
       // else{
       //   next(null,'./static/pdf');
@@ -203,10 +204,10 @@ Function to get storage path of book cover photos
 
 function path(req) {
   if (req.file) {
-    return '../static/coverimages/' + req.file.filename;
+    return '/static/coverimages/' + req.file.filename;
   }
   else {
-    return '../static/pics/image_placeholder.jpg';
+    return '/static/pics/image_placeholder.jpg';
   }
 }
 

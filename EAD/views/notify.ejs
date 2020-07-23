@@ -137,17 +137,17 @@ display: none;
 </head>
 
 <body class="product-page sidebar-collapse">
-  <div class="main">
+  <div class="main" style="min-height:85vh">
     <div class="section">
       <div class="container">
         <div class="row title-row">
           <div class="reviews-heading">
           <h3>Notifications</h3>
-          </div> 
+          </div>
           <% if (len>0){%>
             <% if(unseen.length>0){%>
             <h4>New notifications</h4>
-            <%for(not=0;not<unseen.length;not++){%> 
+            <%for(not=0;not<unseen.length;not++){%>
             <div class="column">
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
@@ -163,7 +163,7 @@ display: none;
             <%}%>
             <% if(seen.length>0){%>
             <h4>Seen Notifications</h4>
-            <%for(not=0;not<seen.length;not++){%> 
+            <%for(not=0;not<seen.length;not++){%>
             <div class="column">
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
@@ -187,7 +187,7 @@ display: none;
       </div>
     </div>
   </div>
-  
+
 
   <script src="https://demos.creative-tim.com/paper-kit-2-pro/assets/js/core/jquery.min.js" type="text/javascript"></script>
 </body>
