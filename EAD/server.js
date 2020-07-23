@@ -234,8 +234,9 @@
        console.log(data)
        var ac = new AuctionChat({room:data.room,userid:data.userid,bidid:data.bidid,message:data.message})
        ac.save().then(x=>{
-         socket.broadcast.in(data.room).emit('auction_chat',{message:data.message})
+
        })
+       socket.broadcast.in(data.room).emit('auction_chat',{message:data.message})
 
      })
 
