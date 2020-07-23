@@ -221,16 +221,13 @@
     $("#year").prop("disabled",false);
     $("#image").attr("src",'../static/pics/image_placeholder.jpg');
     $("#imageSelect").show();
-    alert('e');
   });
 
   $("#hasHardCopy").change(function() {
     if($(this).is(':checked')) {
-      alert('hi');
       $(this).val(true);
     }
     else {
-      alert('bye');
       $(this).val(false);
     }
   });
