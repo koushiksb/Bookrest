@@ -128,7 +128,66 @@ router.get('/addbook', isLoggedIn.isLoggedIn, (req, res) => {
     }
     console.log('booksInfo', booksInfo.length);
 
-    res.render('addbook', { 'booksInfo': booksInfo, layout: 'navbar2' });
+    res.render('addbook', { 'booksInfo': booksInfo, layout: 'navbar2', 'edit': false });
+  });
+
+});
+
+/*
+Api to edit book information in user shelf
+*/
+
+router.get('/editbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
+  Book.findOne({ Title: req.params.title }).then((books) => {
+    booksInfo = [[]];
+    booksInfo[0].push(books.Title);
+    booksInfo[0].push(books.Publisher);
+    booksInfo[0].push(books.Author);
+    booksInfo[0].push(books.YearOfPublication);
+    booksInfo[0].push(books.ImageURLL);
+    Shelf.find({ user: req.user._id, book: books._id }).then((y) => {
+      booksInfo[0].push(y[0].hasHardCopy);
+      if (y[0].softcopy) {
+        console.log('y[0].softcopy', y[0].softcopy);
+        console.log('y[0].softcopy', y[0].softcopy.length);
+
+        booksInfo[0].push(true);
+      }
+      else {
+        booksInfo[0].push(false);
+      }
+
+      res.render('addbook', { 'booksInfo': booksInfo, layout: 'navbar2', 'edit': true });
+    });
+  })
+
+});
+
+/*
+Api to edit book information in user shelf
+*/
+
+router.post('/editbook', isLoggedIn.isLoggedIn, (req, res) => {
+  var delSoftCopy = req.body.delSoftCopy;
+  var hasHardCopy = req.body.hasHardCopy;
+  var bookname = req.body.hiddenbookname;
+
+  if (delSoftCopy === 'true') {
+    delSoftCopy = '';
+  }
+
+  Book.findOne({ Title: bookname }).then((x) => {
+    if (delSoftCopy === '') {
+      Shelf.findOneAndUpdate({ user: req.user._id, book: x._id }, { hasHardCopy: hasHardCopy, softcopy: delSoftCopy }).then((y) => {
+        res.redirect('/shelf/view');
+      });
+    }
+    else {
+
+      Shelf.findOneAndUpdate({ user: req.user._id, book: x._id }, { hasHardCopy: hasHardCopy }).then((y) => {
+        res.redirect('/shelf/view');
+      });
+    }
   });
 
 });
