@@ -19,25 +19,32 @@ router.get('/history', isLoggedIn.isLoggedIn, async (req, res) => {
         console.log('paid', paid);
     });
 
-    await Payment.find({ owner: req.user._id, status: true }).populate({ path: 'purchaser', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then((y) => {
-        received = y;
+    await Payment.find({ owner: req.user._id, status: true }).populate({ path: 'purchaser', model: 'User', populate: { path: 'profile', model: 'Profile' } }).populate({ path: 'book', model: 'Book' }).then(async (y) => {
+        received = [];
+        await y.forEach((item, i) => {
+            if (item.book.Author !== 'Wallet') {
+                received.push(item);
+            }
+        });
         // console.log('received', received);
     });
 
     allPayments = paid.concat(received);
+
+
     await allPayments.forEach((item, i) => {
         item.formatDate = dateFormat(item.date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-      });
+    });
 
-    await User.findOne({ _id: req.user._id }).then((z)=> {
-        if(z.walletBalance) {
+    await User.findOne({ _id: req.user._id }).then((z) => {
+        if (z.walletBalance) {
             allPayments.walletBalance = z.walletBalance;
         }
         else {
             allPayments.walletBalance = 0;
         }
     });
-      
+
     console.log('all Payments', allPayments);
     allPayments.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
@@ -64,7 +71,7 @@ router.get('/history', isLoggedIn.isLoggedIn, async (req, res) => {
     return res.render('paymentshistory', { paid: paid, layout: 'navbar2', received: received, allPayments: allPayments });
 })
 
-router.get('/pending', isLoggedIn.isLoggedIn, async(req, res) => {
+router.get('/pending', isLoggedIn.isLoggedIn, async (req, res) => {
     var getPaid;
     var pay;
     var allPayments;
@@ -80,8 +87,8 @@ router.get('/pending', isLoggedIn.isLoggedIn, async(req, res) => {
 
     allPayments = pay.concat(getPaid);
 
-    await User.findOne({ _id: req.user._id }).then((z)=> {
-        if(z.walletBalance) {
+    await User.findOne({ _id: req.user._id }).then((z) => {
+        if (z.walletBalance) {
             allPayments.walletBalance = z.walletBalance;
         }
         else {
@@ -93,7 +100,7 @@ router.get('/pending', isLoggedIn.isLoggedIn, async(req, res) => {
     allPayments.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     })
-    return res.render('pendingpayments', { layout: 'navbar2',allPayments:allPayments });
+    return res.render('pendingpayments', { layout: 'navbar2', allPayments: allPayments });
 })
 
 module.exports = router;

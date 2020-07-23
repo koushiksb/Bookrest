@@ -1187,8 +1187,20 @@
                     <div class="col-md-10 ml-auto mr-auto">
                         <h2 class="title">Payments</h2>
                         <br>
-                        <div style="justify-content:center;color: black;">
-                            <b>Wallet Balance : <%= allPayments.walletBalance %></b>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div style="float:left;color: black;">
+                                    <b>Wallet Balance : <%= allPayments.walletBalance %></b>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div style="float:right;">
+                                    <button type="submit" class="b btn btn-round" data-toggle="modal"
+                                        data-target='#payoptions'
+                                        style="color:white;background-color:#66615B;border:1px solid white">Add money to
+                                        wallet</button>
+                                </div>
+                            </div>
                         </div>
                         <br>
                         <div class="row" style="justify-content:center">
@@ -1277,7 +1289,8 @@
                                                                 <button type="submit" class="b btn btn-round"
                                                                     style="color:white;background-color:#66615B;border:1px solid white">Pay
                                                                     to unlock</button>
-                                                                <input type="hidden" id="chargeAmount" name="chargeAmount"
+                                                                <input type="hidden" id="chargeAmount"
+                                                                    name="chargeAmount"
                                                                     value="<%= allPayments[i].amount %>">
                                                                 <input type="hidden" id="id" name="id"
                                                                     value="<%=allPayments[i].book._id%>">
@@ -1350,6 +1363,44 @@
                         <%}%>
               </div>
             </div>
+
+
+            <div class="modal fade" id="payoptions"   >
+                <div class="modal-dialog" role="document">
+                  <div  class="modal-content">
+                    <div class="modal-header" style="border-bottom:0px !important">
+                      <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>Bookrest</h3><br>
+                      <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">Find the hidden</p>
+                    </div>
+  
+                    <div class="modal-body" >
+  
+  
+                      <div class="form-group">
+                        <h6 style="text-align:center">Enter the amount : <input type="number" min="0" id="amount" name="amount" value=""></h6>
+                      </div>
+                    </div>
+                    <div class="modal-footer" style="border-top:0px !important;padding:1rem 10rem !important">
+                      <form action='/shelf/charge' method='post'>
+                        <script src = 'https://checkout.stripe.com/checkout.js' 
+                        class = 'stripe-button' 
+                        data-key = 'pk_test_51Gtt6XLG3iR3WbW87jLGZqAHKPibjAmJeK4dqHoVPVsGMA2RVOP1Vjk2GYYgpOTUtTOSGAAXzQKUx5RKZvETBfkC00mH6pT7Wp' 
+                        data-amount = ''
+                        data-name = 'Add To Wallet' 
+                        data-description = '' 
+                        data-locale = 'auto' 
+                        data-currency = 'inr' > 
+                        </script> 
+                      <button type='submit' id='disable' class='b btn btn-round' style='color:white;background-color:#66615B;border:1px solid white' disabled>Pay with card</button> 
+                      <input type="hidden" min="0" id="addedAmount" name="addedAmount" value="">
+                    </form>
+                        <!-- <input type="hidden" id="chargeAmount" name="chargeAmount" value="1"> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            
           </div>
         </div>
       </div>
@@ -1388,6 +1439,17 @@
                 }
             });
         });
+
+        $("#amount").keyup(function () {
+            if ($("#amount").val() > 0) {
+                $("#disable").prop("disabled", false);
+                $("#addedAmount").val($("#amount").val());
+            }
+            else {
+                $("#disable").prop("disabled", true);
+            }
+        });
+
     })
 </script>
 

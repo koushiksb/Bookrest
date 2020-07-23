@@ -143,7 +143,9 @@ router.post('/addbook',multer(multerconf).single('photo'),(req,res)=>{
         Title:req.body.bookname,
         Author:req.body.author,
         YearOfPublication:req.body.year,
-        ImageURLS: path(req)
+        ImageURLS: path(req),
+        ImageURLM: path(req),
+        ImageURLL: path(req)
       });
       n.save().then(x=>{
         console.log('saved to books collection successfully');
@@ -468,41 +470,70 @@ router.post('/charge',(req,res)=>{
   var token = req.body.stripeToken;
   var chargeAmount = req.body.chargeAmount;
   var bookid = req.body.id;  
-  if(token) {
+  var addedAmount = req.body.addedAmount;
+  if(addedAmount > 0) {
     var charge = stripe.charges.create({
-      amount : chargeAmount,
+      amount : addedAmount,
       currency : "inr",
       source : token,
     }, function(err,charge){
       if(err){
         console.log("Your card was declined");
       }
-  }).then((hh)=>{
-    // add bookid to the users subscription list
-    // console.log(bookid);
-    Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
-      Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
-        User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
-          res.redirect('/shelf/view');
-        });
-      });
+  }).then((ff)=>{
+    var m = new Payment({
+      owner: req.user._id,
+      purchaser: req.user._id,
+      book:'5f1939c2c61d280eaa099b42',
+      status:true,
+      amount:addedAmount,
+      date: new Date(),
     });
-  });  
+    m.save().then(()=>{
+      console.log('m',m);
+      User.findOneAndUpdate({_id:req.user._id},{$inc : { walletBalance: addedAmount} }).then((nm)=>{
+        res.redirect('/payments/history');
+      })
+    });
+  });
   }
   else {
-    console.log('working fine');
-    Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
-      Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
-        console.log('d',d);
-        
-        User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
-          chargeAmount = -1*chargeAmount;
-          User.findOneAndUpdate({_id:d.purchaser},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+    if(token) {
+      var charge = stripe.charges.create({
+        amount : chargeAmount,
+        currency : "inr",
+        source : token,
+      }, function(err,charge){
+        if(err){
+          console.log("Your card was declined");
+        }
+    }).then((hh)=>{
+      // add bookid to the users subscription list
+      // console.log(bookid);
+      Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
+        Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
+          User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
             res.redirect('/shelf/view');
           });
         });
       });
-    });
+    });  
+    }
+    else {
+      console.log('working fine');
+      Shelf.findOneAndUpdate({user:req.user._id,book:bookid},{paid:1}).then(z=>{
+        Payment.findOneAndUpdate({purchaser:req.user._id,book:bookid},{status:true,date: new Date()}).then(d=>{
+          console.log('d',d);
+          
+          User.findOneAndUpdate({_id:d.owner},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+            chargeAmount = -1*chargeAmount;
+            User.findOneAndUpdate({_id:d.purchaser},{$inc : { walletBalance: chargeAmount} }).then(u=>{
+              res.redirect('/shelf/view');
+            });
+          });
+        });
+      });
+    }  
   }
 });
 
