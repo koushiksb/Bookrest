@@ -5,6 +5,7 @@
   const Bidding = require('./models/Bidding.js');
   const Openbid = require('./models/Openbid');
   const Shelf = require('./models/Shelf')
+  const AuctionChat = require('./models/AuctionChat')
   const express = require('express');
   const mongoose = require('mongoose');
   const bodyparser=require('body-parser');
@@ -214,6 +215,31 @@
      socket.on('typing',(data)=>{
         socket.broadcast.in(data.room).emit('typing',{username:socket.username})
      })
+
+     socket.on('chat_join',function(data){
+       console.log(data);
+       if(socket.room)
+           socket.leave(socket.room);
+
+       socket.room = data.room;
+       var room = data.room
+       socket.join(data.room);
+       console.log(socket.room);
+        AuctionChat.find({room:data.room}).then(x=>{
+            io.sockets.in(data.room).emit('chat_join_emit',{msgs:x})
+        })
+
+   });
+     socket.on('new_auction_chat_message',(data)=>{
+       console.log(data)
+       var ac = new AuctionChat({room:data.room,userid:data.userid,bidid:data.bidid,message:data.message})
+       ac.save().then(x=>{
+
+       })
+       socket.broadcast.in(data.room).emit('auction_chat',{message:data.message})
+
+     })
+
    })
 
    /*

@@ -262,7 +262,7 @@ Api to redirect user to bidding page for both user and owner
       }
       console.log(x);
       // res.sendStatus(200)
-      res.render('booksSold',{bids:x,layout:'navbar2'});
+      res.render('booksSold',{bids:x,userid:req.user.id,layout:'navbar2'});
     })
   })
 
@@ -280,7 +280,7 @@ Api to redirect user to bidding page for both user and owner
       }
       console.log(x);
       // res.sendStatus(200)
-      res.render('booksBrought',{bids:x,layout:'navbar2'});
+      res.render('booksBrought',{bids:x,userid:req.user.id,layout:'navbar2'});
     })
   })
 
