@@ -296,7 +296,11 @@ a:active,a:focus{outline:0;}
                       <div class="row">
 
                         <a class="btn btn-rose btn-round" style="color:white;margin-left:35%" id='but' onclick="Update('<%=requests[i].id%>','<%=i%>')" >Book recieved</a>
-
+                        <div style="margin-left:35%">
+                        <p>Name: <%= requests[i].userAcc.profile.fname+requests[i].userAcc.profile.lname%></p>
+                        <p>Location: <%= requests[i].userAcc.profile.location%></p>
+                        <p>Contact: <%= requests[i].userAcc.profile.phone%></p>
+                        </div>
                       </div>
 
 
@@ -361,7 +365,11 @@ a:active,a:focus{outline:0;}
                       <div class="row">
 
                         <a class="btn btn-rose btn-round" style="color:white;margin-left:35%" id='but' onclick="Update('<%=accepts[i].id%>','<%=i%>')" >Book recieved</a>
-
+                        <div style="margin-left:35%">
+                        <p>Name: <%= accepts[i].userReq.profile.fname+accepts[i].userReq.profile.lname%></p>
+                        <p>Location: <%= accepts[i].userReq.profile.location%></p>
+                        <p>Contact: <%= accepts[i].userReq.profile.phone%></p>
+                        </div>
                       </div>
 
 

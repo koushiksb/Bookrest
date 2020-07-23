@@ -9,6 +9,7 @@
   const Shelf = require('../models/Shelf.js');
   const Review = require('../models/Review.js');
   const express=require('express');
+  const Notify = require('../models/Notify.js');
   const router = express.Router();
   const isLoggedIn = require('../utils/isLoggedIn');
 
@@ -138,18 +139,38 @@
   Api to update exchange request when user receives the book
   */
   router.post('/ongoing',(req,res)=>{
-    Exchange.findOne({_id:req.body.id})
+    Exchange.findOne({_id:req.body.id}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}})
     .then(x=>{
       if(x.userReq == req.user.id){
         x.exchangeReq = true
+        var n = new Notify({
+          User:x.userAcc,
+          Type:'Book Received',
+          Message:x.userReq.profile.fname+' '+x.userReq.profile.lname+' has received the book you sent.'
+        }).save()
       }else{
           x.exchangeSen = true
+          var n = new Notify({
+          User:x.userReq,
+          Type:'Book Received',
+          Message:x.userAcc.profile.fname+' '+x.userAcc.profile.lname+' has received the book you sent.'
+        }).save()
       }
       x.save()
       .then(a=>{
         console.log(a)
         if(a.exchangeReq && a.exchangeSen){
           console.log("gjhbcdhd")
+          var n = new Notify({
+            User:a.userAcc,
+            Type:'Book Exchanged',
+            Message:'Exchange with '+a.userReq.profile.fname+' '+a.userReq.profile.lname+' has been done. Bookshelf is updated.'
+          }).save()
+          var n = new Notify({
+            User:a.userReq,
+            Type:'Book Exchanged',
+            Message:'Exchange with '+a.userAcc.profile.fname+' '+a.userAcc.profile.lname+' has been done. Bookshelf is updated.'
+          }).save()
           return res.redirect('/exchange/exchangeshelf/'+a._id)
         }
         else{
@@ -214,9 +235,9 @@
     .then(x=>{
       var gen = [];
       for(var i=0;i<x.length;i++){
-        // if (books.includes(x[i].bookReq.id)){
+        if (x[i].userReq.id != req.user._id){
           gen.push(x[i]);
-        // }
+        }
       }
       var locations = ['Bangalore','Bhuvaneshwar','Chennai','Delhi','Goa','Hyderabad','Jabalpur','Kolkatta','Lucknow','Mumbai',
       'Munnar','Mysore','Nagpur','Noida','Patna','Pondicherry','Pune','Raipur','Shimla','Trichy','Vijayawada','Vishakhapatnam',
@@ -289,8 +310,13 @@
   router.get('/accept/:id',isLoggedIn.isLoggedIn,(req,res)=>{
     Exchange.findOneAndUpdate({_id:req.params.id},{status:true,userAcc:req.user.id}).then(x=>{
       console.log(x);
-    })
-    return res.redirect('/exchange/ongoing')
+      var n = new Notify({
+        User:x.userReq,
+        Type:'Exchange Accepted',
+        Message:' has accepted to exchange the book that you offered.'
+      }).save()
+      return res.redirect('/exchange/ongoing')
+    });
   })
 
   //

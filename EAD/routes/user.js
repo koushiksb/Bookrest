@@ -28,6 +28,7 @@ var nodemailer = require('nodemailer');
 const router = express.Router();
 const multer = require('multer');
 const gpath = require('path');
+const Notify = require('../models/Notify.js');
 const MiniSearch = require('minisearch')
 var urlencodedparser=bodyparser.urlencoded({extended:true});
 bodyParser = require('body-parser').json();
@@ -232,6 +233,29 @@ Logout api
 router.get('/logout',isLoggedIn,(req,res)=>{
     req.logout()
     res.redirect('/users/dashboard')
+})
+
+/*
+notification
+*/
+router.get('/notify',isLoggedIn,(req,res)=>{
+  var unseen=[]
+  var seen = []
+  Notify.find({User:req.user.id}).populate({path:'User',model:'User',populate:{path:'profile',model:'Profile'}}).then(y=>{
+    // console.log(y)
+    for (i=0;i<y.length;i++){
+      if(y[i].Status){
+        seen.push(y[i])
+      }
+      else{
+        unseen.push(y[i])
+      y[i].Status = true
+      y[i].save()
+    }
+    }
+    console.log(seen)
+    return res.render('notify',{unseen:unseen,seen:seen,len:y.length,layout:'navbar2.ejs'})
+  })
 })
 
 /*
