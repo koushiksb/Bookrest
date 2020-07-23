@@ -47,7 +47,7 @@
 
 </head>
 
-<form action="/shelf/addbook" method="POST" id="bookdata" enctype="multipart/form-data">
+<form action="" method="POST" id="bookdata" enctype="multipart/form-data">
   <body class="add-product sidebar-collapse">
     <div class="main">
       <div class="section">
@@ -89,6 +89,17 @@
                     <span class="form-check-sign"></span>
                   </label>
                 </div>
+                <% if(edit) { %>
+                <h6>Soft Copy
+                </h6>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" id='delSoftCopy' name='delSoftCopy' type="checkbox" value="false">
+                    Delete
+                    <span class="form-check-sign"></span>
+                  </label>
+                </div>
+                <% } %>
               </div>
               <div class="col-md-7 col-sm-7">
                 <div class="form-group">
@@ -96,6 +107,7 @@
                     <span class="icon-danger">*</span>
                   </h6>
                   <input type="text" list="books" id="bookname" name="bookname" class="form-control border-input" placeholder="Enter the book title here...">
+                  <input type="hidden" id="hiddenbookname" name="hiddenbookname" value="hi">
                   <datalist id="books">
                     <% for(i=0;i<booksInfo.length; i++) {%>
                       <option value="<%= booksInfo[i][0] %>"></option>
@@ -189,50 +201,116 @@
     booksList.push(booksInfo[i][0]);
   }
 
+  var isEdit = <%- edit %>
   $(document).ready(function(){
-    $("#bookname").change(function() {
-    var index = booksList.indexOf($("#bookname").val().toString());
 
-    if(index !== -1) {
-      $("#publisher").val(booksInfo[index][1]);
-      $("#publisher").prop("disabled",true);
-      $("#author").val(booksInfo[index][2]);
-      $("#author").prop("disabled",true);
-      $("#year").val(booksInfo[index][3]);
-      $("#year").prop("disabled",true);
-      $("#image").attr("src",booksInfo[index][4]);
-      $("#imageSelect").hide();
+    if(isEdit) {
+
+        // $("#bookdata").attr('action','/shelf/editbook')
+        $("#bookdata").submit(function(e){
+          e.preventDefault();
+          $.ajax({
+            type:'POST',
+            url:'/shelf/editbook',
+            data:{
+              delSoftCopy: $("#delSoftCopy").val(),
+              hasHardCopy: $("#hasHardCopy").val(),
+              hiddenbookname: hiddenbookname
+            },
+            success:function(result){
+              window.location.replace('/shelf/view')
+            }            
+          });
+        });
+
+        $("#bookname").val(booksInfo[0][0]);
+        $("#bookname").prop("disabled",true);
+        $("#hiddenbookname").val(booksInfo[0][0]);
+        var hiddenbookname = $("#hiddenbookname").val();
+        $("#publisher").val(booksInfo[0][1]);
+        $("#publisher").prop("disabled",true);
+        $("#author").val(booksInfo[0][2]);
+        $("#author").prop("disabled",true);
+        $("#year").val(booksInfo[0][3]);
+        $("#year").prop("disabled",true);
+        $("#hasHardCopy").val(booksInfo[0][5]);
+        var isThereHardCopy = booksInfo[0][5];
+        $("#hasHardCopy").prop("checked",isThereHardCopy);
+        $("#image").attr("src",booksInfo[0][4]);
+        $("#imageSelect").hide();
+        var isThereSoftCopy = booksInfo[0][6];
+        $("#delSoftCopy").prop('disabled',!isThereSoftCopy);
+
+        $("#delSoftCopy").change(function() {
+          if($(this).is(':checked')) {
+            $(this).val(true);
+          }
+          else {
+            $(this).val(false);
+          }
+        });
+
+        $("#hasHardCopy").change(function() {
+          if($(this).is(':checked')) {
+            $(this).val(true);
+          }
+          else {
+            $(this).val(false);
+          }
+        });
+
+        $("#reset").prop("disabled",true);
+
     }
-    else{
-      $("#publisher").val('');
+    else {
+      $("#bookdata").attr('action','/shelf/addbook')
+      $("#bookname").change(function() {
+      var index = booksList.indexOf($("#bookname").val().toString());
+
+      if(index !== -1) {
+        $("#publisher").val(booksInfo[index][1]);
+        $("#publisher").prop("disabled",true);
+        $("#author").val(booksInfo[index][2]);
+        $("#author").prop("disabled",true);
+        $("#year").val(booksInfo[index][3]);
+        $("#year").prop("disabled",true);
+        $("#image").attr("src",booksInfo[index][4]);
+        $("#imageSelect").hide();
+      }
+      else{
+        $("#publisher").val('');
+        $("#publisher").prop("disabled",false);
+        $("#author").val('');
+        $("#author").prop("disabled",false);
+        $("#year").val('');
+        $("#year").prop("disabled",false);
+        $("#image").attr("src",'../static/pics/image_placeholder.jpg');
+        $("#imageSelect").show();
+      }
+    });
+
+    $("#reset").click(function(){
       $("#publisher").prop("disabled",false);
-      $("#author").val('');
       $("#author").prop("disabled",false);
-      $("#year").val('');
       $("#year").prop("disabled",false);
       $("#image").attr("src",'../static/pics/image_placeholder.jpg');
       $("#imageSelect").show();
-    }
+    });
+
+    $("#hasHardCopy").change(function() {
+      if($(this).is(':checked')) {
+        $(this).val(true);
+      }
+      else {
+        $(this).val(false);
+      }
   });
 
-  $("#reset").click(function(){
-    $("#publisher").prop("disabled",false);
-    $("#author").prop("disabled",false);
-    $("#year").prop("disabled",false);
-    $("#image").attr("src",'../static/pics/image_placeholder.jpg');
-    $("#imageSelect").show();
-  });
+};
+      
+    })
 
-  $("#hasHardCopy").change(function() {
-    if($(this).is(':checked')) {
-      $(this).val(true);
-    }
-    else {
-      $(this).val(false);
-    }
-  });
 
-});
 
 </script>
 
