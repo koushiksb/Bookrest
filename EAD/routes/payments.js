@@ -1,15 +1,19 @@
-const express = require('express');
-const router = express.Router();
-const isLoggedIn = require('../utils/isLoggedIn');
+/*
+All payment related logic goes here
+*/
+
 const Payment = require('../models/Payment')
 const User = require('../models/User');
 const Profile = require('../models/Profile')
+const express = require('express');
+const router = express.Router();
 const dateFormat = require('dateformat');
+const isLoggedIn = require('../utils/isLoggedIn');
 
 router.get('', isLoggedIn.isLoggedIn, (req, res) => {
     return res.render('payments', { layout: 'navbar2' });
 })
-
+/*Api to view payment history of the user*/
 router.get('/history', isLoggedIn.isLoggedIn, async (req, res) => {
     var paid;
     var received;
@@ -57,20 +61,21 @@ router.get('/history', isLoggedIn.isLoggedIn, async (req, res) => {
     // for (i = 0; i < p1.length; i++) {
     //     await User.findOne({_id:p1[i].owner}).select('profile -_id').populate('profile','fname lname').then((paidto)=> {
     //         console.log('paid to',paidto);
-    //         p1[i].profile = paidto;                 
+    //         p1[i].profile = paidto;
     //     });
     // }
 
     // for (i = 0; i < p2.length; i++) {
     //     await User.findOne({_id:p1[i].purchaser}).select('profile -_id').populate('profile','fname lname').then((receivedfrom)=> {
     //         console.log('paid to',receivedfrom);
-    //         p2[i].profile = receivedfrom;                 
+    //         p2[i].profile = receivedfrom;
     //     });
     // }
 
     return res.render('paymentshistory', { paid: paid, layout: 'navbar2', received: received, allPayments: allPayments });
 })
 
+/*Api to view pending payments of the user*/
 router.get('/pending', isLoggedIn.isLoggedIn, async (req, res) => {
     var getPaid;
     var pay;
