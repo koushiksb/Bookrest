@@ -1,3 +1,10 @@
+/*
+
+Model to store all the data related to the user to user chat in auctions page.
+
+*/
+
+
 const mongoose = require('mongoose');
 
 
