@@ -122,7 +122,7 @@
       Exchange.find({userAcc:req.user.id,status:true,$or:[{exchangeReq:false},{exchangeSen:false}]}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate({path:'userAcc',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Author')
       .then(y=>{
         console.log(y);
-      return res.render('ongoing',{requests:x,accepts:y,layout:"navbar2"})
+      return res.render('ongoing',{requests:x,accepts:y,userid:req.user._id,layout:"navbar2"})
       })
       .catch(err=>{
         console.log(err);
