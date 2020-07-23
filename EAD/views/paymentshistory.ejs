@@ -1,4 +1,4 @@
-v<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
@@ -1167,6 +1167,10 @@ v<!DOCTYPE html>
       border-color: red !important;
       box-shadow: none;
     }
+
+    .stripe-button-el span {
+      display: none !important
+    }
   </style>
 </head>
 
@@ -1187,16 +1191,17 @@ v<!DOCTYPE html>
               <div class="col-md-4">
                 <div style="float:left;color: black;">
                   <b>Wallet Balance : <%= allPayments.walletBalance %></b>
-                </div>    
+                </div>
               </div>
               <div class="col-md-8">
                 <div style="float:right;">
-                  <button type="submit" class="b btn btn-round" style="color:white;background-color:#66615B;border:1px solid white">Add money to wallet</button>
-                </div>    
+                  <button type="submit" class="b btn btn-round" data-toggle="modal" data-target='#payoptions'
+                    style="color:white;background-color:#66615B;border:1px solid white">Add money to wallet</button>
+                </div>
               </div>
             </div>
             <br>
-              <br>
+            <br>
             <div class="row" style="justify-content:center">
               <%- include ("./payments.ejs") %>
             </div>
@@ -1216,22 +1221,24 @@ v<!DOCTYPE html>
                     <h3 style="margin-bottom:1px" class="card-title">
                       <a href="#pablo"><%=allPayments[i].book.Title%></a>
                     </h3>&nbsp
+
+                    <% if(allPayments[i].book.Author !== 'Wallet') { %>
                     <p class="author">
                       by
                       <a href="#pablo">
                         <b><%=allPayments[i].book.Author%></b>
                       </a>
                     </p>
+                    <% } %>
 
                     <p class="card-description desc">
                       Amount <b style="color: black;"><%=allPayments[i].amount%></b> <br>
                       <% if(allPayments[i].purchaser.password) { %>
                       Received from <b style="color: black;"><%=allPayments[i].purchaser.profile.fname%></b> <br>
-                      <% } else { %>
+                      <% } else if(allPayments[i].book.Author !== 'Wallet') { %>
                       Paid to <b style="color: black;"><%=allPayments[i].owner.profile.fname%></b> <br>
                       <% } %>
-                      Time <b
-                        style="color: black;"><%= allPayments[i].formatDate %></b>
+                      Time <b style="color: black;"><%= allPayments[i].formatDate %></b>
                       <br>
 
                     </p>
@@ -1246,6 +1253,44 @@ v<!DOCTYPE html>
             <%}%>
               </div>
             </div>
+
+            <div class="modal fade" id="payoptions"   >
+              <div class="modal-dialog" role="document">
+                <div  class="modal-content">
+                  <div class="modal-header" style="border-bottom:0px !important">
+                    <h3  style='font-size:30px;font-family:"Comic Sans MS",cursive,sans-serif;color:#66615b'>Bookrest</h3><br>
+                    <p  style="font-family:'Comic Sans MS',cursive,sans-serif;font-size:12px;margin-top:-5% ;color:#66615b">Find the hidden</p>
+                  </div>
+
+                  <div class="modal-body" >
+
+
+                    <div class="form-group">
+                      <h6 style="text-align:center">Enter the amount : <input type="number" min="0" id="amount" name="amount" value=""></h6>
+                    </div>
+                  </div>
+                  <div class="modal-footer" style="border-top:0px !important;padding:1rem 10rem !important">
+                    <form action='/shelf/charge' method='post'>
+                      <script src = 'https://checkout.stripe.com/checkout.js' 
+                      class = 'stripe-button' 
+                      data-key = 'pk_test_51Gtt6XLG3iR3WbW87jLGZqAHKPibjAmJeK4dqHoVPVsGMA2RVOP1Vjk2GYYgpOTUtTOSGAAXzQKUx5RKZvETBfkC00mH6pT7Wp' 
+                      data-amount = ''
+                      data-name = 'Add To Wallet' 
+                      data-description = '' 
+                      data-locale = 'auto' 
+                      data-currency = 'inr' > 
+                      </script> 
+                    <button type='submit' id='disable' class='b btn btn-round' style='color:white;background-color:#66615B;border:1px solid white' disabled>Pay with card</button> 
+                    <input type="hidden" min="0" id="addedAmount" name="addedAmount" value="">
+                  </form>
+                      <!-- <input type="hidden" id="chargeAmount" name="chargeAmount" value="1"> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
         </div>
       </div>
@@ -1263,6 +1308,23 @@ v<!DOCTYPE html>
 
           document.getElementById("nav1").classList.add('active')
         }
+      </script>
+
+      <script>
+        $(document).ready(function () {
+          $("#amount").keyup(function () {
+            if ($("#amount").val() > 0) {
+              $("#disable").prop("disabled", false);
+              $("#addedAmount").val($("#amount").val());
+            }
+            else {
+              $("#disable").prop("disabled", true);
+            }
+          });
+
+        });
+
+
       </script>
 
   </body>
