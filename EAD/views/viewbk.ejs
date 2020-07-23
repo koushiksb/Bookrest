@@ -294,10 +294,10 @@ h1 { font-size: 1.5em; margin: 10px; }
                          <p class="card-title" style="font-weight: normal;width:20ch"><%= similar[j].Title%></p>
                          <p class="card-description" style="font-weight: normal"><%= similar[j].Author%></p>
                          <!-- here we need to keep a loop for displayin the rating -->
-                          <% for(var m=0; m<Math.round(similar[j].Rating/2)+1 ;m++){%>
+                          <% for(var m=0; m<Math.round(similar[j].Rating/2) ;m++){%>
                           <span class="fa fa-star checked"></span>
                           <%}%>
-                          <% for(var m=4; m>Math.round(similar[j].Rating/2) ;m--){%>
+                          <% for(var m=4; m>Math.round(similar[j].Rating/2)-1 ;m--){%>
                           <span class="fa fa-star"></span>
                           <%}%>
                        </div>
@@ -311,16 +311,22 @@ h1 { font-size: 1.5em; margin: 10px; }
           <div class="reviews-heading">
           <h3>Reviewed</h3>
         </div>
-          <div class="column">
+          <div class="column" style="margin-left:7%">
             <div class="myrow vertical-center">
               <img class="review-user-image" src="../../static/pics/person.svg" alt="">
               <div class="col">
                 <div class="review-user-name"><%=given[0].user.profile.fname%>&nbsp;<%=given[0].user.profile.lname%></div>
-                <div class="star-ratings-css">
+                <% for(var m=0; m<Math.round(given[0].rating/2) ;m++){%>
+                <span class="fa fa-star checked"></span>
+                <%}%>
+                <% for(var m=4; m>Math.round(given[0].rating/2)-1 ;m--){%>
+                <span class="fa fa-star"></span>
+                <%}%>
+                <!-- <div class="star-ratings-css">
                   <div class="star-ratings-css-top" style="width: <%=given[0].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
                   <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
-                </div>
-
+                </div> -->
+                <br>
                 <a href="javascript:openForm();">Edit</a>
                 <a href="/shelf/deletereview/<%= title%>">Delete</a>
 
@@ -392,11 +398,16 @@ h1 { font-size: 1.5em; margin: 10px; }
                       <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                       <div class="col">
                         <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
-                        <div class="star-ratings-css">
+                        <!-- <div class="star-ratings-css">
                           <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
                           <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
-                        </div>
-
+                        </div> -->
+                        <% for(var m=0; m<Math.round(reviews[review].rating/2) ;m++){%>
+                        <span class="fa fa-star checked"></span>
+                        <%}%>
+                        <% for(var m=4; m>Math.round(reviews[review].rating/2)-1 ;m--){%>
+                        <span class="fa fa-star"></span>
+                        <%}%>
                       </div>
                     </div>
                     <div class="myrow margin-top-review-box" style="font-weight: 400;">
@@ -413,10 +424,16 @@ h1 { font-size: 1.5em; margin: 10px; }
                         <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                         <div class="col">
                           <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
-                          <div class="star-ratings-css">
+                          <!-- <div class="star-ratings-css">
                             <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
                             <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
-                          </div>
+                          </div> -->
+                          <% for(var m=0; m<Math.round(reviews[review].rating/2) ;m++){%>
+                          <span class="fa fa-star checked"></span>
+                          <%}%>
+                          <% for(var m=4; m>Math.round(reviews[review].rating/2)-1 ;m--){%>
+                          <span class="fa fa-star"></span>
+                          <%}%>
 
                         </div>
                       </div>

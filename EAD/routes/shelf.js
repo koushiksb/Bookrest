@@ -402,7 +402,7 @@ router.get('/viewbk/:title', async (req, res) => {
       given = l;
       // console.log(given.length)
       if (given.length > 0) {
-        given[0].rating = Number(given[0].rating) * 10
+        given[0].rating = Number(given[0].rating);
       }
     });
     var suggest = false;
@@ -413,7 +413,7 @@ router.get('/viewbk/:title', async (req, res) => {
     });
     Review.find({ book: x._id }).populate({ path: 'user', model: 'User', populate: { path: 'profile', model: 'Profile' } }).then(async (y) => {
       await y.forEach(review => {
-        review.rating = Number(review.rating) * 10;
+        review.rating = Number(review.rating);
       });
       var otherUsers = [];
       var col1 = 0;
