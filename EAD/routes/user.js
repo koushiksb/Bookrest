@@ -241,9 +241,9 @@ notification
 router.get('/notify',isLoggedIn,(req,res)=>{
   var unseen=[]
   var seen = []
-  Notify.find({User:req.user.id}).then(y=>{
-    // console.log(y)
-    for (i=0;i<y.length;i++){
+  Notify.find({User:req.user.id}).sort({date:1}).then(y=>{
+    console.log(y)
+    for (i=y.length-1;i>-1;i--){
       if(y[i].Status){
         seen.push(y[i])
       }

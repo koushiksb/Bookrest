@@ -145,6 +145,8 @@ display: none;
           <h3>Notifications</h3>
           </div> 
           <% if (len>0){%>
+            <% if(unseen.length>0){%>
+            <h4>New notifications</h4>
             <%for(not=0;not<unseen.length;not++){%> 
             <div class="column">
               <div class="myrow vertical-center">
@@ -158,6 +160,9 @@ display: none;
               </div>
             </div>
             <%}%>
+            <%}%>
+            <% if(seen.length>0){%>
+            <h4>Seen Notifications</h4>
             <%for(not=0;not<seen.length;not++){%> 
             <div class="column">
               <div class="myrow vertical-center">
@@ -170,6 +175,7 @@ display: none;
                 </div>
               </div>
             </div>
+            <%}%>
             <%}%>
         <%}else{%>
           <div class="myrow margin-top-review-box" style="font-weight: 400;">
