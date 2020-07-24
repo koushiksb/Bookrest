@@ -64,8 +64,9 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             <h2><%= title %></h2>
             <h4 class="price" style="align:right"><strong> <%= author %></strong></h4>
             <h6 class="price" style="align:right;margin-top:0.5rem">Type: <%=type%></h6>
-
+  <%if(!otherUserShelf){%>
             <p style="margin-top:1rem;margin-bottom:-1rem"><a href="/shelf/editbook/<%=title%>" ><b>Edit</b></a></p>
+            <%}%>
             <hr />
             <p>Book Description : <%= desc%></p>
 
