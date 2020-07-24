@@ -28,7 +28,7 @@
 
   </head>
   <body style="background-color:black"  >
-  <div class="page-header" style="background-image: url('https://miro.medium.com/max/1719/1*Gql-Vlc4BQJz_x8GhJXX2A.jpeg');">
+  <div class="page-header" style="height:40vh;min-height: 40vh !important;background-image: url('https://miro.medium.com/max/1719/1*Gql-Vlc4BQJz_x8GhJXX2A.jpeg');">
 </div>
  <div class="wrapper">
    <div class="section latest-offers" style="background-color: #2A2A2A">
@@ -43,7 +43,7 @@
      <div class="container">
        <% for(var i in pop){%>
           <!-- <div id=> -->
-          <b><h3><%= i %> Books</h3></b><!-- </div> --><br>
+          <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
           <div class="col-md-12">
            <div class="products">
              <div class="row">
@@ -58,10 +58,10 @@
                          <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= pop[i][j].Title%></p>
                          <p class="card-description" style="color:white;font-weight: normal"><%= pop[i][j].Author%></p>
                          <!-- here we need to keep a loop for displayin the rating -->
-                          <% for(var m=0; m<Math.round(pop[i][j].Rating/2)+1 ;m++){%>
+                          <% for(var m=0; m<Math.round(pop[i][j].Rating/2) ;m++){%>
                           <span class="fa fa-star checked"></span>
                           <%}%>
-                          <% for(var m=4; m>Math.round(pop[i][j].Rating/2) ;m--){%>
+                          <% for(var m=4; m>Math.round(pop[i][j].Rating/2)-1 ;m--){%>
                           <span class="fa fa-star"></span>
                           <%}%>
                        </div>
@@ -97,7 +97,7 @@
        		<!-- <div id=> -->
           <a name= <%= i %>></a>
           <br>
-       		<h3><%= i %></h3><!-- </div> --><br>
+       		<h3 style="color:white"><%= i %></h3><!-- </div> --><br>
        		<div class="col-md-12">
            <div class="products">
              <div class="row">
@@ -112,10 +112,10 @@
                          <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= books[i][j].Title%></p>
                          <p class="card-description" style="color:white;font-weight: normal"><%= books[i][j].Author%></p>
                          <!-- here we need to keep a loop for displayin the rating -->
-                          <% for(var m=0; m<Math.round(books[i][j].Rating/2)+1 ;m++){%>
+                          <% for(var m=0; m<Math.round(books[i][j].Rating/2) ;m++){%>
                           <span class="fa fa-star checked"></span>
                           <%}%>
-                          <% for(var m=4; m>Math.round(books[i][j].Rating/2) ;m--){%>
+                          <% for(var m=4; m>Math.round(books[i][j].Rating/2)-1 ;m--){%>
                           <span class="fa fa-star"></span>
                           <%}%>
                        </div>

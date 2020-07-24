@@ -20,6 +20,7 @@ const isLoggedIn = require('../utils/isLoggedIn');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3-v2');
 const AWS = require('aws-sdk');
+const gpath = require('path');
 var s3 = new aws.S3(
   // {
   //   accessKeyId: '',
@@ -35,7 +36,7 @@ const multerconf = {
     destination: function (req, file, next) {
       // const ext = file.mimetype.split('/')[0];
       // if(ext === 'image'){
-      next(null, './static/coverimages');
+      next(null, gpath.join(__dirname,'../static/coverimages/'));
       // }
       // else{
       //   next(null,'./static/pdf');
@@ -203,10 +204,10 @@ Function to get storage path of book cover photos
 
 function path(req) {
   if (req.file) {
-    return '../static/coverimages/' + req.file.filename;
+    return '/static/coverimages/' + req.file.filename;
   }
   else {
-    return '../static/pics/image_placeholder.jpg';
+    return '/static/pics/image_placeholder.jpg';
   }
 }
 
@@ -276,7 +277,7 @@ Api to view particular book in shelf
 */
 router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
   var inbidding = 0
-  Book.findOne({ Title: req.params.title }).then(async (x) => {
+  Book.findOne({ Title: req.params.title }).lean().then(async (x) => {
     var owner = '0';
     var softCopy = false;
     var readRequestAmount = 5;
@@ -288,7 +289,7 @@ router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
         inbidding = 1
       }
     })
-    await Shelf.findOne({ user: req.user._id, book: x.id }).then(y => {
+    await Shelf.findOne({ user: req.user._id, book: x._id }).then(y => {
       // console.log(y);
       console.log(y);
       if (y.hasHardCopy) {
@@ -309,7 +310,9 @@ router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
       console.log(y)
     });
     console.log('in bidding', inbidding)
+
     res.render('viewbook', { desc:x.Description,image: x.ImageURLL, title: x.Title, otherUserShelf: false, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, readRequestAmount: readRequestAmount, hasHardCopy: hasHardCopy, layout: 'navbar2.ejs' });
+
   });
 });
 
@@ -321,10 +324,10 @@ router.get('/otherUserShelfviewbook/:title/:userid', (req, res) => {
   var inbidding = 0;
   req.session.otherUserShelfUserId = req.params.userid;
   console.log(req.params);
-  Book.findOne({ Title: req.params.title }).then(async (x) => {
+  Book.findOne({ Title: req.params.title }).lean().then(async (x) => {
     console.log('selected book')
     console.log(x);
-    Openbid.findOne({ bookid: x.id, userid: req.params.userid }).then(a => {
+    Openbid.findOne({ bookid: x._id, userid: req.params.userid }).then(a => {
       if (a != null) {
         inbidding = 1
       }
@@ -341,7 +344,9 @@ router.get('/otherUserShelfviewbook/:title/:userid', (req, res) => {
       }
     });
     console.log(owner);
+
     res.render('viewbook', {desc:x.Description, image: x.ImageURLL, readRequestAmount: readRequestAmount, title: x.Title, hasHardCopy: false, otherUserShelf: true, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, layout: 'navbar2.ejs' });
+
   });
 });
 
@@ -395,13 +400,14 @@ router.get('/viewbk/:title', async (req, res) => {
     navbar = 'navbar.ejs'
     console.log('yay')
   }
-  Book.findOne({ Title: req.params.title.toString() }).populate({ path: 'Similar', model: 'Book' }).then(async (x) => {
+  Book.findOne({ Title: req.params.title.toString() }).populate({ path: 'Similar', model: 'Book' }).lean().then(async (x) => {
     var given = {};
+
     Review.find({ book: x._id, user: req.user.id }).populate({ path: 'user', model: 'User', populate: { path: 'profile', model: 'Profile' } }).then(async (l) => {
       given = l;
       // console.log(given.length)
       if (given.length > 0) {
-        given[0].rating = Number(given[0].rating) * 10
+        given[0].rating = Number(given[0].rating);
       }
     });
     var suggest = false;
@@ -412,7 +418,7 @@ router.get('/viewbk/:title', async (req, res) => {
     });
     Review.find({ book: x._id }).populate({ path: 'user', model: 'User', populate: { path: 'profile', model: 'Profile' } }).then(async (y) => {
       await y.forEach(review => {
-        review.rating = Number(review.rating) * 10;
+        review.rating = Number(review.rating);
       });
       var otherUsers = [];
       var col1 = 0;
@@ -460,8 +466,10 @@ router.get('/viewbk/:title', async (req, res) => {
 
       }
 
+
       console.log(x)
       res.render('viewbk', {desc:x.Description, similar: x.Similar, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
+
 
     })
   })

@@ -6,6 +6,7 @@
   const Openbid = require('./models/Openbid');
   const Shelf = require('./models/Shelf')
   const AuctionChat = require('./models/AuctionChat')
+  const TradeChat = require('./models/TradeChat')
   const express = require('express');
   const mongoose = require('mongoose');
   const bodyparser=require('body-parser');
@@ -237,6 +238,29 @@
 
        })
        socket.broadcast.in(data.room).emit('auction_chat',{message:data.message})
+
+     })
+     socket.on('exchange_chat_join',function(data){
+       console.log(data);
+       if(socket.room)
+           socket.leave(socket.room);
+
+       socket.room = data.room;
+       var room = data.room
+       socket.join(data.room);
+       console.log(socket.room);
+        TradeChat.find({room:data.room}).then(x=>{
+            io.sockets.in(data.room).emit('exchange_chat_join_emit',{msgs:x})
+        })
+
+   });
+     socket.on('new_exchange_chat_message',(data)=>{
+       console.log(data)
+       var ac = new TradeChat({room:data.room,userid:data.userid,exchangeid:data.exchangeid,message:data.message})
+       ac.save().then(x=>{
+
+       })
+       socket.broadcast.in(data.room).emit('exchange_chat',{message:data.message})
 
      })
 
