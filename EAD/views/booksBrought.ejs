@@ -1314,8 +1314,8 @@ color: #bbb;
                             </p>
 
                             <p class="card-description desc">
-                              Brought from <a href="/shelf/otherUserShelf/<%=bids[i].userid._id%>"><%=bids[i].username%></a>  <br>
-                              Brought for Amount : <%=bids[i].soldfor%><br>
+                              Bought from <a href="/shelf/otherUserShelf/<%=bids[i].userid._id%>"><%=bids[i].username%></a>  <br>
+                              Bought for Amount : <%=bids[i].soldfor%><br>
                               <!-- E-mail : <%=bids[i].userid.email%><br>
                               Phone Number :<%=bids[i].userid.profile.phone%> <br> --><br><br>
                               <button type="button" onclick="openchat('<%=bids[i].userid._id%>/<%=bids[i].soldto%>/<%=bids[i]._id%>','<%=bids[i]._id%>','<%=bids[i].soldto%>','<%=bids[i].username%>')" class="btn btn-rose btn-round" style="color:white" id="prime">
@@ -1561,8 +1561,8 @@ function hideChat(hide) {
                     '"></div></div><div class="col-md-9"><div class="card-body"><h6 class="card-category text-info">'+bids[i].bookid.Genre+
                     '</h6><h3 style="margin-bottom:1px" class="card-title"><a href="#pablo">'+bids[i].bookid.Title+
                     '</a></h3 >&nbsp<p class="author">by<a href="#pablo"><b>&nbsp'+bids[i].bookid.Author+
-                    '</b></a></p><p class="card-description desc">Sold to&nbsp' + `<a href="/shelf/otherUserShelf/${bids[i].userid._id%>}">`+bids[i].username +
-                    '</a><br>Sold for Amount :&nbsp'+ bids[i].soldfor+
+                    '</b></a></p><p class="card-description desc">Bought from&nbsp' + `<a href="/shelf/otherUserShelf/${bids[i].userid._id%>}">`+bids[i].username +
+                    '</a><br>Bought for Amount :&nbsp'+ bids[i].soldfor+
                     '<br>'+`<br><br>
                     <button type="button" onclick="openchat('${bids[i].userid._id}/${bids[i].soldto}/${bids[i]._id}','${bids[i]._id}','${bids[i].soldto}','${bids[i].username}')" class="btn btn-rose btn-round" style="color:white" id="prime">
                                   chat

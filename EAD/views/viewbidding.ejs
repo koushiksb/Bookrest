@@ -245,7 +245,7 @@ a:active,a:focus{outline:0;}
     <br><br>
 
   </div>
-  <div class="col-md-4" style="margin-left:-15%">
+  <div class="col-md-4" >
     <div class="card-body">
       <!-- <h6 class="card-category text-info">Enterprise</h6> -->
       <%if(prevbids.length != 0){%>
@@ -257,7 +257,7 @@ a:active,a:focus{outline:0;}
               </span>
               <br>
               Time Left ::
-              <span id='time'>5:00</span>
+              <span id='time'>1:00</span>
             <br>
             <i id='sold'></i>
             <br><br>
@@ -273,14 +273,14 @@ a:active,a:focus{outline:0;}
                 </span>
                 <br>
                 Time Left ::
-                <span id='time'>5:00</span>
+                <span id='time'>1:00</span>
               <br>
               <i id='sold'></i>
               <br><br>
               </p>
 
               <div id='inimsg' style="display:flex;flex-direction:row;justify-content:center;align-items:center;height:auto">
-                <p class="card-description desc"  >Be the first person to bid</p>
+                <p class="card-description desc"  >No one started bidding</p>
               </div>
 
               <%}%>    </div>
@@ -393,7 +393,7 @@ var a = [
 
     }
     if(check===false){
-    fiveMinutes = 60 * 5,
+    fiveMinutes = 60;
         display = document.querySelector('#time');
     startTimer(fiveMinutes, display);
 }else{
@@ -439,7 +439,7 @@ var a = [
   }
 
   function resetTimer() {
-    timer = 60 * 5;
+    timer = 60;
   }
 window.onload=function (){
   if('<%=lastbidtime%>'!=='false'){
@@ -450,8 +450,8 @@ window.onload=function (){
     }
     console.log(new Date().getTime(),new Date('<%=lastbidtime%>').getTime())
     console.log((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000)
-    if((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000<300){
-      fiveMinutes = 300-((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000);
+    if((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000<60){
+      fiveMinutes = 60-((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000);
           display = document.querySelector('#time');
           console.log('sddisplay',display)
       startTimer(fiveMinutes, display);

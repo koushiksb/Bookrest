@@ -257,7 +257,7 @@ a:active,a:focus{outline:0;}
         </span>
         <br>
         Time Left ::
-        <span id='time'>5:00</span>
+        <span id='time'>1:00</span>
       <br>
       <i id='sold'></i>
       <br><br>
@@ -273,7 +273,7 @@ a:active,a:focus{outline:0;}
           </span>
           <br>
           Time Left ::
-          <span id='time'>5:00</span>
+          <span id='time'>1:00</span>
         <br>
         <i id='sold'></i>
         <br><br>
@@ -398,7 +398,7 @@ var a = [
 
     }
     if(check===false){
-    fiveMinutes = 60 * 5,
+    fiveMinutes = 60;
         display = document.querySelector('#time');
     startTimer(fiveMinutes, display);
 }else{
@@ -444,7 +444,7 @@ var a = [
   }
 
   function resetTimer() {
-    timer = 60 * 5;
+    timer = 60;
   }
 window.onload=function (){
   if('<%=lastbidtime%>'!=='false'){
@@ -455,8 +455,8 @@ window.onload=function (){
     }
     console.log(new Date().getTime(),new Date('<%=lastbidtime%>').getTime())
     console.log((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000)
-    if((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000<300){
-      fiveMinutes = 300-((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000);
+    if((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000<60){
+      fiveMinutes = 60-((new Date().getTime() - new Date('<%=lastbidtime%>').getTime())/1000);
           display = document.querySelector('#time');
           console.log('sddisplay',display)
       startTimer(fiveMinutes, display);
