@@ -142,26 +142,26 @@ display: none;
       <div class="container">
         <div class="row title-row">
           <div class="reviews-heading">
-          <h3>Notifications</h3>
+          <h3 style="font-weight: bold;">Notifications</h3>
           </div>
           <% if (len>0){%>
             <% if(unseen.length>0){%>
-            <h4>New notifications</h4>
+            <h4 style="font-weight: normal;">New notifications</h4>
             <%for(not=0;not<unseen.length;not++){%>
             <div class="column">
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                 <div class="col">
                   <% if(urlunseen[not]==0){%>
-                  <a href="/exchange/ongoing"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <a href="/exchange/ongoing"><div class="review-user-name" style="font-weight: bold;"><%=unseen[not].Type%></div></a>
                   <%}else if(urlunseen[not]==2){%>
-                  <a href="/my/viewrequest"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <a href="/my/viewrequest"><div class="review-user-name" style="font-weight: bold;"><%=unseen[not].Type%></div></a>
                   <%}else if(urlunseen[not]==3){%>
-                  <a href="/my/oldrequests"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <a href="/my/oldrequests"><div class="review-user-name" style="font-weight: bold;"><%=unseen[not].Type%></div></a>
                   <%}else{%>
-                  <a href="/exchange/tradescompleted"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <a href="/exchange/tradescompleted"><div class="review-user-name" style="font-weight: bold;"><%=unseen[not].Type%></div></a>
                   <%}%> 
-                  <div class="myrow margin-top-review-box" style="font-weight: 400;">
+                  <div class="myrow margin-top-review-box" style="font-weight: 400;color: black;">
                     <%=unseen[not].Message%>
                   </div>
                 </div>
@@ -170,22 +170,22 @@ display: none;
             <%}%>
             <%}%>
             <% if(seen.length>0){%>
-            <h4>Seen Notifications</h4>
+            <h4 style="font-weight: normal;">Seen Notifications</h4>
             <%for(not=0;not<seen.length;not++){%>
             <div class="column">
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                 <div class="col">
                   <% if(urlseen[not]==0){%>
-                  <a href="/exchange/ongoing"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <a href="/exchange/ongoing"><div class="review-user-name" style="font-weight: bold;"><%=seen[not].Type%></div></a>
                   <%}else if(urlseen[not]==2){%>
-                  <a href="/my/viewrequest"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <a href="/my/viewrequest"><div class="review-user-name" style="font-weight: bold;"><%=seen[not].Type%></div></a>
                   <%}else if(urlseen[not]==3){%>
-                  <a href="/my/oldrequests"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <a href="/my/oldrequests"><div class="review-user-name" style="font-weight: bold;"><%=seen[not].Type%></div></a>
                   <%}else{%>
-                  <a href="/exchange/tradescompleted"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <a href="/exchange/tradescompleted"><div class="review-user-name" style="font-weight: bold;"><%=seen[not].Type%></div></a>
                   <%}%>  
-                  <div class="myrow margin-top-review-box" style="font-weight: 400;">
+                  <div class="myrow margin-top-review-box" style="font-weight: normal;color: black;">
                     <%=seen[not].Message%>
                   </div>
                 </div>
