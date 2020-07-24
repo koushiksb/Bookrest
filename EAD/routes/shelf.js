@@ -394,14 +394,14 @@ Api to view general book page
 
 router.get('/viewbk/:title', async (req, res) => {
   var navbar;
-  console.log('fine')
-  console.log(req.isAuthenticated())
+  // console.log('fine')
+  // console.log(req.isAuthenticated())
   if (req.isAuthenticated()) {
     navbar = 'navbar2.ejs'
-    console.log('wrong')
+    // console.log('wrong')
   } else {
     navbar = 'navbar.ejs'
-    console.log('yay')
+    // console.log('yay')
   }
   Book.findOne({ Title: req.params.title.toString() }).populate({ path: 'Similar', model: 'Book' }).lean().then(async (x) => {
     var given = {};
@@ -435,11 +435,11 @@ router.get('/viewbk/:title', async (req, res) => {
             }
           });
           if (otherUsers.length % 2 === 0) {
-            console.log('here')
+            // console.log('here')
             col1 = otherUsers.length / 2;
             col2 = otherUsers.length;
           } else {
-            console.log('not here')
+            // console.log('not here')
             col1 = (otherUsers.length + 1) / 2;
             col2 = otherUsers.length;
 
@@ -470,7 +470,7 @@ router.get('/viewbk/:title', async (req, res) => {
       }
 
 
-      console.log(x)
+      // console.log(x)
 
       res.render('viewbk', {type:x.Class,desc:x.Description, similar: x.Similar, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
 
@@ -519,6 +519,7 @@ Api to add review to a book
 router.post('/addreview/:title', (req, res) => {
   var rev = req.body.review;
   var rate = req.body.rate;
+  // console.log(rate)
   Book.find({ Title: req.params.title }).then(x => {
     Review.find({ book: x[0]._id, user: req.user.id }).then(y => {
       // console.log(y.length)
@@ -535,11 +536,16 @@ router.post('/addreview/:title', (req, res) => {
           rating: rate,
           review: rev,
         }).save()
-        var te = (x[0].Rating * x[0].Treviews) + rate
+      }
+      // console.log(x[0].Rating)
+      // console.log(x[0].Treviews)
+        var te = Number(x[0].Rating * x[0].Treviews) + Number(rate)
+        // console.log(te)
         x[0].Treviews = x[0].Treviews + 1
+        // console.log(x[0].Treviews)
         x[0].Rating = te / x[0].Treviews
         x[0].save()
-      }
+        // console.log(x[0].Rating)
     })
   })
   return res.redirect('/shelf/viewbk/' + req.params.title)
@@ -557,6 +563,7 @@ router.get('/deletereview/:title', (req, res) => {
       x[0].Treviews = x[0].Treviews - 1
       x[0].Rating = te / x[0].Treviews
       x[0].save()
+      // console.log(x[0].Rating)
       return res.redirect('/shelf/viewbk/' + req.params.title)
     })
   })
