@@ -293,7 +293,7 @@ a:active,a:focus{outline:0;}
                       <div class="card-body">
                         <!-- <h6 class="card-category text-info">Enterprise</h6> -->
                         <h3 style="margin-bottom:1px" class="card-title">
-                          <a href="/shelf/viewbk/<%=requests[i].book.Title%>"><%=requests[i].book.Title%></a>
+                          <a href="/shelf/viewbk/<%=requests[i].book.Title%>" style="font-weight: normal;"><%=requests[i].book.Title%></a>
                         </h3 >&nbsp
                         <p class="author">
                           by
@@ -302,9 +302,9 @@ a:active,a:focus{outline:0;}
                           </a>
                         </p>
 
-                        <p class="card-description desc">
-                          No of Days <%=requests[i].period%> <br>
-                          Requested from <a href="/shelf/otherUserShelf/<%=requests[i].requester._id%>"><%=requests[i].requester.profile.fname%></a> <br>
+                        <p class="card-description desc" style="font-weight: normal;color: #66615b;">
+                          No of Days <span style="color: black;font-weight: normal;"><%=requests[i].period%></span> <br>
+                          Requested from <a href="/shelf/otherUserShelf/<%=requests[i].requester._id%>" style="color: black;font-weight: normal;"><%=requests[i].requester.profile.fname%></a> <br>
                         <br>
 <a class="b btn btn-round" style="color:red;background-color:#fff;border:1px solid red" id='but' onclick="deleteRequest('<%=requests[i]._id%>')" >Delete</a>
 
@@ -316,7 +316,7 @@ a:active,a:focus{outline:0;}
                 </div>
 <%}%>
 <%}else{%>
-  <p style="text-align:center;margin-top:10px;font-size:1.5rem">Currently No Lend Requests</p>
+  <p style="text-align:center;margin-top:10px;font-size:1.5rem;font-weight: normal;">Currently No Lend Requests</p>
   <br><br><br><br><br><br><br>
   <%}%>
               </div>
