@@ -1185,12 +1185,12 @@
 
                 <div class="row">
                     <div class="col-md-10 ml-auto mr-auto">
-                        <h2 class="title">Payments</h2>
+                        <h2 class="title" style="color: #66615b;font-weight: normal;">Payments</h2>
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <div style="float:left;color: black;">
-                                    <b>Wallet Balance : <%= allPayments.walletBalance %></b>
+                                <div style="float:left;color: #66615b;font-weight: normal;">
+                                    <b>Wallet Balance : <span style="font-weight: normal;color: black;"><%= allPayments.walletBalance %></span></b>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -1221,7 +1221,7 @@
                                     <div class="card-body">
                                         <!-- <h6 class="card-category text-info">Enterprise</h6> -->
                                         <h3 style="margin-bottom:1px" class="card-title">
-                                            <a href="#pablo"><%=allPayments[i].book.Title%></a>
+                                            <a href="#pablo" style="color: #66615b;font-weight: normal;"><%=allPayments[i].book.Title%></a>
                                         </h3>&nbsp
                                         <p class="author">
                                             by
@@ -1230,15 +1230,15 @@
                                             </a>
                                         </p>
 
-                                        <p class="card-description desc">
-                                            Amount <b style="color: black;"><%=allPayments[i].amount%></b> <br>
+                                        <p class="card-description desc" style="font-weight: normal;color: #66615b;">
+                                            Amount <span style="color: black;"><%=allPayments[i].amount%></span> <br>
                                             <% if(allPayments[i].purchaser.password) { %>
-                                            To be paid by <b
-                                                style="color: black;"><%=allPayments[i].purchaser.profile.fname%></b>
+                                            To be paid by <span
+                                                style="color: black;"><%=allPayments[i].purchaser.profile.fname%></span>
                                             <br>
                                             <% } else { %>
-                                            Pay Now to <b
-                                                style="color: black;"><%=allPayments[i].owner.profile.fname%></b> <br>
+                                            Pay Now to <span
+                                                style="color: black;"><%=allPayments[i].owner.profile.fname%></span> <br>
 
                                             <a class="btn btn-rose btn-round" style="color:white" id='but' href="#"
                                                 data-toggle="modal" data-target='#payoptions'>Pay to unlock</a>
