@@ -8,6 +8,7 @@
 
 
   const mongoose = require('mongoose');
+  const Book = require('./Book')
   const Profile = require('./Profile')
   const UserSchema = new mongoose.Schema({
     email : {
@@ -35,6 +36,10 @@
       type:Boolean,
       default:false
     },
+    Recommend:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Book'
+    }],
     walletBalance:{
       type:Number
     }

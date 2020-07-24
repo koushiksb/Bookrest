@@ -41,6 +41,41 @@
      </div>
 
      <div class="container">
+      <% for(var i in recom){%>
+          <!-- <div id=> -->
+          <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
+          <div class="col-md-12">
+           <div class="products">
+             <div class="row">
+              <% for (j=0;j<recom[i].length ;j++){%>
+               <div class="col-md-3 col-sm-3" >
+                 <div class="card card-product card-plain">
+                   <div class="card-image">
+                     <a href="/shelf/viewbk/<%=recom[i][j].Title%>"><img class="af-explames-demo-img" style="width:104px;height:160px" src="<%=recom[i][j].ImageURLM%>"
+                  alt="https://www.bookcoversclub.com/wp-content/uploads/2018/02/book-cover-352.jpg"></a>
+                     <div class="card-body">
+                       <div class="card-description">
+                         <p class="card-title" style="color:white;font-weight: normal;width:20ch"><%= recom[i][j].Title%></p>
+                         <p class="card-description" style="color:white;font-weight: normal"><%= recom[i][j].Author%></p>
+                         <!-- here we need to keep a loop for displayin the rating -->
+                          <% for(var m=0; m<Math.round(recom[i][j].Rating/2) ;m++){%>
+                          <span class="fa fa-star checked"></span>
+                          <%}%>
+                          <% for(var m=4; m>Math.round(recom[i][j].Rating/2)-1 ;m--){%>
+                          <span class="fa fa-star"></span>
+                          <%}%>
+                       </div>
+
+                     </div>
+                   </div>
+                 </div>
+               </div>
+                <%} %>
+               <br>
+               </div>
+           </div>
+         </div>
+         <%}%>
        <% for(var i in pop){%>
           <!-- <div id=> -->
           <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
