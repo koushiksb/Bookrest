@@ -1190,7 +1190,7 @@
             <div class="row">
               <div class="col-md-4">
                 <div style="float:left;color: #66615b;font-weight: normal;">
-                  <b>Wallet Balance : <span style="font-weight: normal;color: black;"><%= allPayments.walletBalance %></span></b>
+                  <b>Wallet Balance : <span style="font-weight: normal;color: black;"><span class="fa fa-rupee">&nbsp;<%= allPayments.walletBalance %></span></span></b>
                 </div>
               </div>
               <div class="col-md-8">
@@ -1232,7 +1232,7 @@
                     <% } %>
 
                     <p class="card-description desc" style="font-weight: normal;color: #66615b;">
-                      Amount <span style="color: black;"><%=allPayments[i].amount%></span> <br>
+                      Amount <span style="color: black;"><span class="fa fa-rupee">&nbsp;</span><%=allPayments[i].amount%></span> <br>
                       <% if(allPayments[i].purchaser.password) { %>
                       Received from <span style="color: black;"><%=allPayments[i].purchaser.profile.fname%></span> <br>
                       <% } else if(allPayments[i].book.Author !== 'Wallet') { %>
@@ -1266,7 +1266,7 @@
 
 
                     <div class="form-group">
-                      <h6 style="text-align:center">Enter the amount : <input type="number" min="0" id="amount" name="amount" value=""></h6>
+                      <h6 style="text-align:center">Enter the amount in <span class="fa fa-rupee">&nbsp;</span> : <input type="number" min="0" id="amount" name="amount" value=""></h6>
                     </div>
                   </div>
                   <div class="modal-footer" style="border-top:0px !important;padding:1rem 10rem !important">

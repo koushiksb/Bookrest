@@ -26,7 +26,7 @@
     <div class="section">
 
       <div class="container">
-<h3>Post Details</h3>
+<h3 style="font-weight: normal;">Post Details</h3>
         <div class=" card card-blog">
                   <div class="row">
                     <div class="col-md-3">
@@ -40,7 +40,7 @@
                           <div class="card-body">
                             <h6 class="card-category text-info">Book giving away</h6>
                             <p style="margin-bottom:1px;margin-left:-35%" class="card-title">
-                              <a href="#pablo"><%=exchange.bookSen.Title%></a>
+                              <a href="#pablo" style="font-weight: normal;"><%=exchange.bookSen.Title%></a>
                             </p >&nbsp
                             <br>
                             <p class="author" style="margin-left:-35%">
@@ -56,7 +56,7 @@
                           <div class="card-body">
                             <h6 class="card-category text-info">Book requested</h6>
                             <p style="margin-bottom:1px;margin-right:-35%" class="card-title">
-                              <a href="#pablo"><%=exchange.bookReq.Title%></a>
+                              <a href="#pablo" style="font-weight: normal;"><%=exchange.bookReq.Title%></a>
                             </p >&nbsp
                             <br>
                             <p class="author" style="margin-right:-35%">
@@ -86,8 +86,8 @@
                   </div>
                   <br>
                 </div>
-            <h5>Add Posted by: <b><%= exchange.userReq.profile.fname + exchange.userReq.profile.lname%></b></h5>
-            <h5>City: <b><%=exchange.userReq.profile.location%></b></h5>
+            <h5 style="font-weight: normal;">Add Posted by: <span style="color: black;"><%= exchange.userReq.profile.fname + exchange.userReq.profile.lname%></span></h5>
+            <h5 style="font-weight: normal;">City: <span style="color: black;"><%=exchange.userReq.profile.location%></span></h5>
             <!-- <h5>Contact: <b><%=exchange.userReq.profile.phone%></b></h5> -->
             <!-- <h5>Location: <b><%=exchange.userReq.profile.address%></b></h5> -->
             <hr />
