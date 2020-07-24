@@ -243,7 +243,7 @@ a:active,a:focus{outline:0;}
           <div class="container">
             <div class="row">
               <div class="col-md-10 ml-auto mr-auto">
-                <h2 class="title">Exchange requests</h2>
+                <h2 class="title" style="font-weight: normal;color: #66615b;">Exchange requests</h2>
                 <br>
 <%- include ("./mininavbar.ejs") %>
 
@@ -262,7 +262,7 @@ a:active,a:focus{outline:0;}
                           <div class="card-body">
                             <h6 class="card-category text-info">Book giving away</h6>
                             <p style="margin-bottom:1px;margin-left:-35%" class="card-title">
-                              <a href="#pablo"><%=requests[i].bookSen.Title%></a>
+                              <a href="#pablo" style="font-weight:normal"><%=requests[i].bookSen.Title%></a>
                             </p >&nbsp
                             <br>
                             <p class="author" style="margin-left:-35%">
@@ -278,7 +278,7 @@ a:active,a:focus{outline:0;}
                           <div class="card-body">
                             <h6 class="card-category text-info">Book requested</h6>
                             <p style="margin-bottom:1px;margin-right:-35%" class="card-title">
-                              <a href="#pablo"><%=requests[i].bookReq.Title%></a>
+                              <a href="#pablo" style="font-weight:normal"><%=requests[i].bookReq.Title%></a>
                             </p >&nbsp
                             <br>
                             <p class="author" style="margin-right:-35%">
@@ -310,7 +310,7 @@ a:active,a:focus{outline:0;}
                 </div>
 <%}%>
 <%}else{%>
-  <p style="text-align:center;margin-top:10px;font-size:1.5rem">You can see Exchange requests here</p>
+  <p style="text-align:center;margin-top:10px;font-size:1.5rem;font-weight: normal;">You can see Exchange requests here</p>
   <%}%>
               </div>
             </div>
