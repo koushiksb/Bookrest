@@ -283,7 +283,8 @@ router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
     var readRequestAmount = 5;
     var hasHardCopy = false;
 
-    await Openbid.findOne({ bookid: x.id, userid: req.user.id }).then(a => {
+    await Openbid.findOne({ bookid: x._id, userid: req.user.id }).then(a => {
+      console.log('hey',a)
       if (a != null) {
         console.log('a', a)
         inbidding = 1
