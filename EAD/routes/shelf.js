@@ -277,7 +277,7 @@ Api to view particular book in shelf
 */
 router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
   var inbidding = 0
-  Book.findOne({ Title: req.params.title }).then(async (x) => {
+  Book.findOne({ Title: req.params.title }).lean().then(async (x) => {
     var owner = '0';
     var softCopy = false;
     var readRequestAmount = 5;
@@ -289,7 +289,7 @@ router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
         inbidding = 1
       }
     })
-    await Shelf.findOne({ user: req.user._id, book: x.id }).then(y => {
+    await Shelf.findOne({ user: req.user._id, book: x._id }).then(y => {
       // console.log(y);
       console.log(y);
       if (y.hasHardCopy) {
@@ -310,7 +310,8 @@ router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
       console.log(y)
     });
     console.log('in bidding', inbidding)
-    res.render('viewbook', { image: x.ImageURLL, title: x.Title, otherUserShelf: false, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, readRequestAmount: readRequestAmount, hasHardCopy: hasHardCopy, layout: 'navbar2.ejs' });
+    console.log(x.Class)
+    res.render('viewbook', { image: x.ImageURLL, title: x.Title, otherUserShelf: false,description:x.Description, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, readRequestAmount: readRequestAmount, hasHardCopy: hasHardCopy,type:x.Class, layout: 'navbar2.ejs' });
   });
 });
 
@@ -322,10 +323,10 @@ router.get('/otherUserShelfviewbook/:title/:userid', (req, res) => {
   var inbidding = 0;
   req.session.otherUserShelfUserId = req.params.userid;
   console.log(req.params);
-  Book.findOne({ Title: req.params.title }).then(async (x) => {
+  Book.findOne({ Title: req.params.title }).lean().then(async (x) => {
     console.log('selected book')
     console.log(x);
-    Openbid.findOne({ bookid: x.id, userid: req.params.userid }).then(a => {
+    Openbid.findOne({ bookid: x._id, userid: req.params.userid }).then(a => {
       if (a != null) {
         inbidding = 1
       }
@@ -342,7 +343,7 @@ router.get('/otherUserShelfviewbook/:title/:userid', (req, res) => {
       }
     });
     console.log(owner);
-    res.render('viewbook', { image: x.ImageURLL, readRequestAmount: readRequestAmount, title: x.Title, hasHardCopy: false, otherUserShelf: true, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, layout: 'navbar2.ejs' });
+    res.render('viewbook', { image: x.ImageURLL,description:x.Description,type:x.Class, readRequestAmount: readRequestAmount, title: x.Title, hasHardCopy: false, otherUserShelf: true, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, layout: 'navbar2.ejs' });
   });
 });
 
@@ -396,8 +397,9 @@ router.get('/viewbk/:title', async (req, res) => {
     navbar = 'navbar.ejs'
     console.log('yay')
   }
-  Book.findOne({ Title: req.params.title.toString() }).populate({ path: 'Similar', model: 'Book' }).then(async (x) => {
+  Book.findOne({ Title: req.params.title.toString() }).populate({ path: 'Similar', model: 'Book' }).lean().then(async (x) => {
     var given = {};
+
     Review.find({ book: x._id, user: req.user.id }).populate({ path: 'user', model: 'User', populate: { path: 'profile', model: 'Profile' } }).then(async (l) => {
       given = l;
       // console.log(given.length)
@@ -460,9 +462,9 @@ router.get('/viewbk/:title', async (req, res) => {
         })
 
       }
-
-      console.log(x)
-      res.render('viewbk', { similar: x.Similar, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
+      console.log(';lkjhgfdcvbnm')
+      console.log(x.Class)
+      res.render('viewbk', { similar: x.Similar,type:x.Class, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre,description:x.Description, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
 
     })
   })
