@@ -152,7 +152,15 @@ display: none;
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                 <div class="col">
+                  <% if(urlunseen[not]==0){%>
                   <a href="/exchange/ongoing"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <%}else if(urlunseen[not]==2){%>
+                  <a href="/my/viewrequest"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <%}else if(urlunseen[not]==3){%>
+                  <a href="/my/oldrequests"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <%}else{%>
+                  <a href="/exchange/tradescompleted"><div class="review-user-name"><%=unseen[not].Type%></div></a>
+                  <%}%> 
                   <div class="myrow margin-top-review-box" style="font-weight: 400;">
                     <%=unseen[not].Message%>
                   </div>
@@ -168,7 +176,15 @@ display: none;
               <div class="myrow vertical-center">
                 <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                 <div class="col">
+                  <% if(urlseen[not]==0){%>
                   <a href="/exchange/ongoing"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <%}else if(urlseen[not]==2){%>
+                  <a href="/my/viewrequest"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <%}else if(urlseen[not]==3){%>
+                  <a href="/my/oldrequests"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <%}else{%>
+                  <a href="/exchange/tradescompleted"><div class="review-user-name"><%=seen[not].Type%></div></a>
+                  <%}%>  
                   <div class="myrow margin-top-review-box" style="font-weight: 400;">
                     <%=seen[not].Message%>
                   </div>
