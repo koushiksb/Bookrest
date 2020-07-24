@@ -27,7 +27,7 @@
 .form-check .form-check-label input[type=radio]:disabled+.form-check-sign{pointer-events:none!important;}
 .form-check-label input[type=radio]:checked+.form-check-sign:before{background-color:#66615b;}
 #backbutton{
-  color:white !important; 
+  color:white !important;
 }
   </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -329,7 +329,7 @@
                 console.log(result)
                 document.getElementById('data').innerHTML ='';
                 var exchange = result.exchange;
-                dataOnPage = result.bids;
+                dataOnPage = result.exchange;
                 if(document.getElementById('search')!==''){
                   return search();
                 }
