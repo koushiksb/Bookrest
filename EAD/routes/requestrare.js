@@ -6,6 +6,7 @@
   const Profile=require('../models/Profile')
   const Payment = require('../models/Payment')
   const Shelf=require('../models/Shelf')
+  const Notify=require('../models/Notify')
   const RareRequest=require('../models/RareRequest')
   const express=require('express');
   const router = express.Router();
@@ -59,6 +60,12 @@
       })
       k.save()
       .then(x=>{
+        console.log(x)
+        var y = new Notify({
+          User:x.recipient,
+          Type:'View Read Requests',
+          Message:'You got a read request for one of the books in your shelf.'
+        }).save()
         console.log('saved');
         return res.sendStatus(200)
       })
@@ -167,6 +174,11 @@
         amountPerDay = softCopy.readRequestAmount;
       })
       if(req.body.status == 1){
+        var not = new Notify({
+          User:x.requester,
+          Type:'Read Request Status',
+          Message:'Your read request has been accepted.'
+        }).save()
         var payinfo = new Payment({
           owner:req.user.id,
           purchaser:req.body.requester,
@@ -207,6 +219,11 @@
 
 
       }else{
+        var not = new Notify({
+          User:x.requester,
+          Type:'Read Request Status',
+          Message:'Your read request has been declined.'
+        }).save()
         console.log('jhgfdsa');
         return res.sendStatus(200)
 

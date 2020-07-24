@@ -12,6 +12,9 @@
     ISBN:{
       type:String
     },
+    Description:{
+      type:String
+    },
     Title:{
       type:String
     },

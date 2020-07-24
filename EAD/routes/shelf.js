@@ -310,8 +310,9 @@ router.get('/viewbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
       console.log(y)
     });
     console.log('in bidding', inbidding)
-    console.log(x.Class)
-    res.render('viewbook', { image: x.ImageURLL, title: x.Title, otherUserShelf: false,description:x.Description, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, readRequestAmount: readRequestAmount, hasHardCopy: hasHardCopy,type:x.Class, layout: 'navbar2.ejs' });
+
+    res.render('viewbook', { desc:x.Description,image: x.ImageURLL, title: x.Title, otherUserShelf: false, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, readRequestAmount: readRequestAmount, hasHardCopy: hasHardCopy, layout: 'navbar2.ejs' });
+
   });
 });
 
@@ -343,7 +344,9 @@ router.get('/otherUserShelfviewbook/:title/:userid', (req, res) => {
       }
     });
     console.log(owner);
-    res.render('viewbook', { image: x.ImageURLL,description:x.Description,type:x.Class, readRequestAmount: readRequestAmount, title: x.Title, hasHardCopy: false, otherUserShelf: true, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, layout: 'navbar2.ejs' });
+
+    res.render('viewbook', {desc:x.Description, image: x.ImageURLL, readRequestAmount: readRequestAmount, title: x.Title, hasHardCopy: false, otherUserShelf: true, author: x.Author, inbidding: inbidding, id: x._id, owner: owner, softCopy: softCopy, layout: 'navbar2.ejs' });
+
   });
 });
 
@@ -462,9 +465,11 @@ router.get('/viewbk/:title', async (req, res) => {
         })
 
       }
-      console.log(';lkjhgfdcvbnm')
-      console.log(x.Class)
-      res.render('viewbk', { similar: x.Similar,type:x.Class, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre,description:x.Description, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
+
+
+      console.log(x)
+      res.render('viewbk', {desc:x.Description, similar: x.Similar, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
+
 
     })
   })

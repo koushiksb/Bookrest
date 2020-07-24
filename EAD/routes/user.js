@@ -241,20 +241,26 @@ notification
 router.get('/notify',isLoggedIn,(req,res)=>{
   var unseen=[]
   var seen = []
+  var types = {"Exchange Accepted":0,"Book Received":0,"Book Exchanged":1,"View Read Requests":2,"Read Request Status":3};
+  var urlseen = []
+  var urlunseen = []
   Notify.find({User:req.user.id}).sort({date:1}).then(y=>{
     console.log(y)
     for (i=y.length-1;i>-1;i--){
       if(y[i].Status){
         seen.push(y[i])
+        urlseen.push(types[y[i].Type])
       }
       else{
         unseen.push(y[i])
-      y[i].Status = true
-      y[i].save()
-    }
+        urlunseen.push(types[y[i].Type])
+        y[i].Status = true
+        y[i].save()
+      }
     }
     console.log(seen)
-    return res.render('notify',{unseen:unseen,seen:seen,len:y.length,layout:'navbar2.ejs'})
+    console.log(urlseen)
+    return res.render('notify',{urlseen:urlseen,urlunseen:urlunseen,unseen:unseen,seen:seen,len:y.length,layout:'navbar2.ejs'})
   })
 })
 
