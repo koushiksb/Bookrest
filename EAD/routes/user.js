@@ -268,7 +268,7 @@ router.get('/notify',isLoggedIn,(req,res)=>{
 Dashboard api
 */
 router.get('/dashboard',async (req,res)=>{
-    console.log(req.isAuthenticated());
+    // console.log(req.isAuthenticated());
     if(req.user){
         if(req.user.profile==undefined){
             var genre={
@@ -287,11 +287,15 @@ router.get('/dashboard',async (req,res)=>{
             return res.render('profile1',{user:req.user.email,pro:null,genre:genre})
         }else{
             var pop = {};
-            Book.find({Class:"Rare"}).lean().then(f=>{
-                pop['Rare']=f.slice(0,8);
+            var recom = {}
+            User.findOne({_id:req.user.id}).populate({path:'Recommend',model:'Book'}).lean().then(g=>{
+              recom['Top Picks for you'] = g.Recommend.slice(0,12);
+            })
+            Book.find({Class:"Rare"}).limit(8).lean().then(f=>{
+                pop['Rare']=f;
                                                       })
-            Book.find({Class:"Popular"}).lean().then(f=>{
-                pop['Popular']=f.slice(0,8);
+            Book.find({Class:"Popular"}).limit(8).lean().then(f=>{
+                pop['Popular']=f;
                                                         })
             Genre.find({}).then(async(x)=>{
           // console.log(x[0])
@@ -301,16 +305,19 @@ router.get('/dashboard',async (req,res)=>{
             for (var i = 0; i < arrayLength; i++) {
                 var g = x[i]['Genre'];
             // console.log(g);
-                await Book.find({Genre:g}).lean().then(y=>{
+                await Book.find({Genre:g}).limit(12).lean().then(y=>{
               // console.log(y[0])
-                    gen[g]=y.slice(0,12);
+                    gen[g]=y;
               // console.log(gen)
               // console.log(dic)
                                                             })
                                                     }
           // console.log(gen)
-                return res.render('dashboard',{pop:pop,user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
-        })  // return res.sendStatus(200)
+
+            // console.log(pop['Recom'])
+            return res.render('dashboard',{recom:recom,pop:pop,user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
+        })
+          // return res.sendStatus(200)
      }
     }else{
         var pop = {};
