@@ -22,7 +22,7 @@ h3{orphans:3;widows:3;}
 h3{page-break-after:avoid;}
 }
 /*! CSS Used from: https://demos.creative-tim.com/paper-kit-2-pro/assets/css/paper-kit.min.css?v=2.3.0 */
-h3{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:'Comic Sans MS',cursive,sans-serif;font-weight:300;}
+h3{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:'Montserrat',Helvetica,Arial,sans-serif;font-weight:300;}
 h3{margin:30px 0 0;}
 h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 .reviews-heading{
@@ -65,7 +65,7 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 }
 .review-user-name{
   /* margin-left: 1rem; */
-  font-family:'Comic Sans MS',cursive,sans-serif ;
+  font-family:'Montserrat',Helvetica,Arial,sans-serif ;
 }
 .margin-top-review-box{
   margin-top: 0.5rem;
@@ -105,7 +105,7 @@ display: none;
   cursor: pointer;
   margin-left: auto;
   font-weight: 400;
-  font-family: 'Comic Sans MS',cursive,sans-serif;
+  font-family: 'Montserrat',Helvetica,Arial,sans-serif;
 }
 .readmore-button:hover{
   cursor: pointer;
@@ -251,24 +251,24 @@ h1 { font-size: 1.5em; margin: 10px; }
           </div>
         </div>
         <div class="other-users">
-          <h3>Other users with this Book</h3>
+          <h3 style="font-weight: normal;">Other users with this Book</h3>
         </div>
         <div class="row" style="justify-content: center;margin-top: 2rem;">
             <div class="column reviews-border" style="flex-basis: 60%;">
               <div class="row" style="width:80%;margin-left:auto;margin-right:auto;justify-content:center;">
                 <div style="display:flex;flex-direction:column;flex-basis:50%" >
                   <%for(var i=0;i<col1;i++){%>
-                    <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>'><%=otherUsers[i].name%></a></h3>
+                    <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>' style="font-weight: normal;"><%=otherUsers[i].name%></a></h3>
                     <%}%>
                 </div>
                 <div style="display:flex;flex-direction:column;flex-basis:50%">
                   <%for(var i=col1;i<col2;i++){%>
-                    <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>'><%=otherUsers[i].name%></a></h3>
+                    <h3><a href='/shelf/otherUserShelf/<%=otherUsers[i]._id%>' style="font-weight: normal;"><%=otherUsers[i].name%></a></h3>
                     <%}%>
                 </div>
                 <%if(col1==0 && col2==0){%>
-                  <div style="display:flex;flex-direction:column;flex-basis:100%;align-items:center" >
-                      <h3>No users have softCopy of this book</h3>
+                  <div style="display:flex;flex-direction:column;flex-basis:100%;align-items:center;" >
+                      <h3 style="font-weight: normal;">No users have softCopy of this book</h3>
                   </div>
                 <%}%>
               </div>
@@ -277,7 +277,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 
         </div>
         <div class="reviews-heading" style="margin-top:4rem;margin-bottom:2rem">
-          <h3>Similar Books</h3>
+          <h3 style="font-weight: normal;">Similar Books</h3>
         </div>
         <div class="row">
 
@@ -309,7 +309,7 @@ h1 { font-size: 1.5em; margin: 10px; }
        <%if(u){%>
         <%if(given.length>0){%>
           <div class="reviews-heading">
-          <h3>Reviewed</h3>
+          <h3 style="font-weight: normal;">Reviewed</h3>
         </div>
           <div class="column" style="margin-left:7%">
             <div class="myrow vertical-center">
@@ -383,7 +383,7 @@ h1 { font-size: 1.5em; margin: 10px; }
         <%}
         else{%>
           <div class="reviews-heading" style="margin-bottom:2rem">
-          <h3 >Review this</h3>
+          <h3 style="font-weight: normal;">Review this</h3>
           </div>
 
             <form method="post" action="/shelf/addreview/<%= title%>" style="width:100%">
@@ -419,7 +419,7 @@ h1 { font-size: 1.5em; margin: 10px; }
         <br>
         <%}%>
         <div class="reviews-heading">
-          <h3 >Reviews</h3>
+          <h3 style="font-weight: normal;">Reviews</h3>
         </div>
         <div class="row" style="justify-content: center;margin-top: 2rem;">
           <div class="column reviews-border" style="flex-basis: 80%;">
