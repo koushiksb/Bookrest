@@ -54,7 +54,7 @@
     <div class="main">
       <div class="section">
         <div class="container">
-          <h3>Add Book</h3>
+          <h3 style="font-weight: bold;">Add Book</h3>
           <div onclick="goBack()" style="position:absolute;top:12%;right:7%;cursor:pointer">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
             back
@@ -88,7 +88,7 @@
                 </div> -->
                 <h6>Format
                 </h6>
-                <div class="form-check">
+                <div class="form-check" style="font-weight: normal;color: black;">
                   <label class="form-check-label">
                     <input class="form-check-input" id='hasHardCopy' name='hasHardCopy' type="checkbox" value="false">
                     Print
@@ -98,9 +98,9 @@
                 <% if(edit) { %>
                 <h6>Soft Copy
                 </h6>
-                <div class="form-check">
+                <div class="form-check" style="font-weight: normal;color: black;">
                   <label class="form-check-label">
-                    <input class="form-check-input" id='delSoftCopy' name='delSoftCopy' type="checkbox" value="false">
+                    <input class="form-check-input" id='delSoftCopy' name='delSoftCopy' type="checkbox" value="false" >
                     Delete
                     <span class="form-check-sign"></span>
                   </label>
@@ -112,7 +112,7 @@
                   <h6>Title
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="text" list="books" id="bookname" name="bookname" class="form-control border-input" placeholder="Enter the book title here...">
+                  <input type="text" list="books" id="bookname" name="bookname" class="form-control border-input" placeholder="Enter the book title here..." style="font-weight: normal;color: black;">
                   <input type="hidden" id="hiddenbookname" name="hiddenbookname" value="hi">
                   <datalist id="books">
                     <% for(i=0;i<booksInfo.length; i++) {%>
@@ -124,26 +124,26 @@
                   <h6>Author
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="text" id="author" name="author" class="form-control border-input" placeholder="Enter the Author name here...">
+                  <input type="text" id="author" name="author" class="form-control border-input" placeholder="Enter the Author name here..." style="font-weight: normal;color: black;">
                 </div>
                 <div class="form-group">
                   <h6>Publisher
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="text" id="publisher" name="publisher" class="form-control border-input" placeholder="Enter the publisher name here...">
+                  <input type="text" id="publisher" name="publisher" class="form-control border-input" placeholder="Enter the publisher name here..." style="font-weight: normal;color: black;">
                 </div>
                 <div class="form-group">
                   <h6>Year of Publication
                     <span class="icon-danger">*</span>
                   </h6>
-                  <input type="number" id="year" name="year" class="form-control border-input" placeholder="Enter the Year of Publication...">
+                  <input type="number" id="year" name="year" class="form-control border-input" placeholder="Enter the Year of Publication..." style="font-weight: normal;color: black;">
                 </div>
                 <div class="form-group">
                   <h6>Description</h6>
-                  <textarea name="description" class="form-control textarea-limited" placeholder="This is a textarea limited to 150 characters." rows="13" maxlength="150"></textarea>
+                  <textarea name="description" class="form-control textarea-limited" style="font-weight: normal;color: black;" placeholder="This is a textarea limited to 150 characters." rows="13" maxlength="150"></textarea>
                   <h5>
                     <small>
-                      <span id="textarea-limited-message" class="pull-right">150 characters left</span>
+                      <span id="textarea-limited-message" class="pull-right" style="font-weight: normal;color: black;">150 characters left</span>
                     </small>
                   </h5>
                 </div>

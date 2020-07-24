@@ -61,18 +61,18 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
             <!-- end carousel -->
           </div>
           <div class="col-md-8 col-sm-6">
-            <h2><%= title %></h2>
-            <h4 class="price" style="align:right"><strong> <%= author %></strong></h4>
-            <h6 class="price" style="align:right;margin-top:0.5rem">Type: <%=type%></h6>
+            <h2 style="font-weight: bold;"><%= title %></h2>
+            <h4 class="price" style="align:right;font-weight: bold;"><strong> <%= author %></strong></h4>
+            <h6 class="price" style="align:right;margin-top:0.5rem;">Type: <%=type%></h6>
   <%if(!otherUserShelf){%>
-            <p style="margin-top:1rem;margin-bottom:-1rem"><a href="/shelf/editbook/<%=title%>" ><b>Edit</b></a></p>
+            <p style="margin-top:1rem;margin-bottom:-1rem;"><a href="/shelf/editbook/<%=title%>" style="font-weight: bold;">Edit</a></p>
             <%}%>
             <hr />
-            <p>Book Description : <%= desc%></p>
+            <p style="color: black;font-weight: normal;">Book Description : <%= desc%></p>
 
             <hr />
             <%if(inbidding==1 || hasHardCopy ){%>
-            <ul>
+            <ul style="color: black;font-weight: normal;">
             <%if(hasHardCopy){%>
 
 
@@ -186,8 +186,8 @@ h3{font-size:1.825em;line-height:1.4;margin:20px 0 0;}
 
           <div class="modal-body" >
 
-            <div><p>set the amount payable by user requested to read the book per one day</p>
-            <p>If you do not set, then users will be charged 5 rupees per day</p> </div><br>
+            <div ><p style="color: black;font-weight: normal;">set the amount payable by user requested to read the book per one day</p>
+            <p style="color: black;font-weight: normal;">If you do not set, then users will be charged 5 rupees per day</p> </div><br>
             <div class="form-group">
               <h6>Amount
                 <span class="icon-danger">*</span>

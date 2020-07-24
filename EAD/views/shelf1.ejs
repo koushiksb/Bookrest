@@ -78,7 +78,7 @@
   </head>
   <body style="margin-top:10%">
 
-      <center><h1 style='font-family:"Comic Sans MS",cursive,sans-serif;'>My Shelf</h1></center>
+      <center><h1 style='font-family:"Comic Sans MS",cursive,sans-serif;color: ;'>My Shelf</h1></center>
 
     <div class="af-example-container">
             <div class="af-example-demos-outer">
@@ -177,8 +177,8 @@
                                   <% } %>
 
                           </div>
-                          <p style='font-family:"Comic Sans MS",cursive,sans-serif;'><%= book[i].book.Title %> <br>
-                            <a href="/shelf/deletebook/<%=book[i].book.Title%>">Remove</a>
+                          <p style='font-family:"Comic Sans MS",cursive,sans-serif;' style="color: black;font-weight: normal;"><%= book[i].book.Title %> <br>
+                            <a href="/shelf/deletebook/<%=book[i].book.Title%>" style="font-weight: normal;">Remove</a>
                           </p>
                       </li>
                     <%}%>
