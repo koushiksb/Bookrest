@@ -208,14 +208,14 @@ h1 { font-size: 1.5em; margin: 10px; }
             <!-- end carousel -->
           </div>
           <div class="col-md-8 col-sm-6">
-            <h2><%= title %></h2>
-            <h4 class="price" ><strong> <%= author %></strong></h4>
+            <h2 style="font-weight:bold"><%= title %></h2>
+            <h4 class="price" style="font-weight:bold"><strong> <%= author %></strong></h4>
             <h6 style="margin-top:2rem">Genre : <%=genre%></h6>
             <h6 style="margin-top:0.5rem">Type : <%=type%></h6>
-            <p style="margin-top:0.5rem;font-weight:400">Rating :&nbsp&nbsp <%=rating%>&nbsp/&nbsp5</p>
+            <p style="margin-top:0.5rem;font-weight:normal;color: black;">Rating :&nbsp&nbsp <%=rating%>&nbsp/&nbsp5</p>
             <hr />
 
-            <p>Book Description : <%= desc%></p>
+            <p style="color: black;font-weight:normal">Book Description : <%= desc%></p>
 
             <hr />
             <div class="row">
@@ -225,20 +225,20 @@ h1 { font-size: 1.5em; margin: 10px; }
             </div>
                 <div class="column2" style="margin-top:30px">
                       <%if(suggest){%>
-                      <p>Do you Know this Book?</p>
-                      <a href="javascript:openSuggest();">Yes</a> /
-                      <a href="/shelf/classify/<%= title%>/<%= false%>">No</a>
+                      <p style="font-weight:bold">Do you Know this Book?</p>
+                      <a href="javascript:openSuggest();" style="font-weight:bold">Yes</a> /
+                      <a href="/shelf/classify/<%= title%>/<%= false%>" style="font-weight:bold">No</a>
                       <div class="form-popup" id="sForm" style="display: none;">
                         <form method="post" action="/shelf/classify/<%= title%>/<%= true%>" class="form-container">
-                          <div class="multiple-option__item" style="top:40%;left:37%" >
+                          <div class="multiple-option__item" style="top:40%;left:37%;font-weight:bold" >
                             <input type="radio" name="Class" value="Popular"/>
                             <label>Popular</label>
                           </div>
-                          <div class="multiple-option__item" style="top:40%;left:37%" >
+                          <div class="multiple-option__item" style="top:40%;left:37%;font-weight:bold" >
                             <input type="radio" name="Class" value="Rare"/>
                             <label>Rare</label>
                           </div>
-                          <div class="multiple-option__item" style="top:40%;left:37%" >
+                          <div class="multiple-option__item" style="top:40%;left:37%;font-weight:bold" >
                             <input type="radio" name="Class" value="Common"/>
                             <label>Common</label>
                           </div>
@@ -291,7 +291,7 @@ h1 { font-size: 1.5em; margin: 10px; }
                      <div class="card-body">
                        <div class="card-description">
                          <p class="card-title" style="font-weight: normal;width:20ch"><%= similar[j].Title%></p>
-                         <p class="card-description" style="font-weight: normal"><%= similar[j].Author%></p>
+                         <p class="card-description" style="font-weight: normal;color: black;"><%= similar[j].Author%></p>
                          <!-- here we need to keep a loop for displayin the rating -->
                           <% for(var m=0; m<Math.round(similar[j].Rating/2) ;m++){%>
                           <span class="fa fa-star checked"></span>
@@ -314,7 +314,7 @@ h1 { font-size: 1.5em; margin: 10px; }
             <div class="myrow vertical-center">
               <img id='r-a' class="review-user-image" src="../../static/pics/person.svg" alt="">
               <div class="col">
-                <div id='r-b' class="review-user-name"><%=given[0].user.profile.fname%>&nbsp;<%=given[0].user.profile.lname%></div>
+                <div id='r-b' class="review-user-name" style="font-weight: bold;"><%=given[0].user.profile.fname%>&nbsp;<%=given[0].user.profile.lname%></div>
                 <div class="row" style="margin-left:0.1rem;margin-top:0.3rem">
                   <% for(var m=0; m<Math.round(given[0].rating/2) ;m++){%>
                   <span id='r-<%=m%>' class="fa fa-star checked"></span>
@@ -330,8 +330,8 @@ h1 { font-size: 1.5em; margin: 10px; }
                 </div> -->
 
                 <div class="row" style="margin-left:-0.2rem;margin-top:0.3rem">
-                  <a id='r-c' style="margin-left:0.5rem" href="javascript:openForm();">Edit</a>
-                  <a id='r-d' style="margin-left:0.5rem" href="/shelf/deletereview/<%= title%>">Delete</a>
+                  <a id='r-c' style="margin-left:0.5rem;font-weight: bold;" href="javascript:openForm();">Edit</a>
+                  <a id='r-d' style="margin-left:0.5rem;font-weight: bold;" href="/shelf/deletereview/<%= title%>">Delete</a>
 
                 </div>
 
@@ -352,7 +352,7 @@ h1 { font-size: 1.5em; margin: 10px; }
         </fieldset>
                     </div>
                     <div class="row justify-content-center align-items-center" >
-                    <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" value="<%=given[0].review%>" style="width:50%;height:100px;float:left">
+                    <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" value="<%=given[0].review%>" style="width:50%;height:100px;float:left;color: black;">
                     <!-- <label>Rate from 1-10:</label> -->
                     <!-- <input class="form-control" type="number" required name="rate" min="1" max="10" style="width:10%;display:inline;float:left"> -->
 
@@ -375,7 +375,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 
               </div>
             </div>
-            <div id='r-e' class="myrow margin-top-review-box" style="font-weight: 400;">
+            <div id='r-e' class="myrow margin-top-review-box" style="font-weight: 400;color: black;">
               <%=given[0].review%>
             </div>
           </div>
@@ -402,7 +402,7 @@ h1 { font-size: 1.5em; margin: 10px; }
   </fieldset>
               </div>
               <div class="row justify-content-center align-items-center" >
-              <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" style="width:50%;height:100px;float:left">
+              <input class="form-control" name="review" type="text" required placeholder="Review this" aria-label="Search" style="width:50%;height:100px;float:left;color: black;">
               <!-- <label>Rate from 1-10:</label> -->
               <!-- <input class="form-control" type="number" required name="rate" min="1" max="10" style="width:10%;display:inline;float:left"> -->
 
@@ -430,7 +430,7 @@ h1 { font-size: 1.5em; margin: 10px; }
                     <div class="myrow vertical-center">
                       <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                       <div class="col">
-                        <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
+                        <div class="review-user-name" style="font-weight: bold;"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
                         <!-- <div class="star-ratings-css">
                           <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
                           <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
@@ -443,7 +443,7 @@ h1 { font-size: 1.5em; margin: 10px; }
                         <%}%>
                       </div>
                     </div>
-                    <div class="myrow margin-top-review-box" style="font-weight: 400;">
+                    <div class="myrow margin-top-review-box" style="font-weight: 400;color: black;">
                       <%=reviews[review].review%>
                     </div>
                   </div>
@@ -456,7 +456,7 @@ h1 { font-size: 1.5em; margin: 10px; }
                       <div class="myrow vertical-center">
                         <img class="review-user-image" src="../../static/pics/person.svg" alt="">
                         <div class="col">
-                          <div class="review-user-name"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
+                          <div class="review-user-name" style="font-weight:bold"><%=reviews[review].user.profile.fname%>&nbsp;<%=reviews[review].user.profile.lname%></div>
                           <!-- <div class="star-ratings-css">
                             <div class="star-ratings-css-top" style="width: <%=reviews[review].rating%>%;"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
                             <div class="star-ratings-css-bottom"><span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span>&nbsp<span>★</span></div>
@@ -470,7 +470,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 
                         </div>
                       </div>
-                      <div class="myrow margin-top-review-box" style="font-weight: 400;">
+                      <div class="myrow margin-top-review-box" style="font-weight: 400;color: black;">
                         <%=reviews[review].review%>
                       </div>
                     </div>
