@@ -396,16 +396,19 @@ router.get('/viewbk/:title', async (req, res) => {
   var navbar;
   // console.log('fine')
   // console.log(req.isAuthenticated())
+  var u = true;
   if (req.isAuthenticated()) {
     navbar = 'navbar2.ejs'
     // console.log('wrong')
   } else {
     navbar = 'navbar.ejs'
+    u = false;
     // console.log('yay')
   }
   Book.findOne({ Title: req.params.title.toString() }).populate({ path: 'Similar', model: 'Book' }).lean().then(async (x) => {
     var given = {};
-
+    var suggest = false;
+    if(u){
     Review.find({ book: x._id, user: req.user.id }).populate({ path: 'user', model: 'User', populate: { path: 'profile', model: 'Profile' } }).then(async (l) => {
       given = l;
       // console.log(given.length)
@@ -413,12 +416,12 @@ router.get('/viewbk/:title', async (req, res) => {
         given[0].rating = Number(given[0].rating);
       }
     });
-    var suggest = false;
     Classify.find({ book: x._id, user: req.user.id }).then(c => {
       if (c.length === 0) {
         suggest = true;
       }
     });
+  }
     Review.find({ book: x._id }).populate({ path: 'user', model: 'User', populate: { path: 'profile', model: 'Profile' } }).then(async (y) => {
       await y.forEach(review => {
         review.rating = Number(review.rating);
@@ -472,7 +475,7 @@ router.get('/viewbk/:title', async (req, res) => {
 
       // console.log(x)
 
-      res.render('viewbk', {type:x.Class,desc:x.Description, similar: x.Similar, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
+      res.render('viewbk', {u:u,type:x.Class,desc:x.Description, similar: x.Similar, suggest: suggest, given: given, image: x.ImageURLL, genre: x.Genre, rating: (x.Rating / 2).toFixed(1), title: x.Title, author: x.Author, reviews: y, col1: col1, col2: col2, otherUsers: otherUsers, layout: navbar });
 
 
 
