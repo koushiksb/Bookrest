@@ -343,7 +343,7 @@ router.get('/dashboard',async (req,res)=>{
                                                           })
                                                   }
        // console.log(gen)
-            return res.render('dashboard',{pop:pop,genre:lis_genre,books:gen,layout:'navbar.ejs'})
+            return res.render('dashboard',{recom:{},pop:pop,genre:lis_genre,books:gen,layout:'navbar.ejs'})
      })  // return res.sendStatus(200)
 
 
