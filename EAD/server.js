@@ -290,6 +290,15 @@
   },null,true,'Asia/Kolkata');
    console.log('After job instantiation');
 
+   const similarBooksJob = new CronJob('5 1 * * Sun', function() {
+     const { spawn } = require('child_process');
+     const pythonFunc = spawn('python', ['similar.py']);
+
+
+  },null,true,'Asia/Kolkata');
+   console.log('After job instantiation');
+
    staleAuctionRemoveJob.start();
    expiredBooksRemoveJob.start();
+   similarBooksJob.start();
   console.log('you are listening to port 3000');
