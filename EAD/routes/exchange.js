@@ -228,19 +228,21 @@
   */
   router.get('/tradepage',(req,res)=>{
     var books = [];
-    // Shelf.find({user:req.user.id}).populate('book','_id').then(y=>{
-    //   for(var i=0;i<y.length;i++){
-    //     books.push(y[i].book.id)
-    //   }
-    //   console.log(books);
-    // })
+    Shelf.find({user:req.user.id}).populate('book','_id').then(y=>{
+      for(var i=0;i<y.length;i++){
+        books.push(y[i].book.id)
+      }
+      console.log(books);
+    })
 
     Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL')
     .then(x=>{
       var gen = [];
       for(var i=0;i<x.length;i++){
         if (x[i].userReq.id != req.user._id){
-          gen.push(x[i]);
+          if (books.includes(x[i].bookReq.id)){
+           gen.push(x[i]);
+        }
         }
       }
       var locations = ['Bangalore','Bhuvaneshwar','Chennai','Delhi','Goa','Hyderabad','Jabalpur','Kolkatta','Lucknow','Mumbai',
@@ -281,6 +283,13 @@
       'munnar','mysore','nagpur','noida','patna','pondicherry','pune','raipur','shimla','trichy','vijayawada','vishakhapatnam',
       'warangal','tirupati'];
     }
+    var books = [];
+    Shelf.find({user:req.user.id}).populate('book','_id').then(y=>{
+      for(var i=0;i<y.length;i++){
+        books.push(y[i].book.id)
+      }
+      console.log(books);
+    })
     Exchange.find({status:false}).populate({path:'userReq',model:'User',populate:{path:'profile',model:'Profile'}}).populate('bookReq bookSen','Title ImageURLL Genre')
     .then(x=>{
       var gen = [];
@@ -289,7 +298,9 @@
         console.log(x[i].userReq.profile.location)
         if (location.includes(x[i].userReq.profile.location.toLowerCase())){
           if (genreFilters.includes(x[i].bookReq.Genre) || genreFilters.includes(x[i].bookSen.Genre)){
-            gen.push(x[i]);
+            if (x[i].userReq.id != req.user._id && books.includes(x[i].bookReq.id)){
+              gen.push(x[i]);
+            }
           }
         }
       }
