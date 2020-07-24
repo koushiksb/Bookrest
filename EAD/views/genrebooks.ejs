@@ -41,7 +41,7 @@
         <div class="row">
 
           <div class="col-md-12">
-            <h2 style="color:black"><%= books[0].Genre%></h2>
+            <h2 style="color:black;font-weight:normal"><%= books[0].Genre%></h2>
             <br/>
           </div>
           <% for(i=0;i<books.length; i++){%>
@@ -53,8 +53,8 @@
                 </a>
                 <div class="card-body">
                   <div class="card-description">
-                    <p class="card-title" style="font-family:400"><%= books[i].Title%></p>
-                    <p class="card-description"><%= books[i].Author%></p>
+                    <p class="card-title" style="color: black; font-family:400;font-weight: normal;"><%= books[i].Title%></p>
+                    <p class="card-description" style="color: black; font-weight: normal;"><%= books[i].Author%></p>
                     <% for(var m=0; m<Math.round(books[i].Rating/2) ;m++){%>
                     <span class="fa fa-star checked"></span>
                     <%}%>
