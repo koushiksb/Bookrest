@@ -43,7 +43,11 @@
      <div class="container">
       <% for(var i in recom){%>
           <!-- <div id=> -->
-          <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
+          <%if( i == 'Top Picks for you'){%>
+          <b><h3 style="color:white">Top Picks For You </h3></b><!-- </div> --><br>
+          <%}else{%>
+            <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
+            <%}%>
           <div class="col-md-12">
            <div class="products">
              <div class="row">
