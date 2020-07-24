@@ -287,9 +287,15 @@ router.get('/dashboard',async (req,res)=>{
             return res.render('profile1',{user:req.user.email,pro:null,genre:genre})
         }else{
             var pop = {};
-            var recom = {}
+            var recom = {};
+            var u = true;
             User.findOne({_id:req.user.id}).populate({path:'Recommend',model:'Book'}).lean().then(g=>{
-              recom['Top Picks for you'] = g.Recommend.slice(0,12);
+              if (g.Recommend){
+                recom['Top Picks for you'] = g.Recommend.slice(0,12);
+              }
+              else{
+                u=false;
+              }
             })
             Book.find({Class:"Rare"}).limit(8).lean().then(f=>{
                 pop['Rare']=f;
@@ -315,16 +321,16 @@ router.get('/dashboard',async (req,res)=>{
           // console.log(gen)
 
             // console.log(pop['Recom'])
-            return res.render('dashboard',{recom:recom,pop:pop,user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
+            return res.render('dashboard',{u:u,recom:recom,pop:pop,user:req.user.email,genre:lis_genre,books:gen,layout:'navbar2.ejs'})
         })
           // return res.sendStatus(200)
      }
     }else{
         var pop = {};
-        Book.find({Class:"Rare"}).lean().then(f=>{
+        Book.find({Class:"Rare"}).limit(8).lean().then(f=>{
             pop['Rare']=f;
         })
-        Book.find({Class:"Popular"}).lean().then(f=>{
+        Book.find({Class:"Popular"}).limit(8).lean().then(f=>{
             pop['Popular']=f;
         })
         Genre.find({}).then(async(x)=>{
@@ -335,15 +341,17 @@ router.get('/dashboard',async (req,res)=>{
             for (var i = 0; i < arrayLength; i++) {
                 var g = x[i]['Genre'];
          // console.log(g);
-                await Book.find({Genre:g}).lean().then(y=>{
+                await Book.find({Genre:g}).limit(12).lean().then(y=>{
            // console.log(y[0])
-                    gen[g]=y.slice(0,12);
+                    gen[g]=y;
            // console.log(gen)
            // console.log(dic)
                                                           })
                                                   }
        // console.log(gen)
-            return res.render('dashboard',{recom:{},pop:pop,genre:lis_genre,books:gen,layout:'navbar.ejs'})
+
+            return res.render('dashboard',{u:false,pop:pop,genre:lis_genre,books:gen,layout:'navbar.ejs'})
+
      })  // return res.sendStatus(200)
 
 
