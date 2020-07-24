@@ -538,7 +538,7 @@ a:active,a:focus{outline:0;}
                           <div class="card-body">
                             <h6 class="card-category text-info"><%=mybids[i].bookid.Genre%></h6>
                             <h3 style="margin-bottom:1px" class="card-title">
-                              <a href="/shelf/viewbook/<%=mybids[i].bookid.Title%>"><%=mybids[i].bookid.Title%></a>
+                              <a href="/shelf/viewbook/<%=mybids[i].bookid.Title%>" style="font-weight: normal;"><%=mybids[i].bookid.Title%></a>
                             </h3 >&nbsp
                             <p class="author">
                               by
@@ -547,10 +547,10 @@ a:active,a:focus{outline:0;}
                               </a>
                             </p>
 
-                            <p class="card-description desc">
+                            <p class="card-description desc" style="font-weight: normal;color: #66615b;">
 
-                              Base Amount : <%=mybids[i].baseamount%><br>
-                              Starts On : <%=mybids[i].formatDate%>
+                              Base Amount : <span style="color: black;"><%=mybids[i].baseamount%></span><br>
+                              Starts On : <span style="color: black;"><%=mybids[i].formatDate%></span>
 
                             <br><br>
     <a class="btn btn-rose btn-round" style="color:white" id='but' href="/book/bidding/<%=mybids[i].bookid._id%>/<%=mybids[i].userid%>/<%=mybids[i]._id%>"  >View auction</a>
