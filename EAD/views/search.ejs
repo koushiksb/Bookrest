@@ -40,14 +40,14 @@
       <div class="container">
         <div class="row" style="margin-top:3rem;justify-content:center;align-items:center">
           <form method="post" action="/users/search" style="width:60%">
-           <input class="form-control" list="books" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
+           <input class="form-control" list="books" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left;font-weight: bold">
            <datalist id='books'>
              <%for(var i=0;i<allbooks.length;i++){%>
              <option value="<%=allbooks[i].Title%>"></option>
              <option value="<%=allbooks[i].Author%>"></option>
              <%}%>
            </datalist>
-           <button type="submit" class="btn primary" style="margin-left:10px">Search</button>
+           <button type="submit" class="btn primary" style="font-weight: bold;margin-left:10px">Search</button>
            </form>
 
         </div>
@@ -55,7 +55,7 @@
         <div class="row">
 
           <div class="col-md-12">
-            <h2 style="color:black">Results for <%= query%></h2>
+            <h2 style="color:black;font-weight: normal;">Results for <%= query%></h2>
             <br/>
           </div>
           <% for(i=0;i<books.length; i++){%>
@@ -67,8 +67,8 @@
                 </a>
                 <div class="card-body">
                   <div class="card-description">
-                    <p class="card-title" style="width:20ch"><%= books[i].Title%></p>
-                    <p class="card-description" style="margin-top:-0.4rem"><%= books[i].Author%></p>
+                    <p class="card-title" style="width:20ch;color:black;font-weight: normal;"><%= books[i].Title%></p>
+                    <p class="card-description" style="margin-top:-0.4rem;color:black;font-weight: normal;"><%= books[i].Author%></p>
                     <% for(var m=0; m<Math.round(books[i].Rating/2) ;m++){%>
                     <span class="fa fa-star checked"></span>
                     <%}%>
@@ -86,7 +86,7 @@
     </div>
 <br>
 <div style="margin-left:45%" id="loadMore">
-              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See More...</button>
+              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: bold;margin-bottom: 20px">See More...</button>
           </div>
           <script>
    $( document ).ready(function () {

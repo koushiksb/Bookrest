@@ -32,10 +32,10 @@
 </div>
  <div class="wrapper">
    <div class="section latest-offers" style="background-color: #2A2A2A">
-     <h3 class="section-title" style="margin-left:23%;color:white;display:inline"><b>Search</b></h3>
+     <h3 class="section-title" style="margin-left:23%;color:white;display:inline;font-weight: normal"><b>Search</b></h3>
      <div class="md-form mt-0" style="margin-left:23%;width:50%">
       <form method="post" action="/users/search">
-       <input class="form-control" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left">
+       <input class="form-control" name="search" type="text" placeholder="Search" aria-label="Search" style="width:70%;display:inline;float:left;font-weight: bold">
        <button type="submit" class="btn primary" style="margin-left:10px">Search</button>
        </form>
      </div>
@@ -44,7 +44,7 @@
       <% for(var i in recom){%>
           <!-- <div id=> -->
           <%if( i == 'Top Picks for you'){%>
-          <b><h3 style="color:white">Top Picks For You </h3></b><!-- </div> --><br>
+          <b><h3 style="color:white;font-weight: bold">Top Picks For You </h3></b><!-- </div> --><br>
           <%}else{%>
             <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
             <%}%>
@@ -82,7 +82,7 @@
          <%}%>
        <% for(var i in pop){%>
           <!-- <div id=> -->
-          <b><h3 style="color:white"><%= i %> Books</h3></b><!-- </div> --><br>
+          <b><h3 style="color:white;font-weight: normal"><%= i %> Books</h3></b><!-- </div> --><br>
           <div class="col-md-12">
            <div class="products">
              <div class="row">
@@ -114,7 +114,7 @@
                </div>
              <div class="col-md-3 offset-md-4">
               <a href="/users/seebks/<%= i %>">
-                <button rel="tooltip" class="btn btn-round btn-outline-default" id="successBtn" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+                <button rel="tooltip" class="btn btn-round btn-outline-default" id="successBtn" data-rotation-color="gray" style="color:white;font-weight: bold">See all...</button>
               </a>
               </div>
            </div>
@@ -125,7 +125,7 @@
    <!-- section -->
    <div class="section" style="background-color: #161616">
      <div class="container">
-       <h3 class="section-title" style="color:white;margin-bottom: 20px"><b>All Genres</b></h3>
+       <h3 class="section-title" style="color:white;margin-bottom: 20px;font-weight: normal"><b>All Genres</b></h3>
        <% for(i=0;i<genre.length ;i++){%>
        			<a href=#<%= genre[i]["Genre"]%>>
             <button rel="tooltip" title=genre[i]["Genre"] class="btn btn-round "   style="color:white;font-weight: bold;background-ccolor:white; margin-right: 20px;margin-bottom:15px"><%= genre[i]["Genre"]%>
@@ -136,7 +136,7 @@
        		<!-- <div id=> -->
           <a name= <%= i %>></a>
           <br>
-       		<h3 style="color:white"><%= i %></h3><!-- </div> --><br>
+       		<h3 style="color:white;font-weight: normal"><%= i %></h3><!-- </div> --><br>
        		<div class="col-md-12">
            <div class="products">
              <div class="row">
@@ -168,7 +168,7 @@
                </div>
              <div class="col-md-3 offset-md-4">
               <a href="/users/seebooks/<%= i %>">
-                <button rel="tooltip" class="btn btn-round btn-outline-default" id="successBtn" data-rotation-color="gray" style="color:white;font-weight: normal">See all...</button>
+                <button rel="tooltip" class="btn btn-round btn-outline-default" id="successBtn" data-rotation-color="gray" style="color:white;font-weight: bold">See all...</button>
               </a>
               </div>
            </div>

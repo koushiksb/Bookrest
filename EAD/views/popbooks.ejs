@@ -38,7 +38,7 @@
         <div class="row">
 
           <div class="col-md-12">
-            <h2 style="color:black"><%= books[0].Class%> Books</h2>
+            <h2 style="color:black;font-weight: normal"><%= books[0].Class%> Books</h2>
             <br/>
           </div>
           <% for(i=0;i<books.length; i++){%>
@@ -50,8 +50,8 @@
                 </a>
                 <div class="card-body">
                   <div class="card-description">
-                    <p class="card-title" style="font-family:400"><%= books[i].Title%></p>
-                    <p class="card-description"><%= books[i].Author%></p>
+                    <p class="card-title" style="font-family:400;font-weight: normal;color: black;"><%= books[i].Title%></p>
+                    <p class="card-description" style="font-weight: normal;color: black;"><%= books[i].Author%></p>
                     <div >
                       <span class="fa fa-star checked"></span>
                       <span class="fa fa-star checked"></span>
@@ -71,7 +71,7 @@
     </div>
 <br>
 <div style="margin-left:45%" id="loadMore">
-              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: normal;margin-bottom: 20px">See More...</button>
+              <button rel="tooltip" title="This is a morphing button" class="btn btn-round btn-outline-default" id="successBtn" data-toggle="morphing" data-rotation-color="gray" style="font-weight: bold;margin-bottom: 20px">See More...</button>
           </div>
           <script>
    $( document ).ready(function () {
