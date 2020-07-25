@@ -131,7 +131,7 @@
 
     }
     console.log(x);
-      return res.render('oldrequests',{requests:x,layout:'navbar2'})
+      return res.render('oldrequests',{requests:x.reverse(),layout:'navbar2'})
     // return res.sendStatus(200)
     })
 
@@ -239,4 +239,3 @@
 
 
   module.exports  = router
-  
