@@ -127,7 +127,7 @@ router.get('/addbook', isLoggedIn.isLoggedIn, (req, res) => {
       inf.push(books[i].YearOfPublication).toString();
       inf.push(books[i].ImageURLL).toString();
       var desc = books[i].Description;
-        
+
       inf.push(desc.replace(/[^a-zA-Z0-9 .]/g,""));
       booksInfo.push(inf);
     }
@@ -162,7 +162,7 @@ router.get('/editbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
         booksInfo[0].push(false);
       }
       var desc = books.Description;
-        
+
       booksInfo[0].push(desc.replace(/[^a-zA-Z0-9 .]/g,""));
 
       res.render('addbook', { 'booksInfo': booksInfo, layout: 'navbar2', 'edit': true });
@@ -620,7 +620,7 @@ router.post('/charge', (req, res) => {
   var addedAmount = req.body.addedAmount;
   if (addedAmount > 0) {
     var charge = stripe.charges.create({
-      amount: addedAmount,
+      amount: addedAmount*100,
       currency: "inr",
       source: token,
     }, function (err, charge) {
@@ -647,7 +647,7 @@ router.post('/charge', (req, res) => {
   else {
     if (token) {
       var charge = stripe.charges.create({
-        amount: chargeAmount,
+        amount: chargeAmount*100,
         currency: "inr",
         source: token,
       }, function (err, charge) {
