@@ -19,7 +19,8 @@
       type:String
     },
     Class:{
-      type:String
+      type:String,
+      default:'Rare'
     },
     Author:{
       type:String

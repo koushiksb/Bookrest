@@ -105,6 +105,7 @@ router.get('/view', isLoggedIn.isLoggedIn, (req, res) => {
           });
         }
       }
+      console.log(x)
       return res.render('shelf1', { book: x, layout: 'navbar2', owner: y });
     });
   })
