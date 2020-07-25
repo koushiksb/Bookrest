@@ -140,7 +140,7 @@
                 </div>
                 <div class="form-group">
                   <h6>Description</h6>
-                  <textarea name="description" class="form-control textarea-limited" style="font-weight: normal;color: black;" placeholder="This is a textarea limited to 150 characters." rows="13" maxlength="150"></textarea>
+                  <textarea id="description" name="description" class="form-control textarea-limited" style="font-weight: normal;color: black;" placeholder="This is a textarea limited to 150 characters." rows="13" maxlength="150"></textarea>
                   <h5>
                     <small>
                       <span id="textarea-limited-message" class="pull-right" style="font-weight: normal;color: black;">150 characters left</span>
@@ -239,6 +239,9 @@
         $("#author").prop("disabled",true);
         $("#year").val(booksInfo[0][3]);
         $("#year").prop("disabled",true);
+        $("#textarea-limited-message").hide();
+        $("#description").val(booksInfo[0][7]);
+        $("#description").prop("disabled",true);
         $("#hasHardCopy").val(booksInfo[0][5]);
         var isThereHardCopy = booksInfo[0][5];
         $("#hasHardCopy").prop("checked",isThereHardCopy);
@@ -282,6 +285,9 @@
         $("#year").prop("disabled",true);
         $("#image").attr("src",booksInfo[index][4]);
         $("#imageSelect").hide();
+        $("#description").val(booksInfo[index][5]);
+        $("#description").prop("disabled",true);
+        $("#textarea-limited-message").hide();
       }
       else{
         $("#publisher").val('');
@@ -292,6 +298,9 @@
         $("#year").prop("disabled",false);
         $("#image").attr("src",'../static/pics/image_placeholder.jpg');
         $("#imageSelect").show();
+        $("#description").val('');
+        $("#description").prop("disabled",false);
+        $("#textarea-limited-message").toggle('show');
       }
     });
 
