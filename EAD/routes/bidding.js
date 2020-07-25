@@ -98,7 +98,7 @@ Api to redirect user to bidding page for both user and owner
   router.get('/allbidding',(req,res)=>{
     console.log(req.user.id);
     var canEdit = true;
-    Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid').sort({date:1}).lean()
+    Openbid.find({ userid: { $not: { $eq: req.user.id } },status:1 }).populate('bookid','Title Author ImageURLL Genre').sort({date:1}).lean()
     .then(async x=>{
       console.log(x);
       await x.forEach((item, i) => {
