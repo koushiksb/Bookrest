@@ -121,14 +121,17 @@ router.get('/addbook', isLoggedIn.isLoggedIn, (req, res) => {
     var booksInfo = [];
     for (i = 0; i < books.length; i++) {
       var inf = [];
-      inf.push(books[i].Title);
-      inf.push(books[i].Publisher);
-      inf.push(books[i].Author);
-      inf.push(books[i].YearOfPublication);
-      inf.push(books[i].ImageURLL)
+      inf.push(books[i].Title).toString();
+      inf.push(books[i].Publisher).toString();
+      inf.push(books[i].Author).toString();
+      inf.push(books[i].YearOfPublication).toString();
+      inf.push(books[i].ImageURLL).toString();
+      var desc = books[i].Description;
+        
+      inf.push(desc.replace(/[^a-zA-Z0-9 .]/g,""));
       booksInfo.push(inf);
     }
-    console.log('booksInfo', booksInfo.length);
+    // console.log('booksInfo', booksInfo);
 
     res.render('addbook', { 'booksInfo': booksInfo, layout: 'navbar2', 'edit': false });
   });
@@ -158,6 +161,9 @@ router.get('/editbook/:title', isLoggedIn.isLoggedIn, (req, res) => {
       else {
         booksInfo[0].push(false);
       }
+      var desc = books.Description;
+        
+      booksInfo[0].push(desc.replace(/[^a-zA-Z0-9 .]/g,""));
 
       res.render('addbook', { 'booksInfo': booksInfo, layout: 'navbar2', 'edit': true });
     });
@@ -228,6 +234,7 @@ router.post('/addbook', multer(multerconf).single('photo'), (req, res) => {
         Title: req.body.bookname,
         Author: req.body.author,
         YearOfPublication: req.body.year,
+        Description: req.body.description,
         ImageURLS: path(req),
         ImageURLM: path(req),
         ImageURLL: path(req),
