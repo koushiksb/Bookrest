@@ -1190,7 +1190,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div style="float:left;color: #66615b;font-weight: normal;">
-                                    <b>Wallet Balance : <span style="font-weight: normal;color: black;"><%= allPayments.walletBalance %></span></b>
+                                    <b>Wallet Balance : <span style="font-weight: normal;color: black;"><span class="fa fa-rupee">&nbsp;<%= allPayments.walletBalance %></span></span></b>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -1231,7 +1231,7 @@
                                         </p>
 
                                         <p class="card-description desc" style="font-weight: normal;color: #66615b;">
-                                            Amount <span style="color: black;"><%=allPayments[i].amount%></span> <br>
+                                            Amount <span style="color: black;"><span class="fa fa-rupee">&nbsp;</span><%=allPayments[i].amount%></span> <br>
                                             <% if(allPayments[i].purchaser.password) { %>
                                             To be paid by <span
                                                 style="color: black;"><%=allPayments[i].purchaser.profile.fname%></span>
@@ -1260,20 +1260,20 @@
 
                                                             <div class="form-group">
                                                                 <h6 style="text-align:center">Wallet Balance :
-                                                                    <%= allPayments.walletBalance %></h6>
+                                                                <span class="fa fa-rupee"></span><%= allPayments.walletBalance %></h6>
                                                                 <h6 style="text-align:center">Amount To be paid :
-                                                                    <%= allPayments[i].amount %></h6>
+                                                                <span class="fa fa-rupee"></span><%= allPayments[i].amount %></h6>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer"
                                                             style="border-top:0px !important;padding:1rem 5rem !important">
                                                             <% if( allPayments.walletBalance >= allPayments[i].amount) { %>
                                                             <button type="button" class="b btn btn-round"
-                                                                style="float: left" data-toggle="modal"
+                                                                style="float: left;border-width: 0px;" data-toggle="modal"
                                                                 data-target='#confirmation'>Pay from wallet</button>
                                                             <% } else { %>
                                                             <button type="button" class="b btn btn-round"
-                                                                style="float: left" data-toggle="modal"
+                                                                style="float: left;border-width: 0px;" data-toggle="modal"
                                                                 data-target='#confirmation' disabled>Pay from
                                                                 wallet</button>
                                                             <% } %>
@@ -1288,7 +1288,7 @@
                                                                     </script>
                                                                 <button type="submit" class="b btn btn-round"
                                                                     style="color:white;background-color:#66615B;border:1px solid white">Pay
-                                                                    to unlock</button>
+                                                                    with card</button>
                                                                 <input type="hidden" id="chargeAmount"
                                                                     name="chargeAmount"
                                                                     value="<%= allPayments[i].amount %>">
@@ -1321,14 +1321,14 @@
                                                                 <br>
                                                                 <h6 style="text-align:center">Current Balance
                                                                     &nbsp;&nbsp;&nbsp; =
-                                                                    <%= allPayments.walletBalance %></h6>
+                                                                    <span class="fa fa-rupee">&nbsp;</span><%= allPayments.walletBalance %></h6>
                                                                 <h6 style="text-align:center">Book Cost
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    = <%= allPayments[i].amount %></h6>
+                                                                    = <span class="fa fa-rupee">&nbsp;</span><%= allPayments[i].amount %></h6>
                                                                 <h6 style="text-align:center">
                                                                     ============================</h6>
                                                                 <h6 style="text-align:center">Remaining Balance =
-                                                                    <%- allPayments.walletBalance - allPayments[i].amount %>
+                                                                    <span class="fa fa-rupee">&nbsp;</span><%- allPayments.walletBalance - allPayments[i].amount %>
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -1359,7 +1359,7 @@
                         </div>
                         <%}%>
 <%}else{%>
-                        <p style="text-align:center;margin-top:10px;font-size:1.5rem">No pending payments</p>
+                        <p style="text-align:center;margin-top:10px;font-size:1.5rem;font-weight: normal;">No pending payments</p>
                         <%}%>
               </div>
             </div>
@@ -1377,7 +1377,7 @@
   
   
                       <div class="form-group">
-                        <h6 style="text-align:center">Enter the amount : <input type="number" min="0" id="amount" name="amount" value=""></h6>
+                        <h6 style="text-align:center">Enter the amount in <span class="fa fa-rupee">&nbsp;</span> : <input type="number" min="0" id="amount" name="amount" value=""></h6>
                       </div>
                     </div>
                     <div class="modal-footer" style="border-top:0px !important;padding:1rem 10rem !important">
