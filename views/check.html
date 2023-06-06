@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style media="screen">
+      /*! CSS Used from: http://www.page-flip.info/newspaper_wp/wp-content/plugins/wp_bookshelf/bookshelf/css/bookshelf.css?ver=4.7.16 ; media=all */
+      @media all {
+        /*! @import http://www.page-flip.info/newspaper_wp/wp-content/plugins/wp_bookshelf/bookshelf/css/magnific.css */
+        .mfp-hide {
+          display: none !important;
+        }
+        /*! end @import */
+        /*! @import http://www.page-flip.info/newspaper_wp/wp-content/plugins/wp_bookshelf/bookshelf/css/book.css */
+        .bs-container {
+          max-width: 800px;
+          margin: 0 auto;
+          background: none;
+          overflow: hidden;
+          margin-bottom: 0px;
+          text-align: center;
+        }
+        .bs-container .bs-shelf {
+          position: relative;
+          height: 150px;
+          margin-bottom: 10%;
+        }
+        .bs-container .bs-shelf-image {
+          width: 140px;
+          height: 100%;
+          display: inline-block;
+          vertical-align: bottom;
+          position: relative;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          margin-left: 0px;
+          margin-right: 5px;
+          max-width: 100%;
+        }
+        .bs-container .bs-shelf-image:last-child {
+          margin-right: 0px;
+        }
+        .bs-container .bs-shelf-image:nth-child(2) {
+          margin-left: 0px;
+        }
+        .bs-container .bs-shelf-image img {
+          max-width: 100%;
+          max-height: 100%;
+          box-shadow: 0px 0px 3px #666666;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+        }
+        .bs-container .bs-shelf-image img {
+          -moz-transition-duration: 0.5s;
+          -webkit-transition-duration: 0.5s;
+          -ms-transition-duration: 0.5s;
+        }
+        .bs-container .bs-shelf-image .bs-mask {
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          overflow: hidden;
+          position: relative;
+        }
+        .bs-container .bs-shelf-image .bs-textbox {
+          position: absolute;
+          background-color: #ffffff;
+          width: 100%;
+          bottom: -100px;
+          left: 50%;
+          -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+          opacity: 1;
+          padding: 5px 0;
+          pointer-events: none;
+        }
+        .bs-container .bs-shelf-image .bs-textbox p {
+          color: #000000;
+          font-size: 11px;
+          font-weight: 700;
+          margin: 0 !important;
+          line-height: 1.5 !important;
+          padding: 0 !important;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+        }
+        .bs-container .bs-shelf-background {
+          position: absolute;
+          border: 0px solid #ff0000;
+          left: 0;
+          bottom: -15px;
+          width: 100%;
+          height: 35px;
+        }
+        .bs-container .bs-shelf-background .bs-rectangle {
+          width: 100%;
+          height: 100%;
+          border: 0px solid #fff000;
+          position: absolute;
+          top: 0;
+          left: 0;
+          -webkit-transform: perspective(100px) rotateX(15deg);
+          -webkit-transform-origin: 50% 100% 0;
+          -ms-transform: perspective(100px) rotateX(15deg);
+          -ms-transform-origin: 50% 100% 0;
+          box-shadow: 0px 7px 1px rgba(0, 0, 0, 0.25);
+          background: -moz-linear-gradient(
+            top,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0.06) 100%
+          );
+          background: -webkit-linear-gradient(
+            top,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0.06) 100%
+          );
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0.06) 100%
+          );
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40000000', endColorstr='#0f000000',GradientType=0 );
+        }
+        /*! end @import */
+        .dialog-bookshelf {
+          background: white;
+          padding: 20px 30px;
+          text-align: left;
+          max-width: 800px;
+          margin: 40px auto;
+          position: relative;
+        }
+      }
+      /*! CSS Used from: http://www.page-flip.info/newspaper_wp/wp-content/themes/omega/style.css?ver=4.7.16 ; media=all */
+      @media all {
+        article,
+        header,
+        main,
+        section {
+          display: block;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2em;
+          margin: 0.67em 0;
+        }
+        img {
+          border: 0;
+        }
+        * {
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+        .entry:before,
+        .site-inner:before,
+        .wrap:before {
+          content: " ";
+          display: table;
+        }
+        .entry:after,
+        .site-inner:after,
+        .wrap:after {
+          clear: both;
+          content: " ";
+          display: table;
+        }
+        ::-moz-selection {
+          background: #333;
+          color: #fff;
+        }
+        ::selection {
+          background: #333;
+          color: #fff;
+        }
+        a {
+          color: #333;
+          text-decoration: none;
+        }
+        a:hover,
+        a:focus {
+          color: #008cba;
+          text-decoration: none;
+        }
+        p {
+          margin: 0 0 24px;
+          padding: 0;
+        }
+        h1,
+        h3 {
+          color: #444;
+          font-weight: normal;
+          line-height: 1.2;
+          margin: 0;
+          margin-bottom: 22px;
+          padding: 0;
+        }
+        h1 {
+          font-size: 36px;
+        }
+        h3 {
+          font-size: 24px;
+        }
+        img {
+          max-width: 100%;
+        }
+        img {
+          height: auto;
+          width: auto\9;
+        }
+        ::-moz-placeholder {
+          color: #999;
+        }
+        ::-webkit-input-placeholder {
+          color: #999;
+        }
+        .wrap {
+          margin: 0 auto;
+          max-width: 980px;
+        }
+        .site-inner {
+          clear: both;
+          padding-top: 50px;
+        }
+        .content {
+          float: left;
+          width: 600px;
+        }
+        .entry-title {
+          font-size: 36px;
+          word-wrap: break-word;
+          line-height: 1.2;
+        }
+        .entry {
+          margin-bottom: 50px;
+        }
+        .entry-content {
+          word-wrap: break-word;
+        }
+        .entry-content a {
+          text-decoration: underline;
+        }
+        @media only screen and (max-width: 1023px) {
+          .content,
+          .wrap {
+            width: 100%;
+          }
+          .site-inner {
+            padding-top: 40px;
+          }
+          .site-inner {
+            padding-left: 5%;
+            padding-right: 5%;
+          }
+          .entry {
+            padding: 0;
+          }
+          .site-inner {
+            background: none;
+          }
+        }
+        @media only screen and (max-width: 768px) {
+          .entry-title {
+            font-size: 22px;
+          }
+          h1 {
+            font-size: 22px;
+          }
+          h3 {
+            font-size: 20px;
+          }
+        }
+      }
+      /*! CSS Used from: Embedded */
+      .content {
+        float: left;
+        width: 100%;
+      }
+      .singular-page-1059 .entry-title {
+        text-align: center;
+        display: none;
+      }
+      /*! CSS Used from: Embedded */
+      #_913804615.bs-container {
+        max-width: 800px;
+      }
+      #_913804615.bs-container .bs-shelf-image .bs-textbox {
+        background-color: #ffffff;
+      }
+      #_913804615.bs-container .bs-shelf-image .bs-textbox {
+        opacity: 1;
+      }
+      #_913804615.bs-container .bs-shelf-image .bs-textbox p {
+        color: #000000;
+      }
+      #_913804615.bs-container .bs-shelf-image img {
+        box-shadow: 0px 0px 3px #666666;
+      }
+      #_913804615.bs-container .bs-shelf-image .bs-textbox p {
+        font-size: 11px;
+      }
+      #_913804615.bs-container .bs-shelf-background .bs-rectangle {
+        box-shadow: 0px 7px 1px rgba(224, 224, 224, 1);
+        background: -moz-linear-gradient(
+          top,
+          rgba(224, 224, 224, 1) 0%,
+          rgba(0, 0, 0, 0.4) 100%
+        );
+        background: -webkit-linear-gradient(
+          top,
+          rgba(224, 224, 224, 1) 0%,
+          rgba(224, 224, 224, 0.4) 100%
+        );
+        background: linear-gradient(
+          to bottom,
+          rgba(224, 224, 224, 1) 0%,
+          rgba(224, 224, 224, 0.4) 100%
+        );
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40000000', endColorstr='#0f000000',GradientType=0 );
+      }
+      #_913804615.bs-container .bs-shelf-image a img:hover {
+        opacity: 1;
+      }
+      .dialog-bookshelf {
+        max-width: 800px;
+        background: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-inner">
+      <div class="wrap">
+        <main
+          class="content"
+          id="content"
+          role="main"
+          itemprop="mainContentOfPage"
+        >
+          <article
+            id="post-1059"
+            class="entry page publish author-admin post-1059"
+            itemscope="itemscope"
+            itemtype="http://schema.org/CreativeWork"
+          >
+            <div class="entry-wrap">
+              <header class="entry-header">
+                <h1 class="entry-title" itemprop="headline">Bookshelf</h1>
+              </header>
+              <!-- .entry-header -->
+              <div class="entry-content" itemprop="text">
+                <!-- begin BookShelf html -->
+                <div id="_173601479" class="bs-container">
+                  <!-- begin tile bookshelf -->
+                  <section class="bs-description">
+                    <h3></h3>
+                  </section>
+                  <!-- end tile bookshelf -->
+
+                  <!-- begin images for bookshelf -->
+                  <section>
+                    <div class="bs-shelf">
+                      <div class="bs-shelf-background">
+                        <div class="bs-rectangle"></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>newspaper</p>"
+                          onclick="load_book_lightbox('_book1')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2016/01/1.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                      style="
+                                                                                                                        width: 106px;
+                                                                                                                        bottom: -26px;
+                                                                                                                      "
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        newspaper
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_488409265"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Why Not</p>"
+                          onclick="load_book_lightbox('_book2')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2016/01/thumb_books_2.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                      style="
+                                                                                                                        width: 106px;
+                                                                                                                        bottom: -26px;
+                                                                                                                      "
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Why
+                                                                                                                        Not
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_2092316386"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Newspaper</p>"
+                          onclick="load_book_lightbox('book1')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/005.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                      style="
+                                                                                                                        width: 106px;
+                                                                                                                        bottom: -26px;
+                                                                                                                      "
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Newspaper
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_1618670177"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Why Not</p>"
+                          onclick="load_book_lightbox('book2')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/01.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                      style="
+                                                                                                                        width: 115px;
+                                                                                                                        bottom: -26px;
+                                                                                                                      "
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Why
+                                                                                                                        Not
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_154573490"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Newspaper</p>"
+                          onclick="load_book_lightbox('_book2')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/004.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                      style="
+                                                                                                                        width: 106px;
+                                                                                                                        bottom: -26px;
+                                                                                                                      "
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Newspaper
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_1809199714"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                    </div>
+                    <div class="bs-shelf">
+                      <div class="bs-shelf-background">
+                        <div class="bs-rectangle"></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Newspaper</p>"
+                          onclick="load_book_lightbox('_book2')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/04.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                      style="
+                                                                                                                        width: 106px;
+                                                                                                                        bottom: -26px;
+                                                                                                                      "
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Newspaper
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_1070138165"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Why Not</p>"
+                          onclick="load_book_lightbox('_book1')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/003.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Why
+                                                                                                                        Not
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_1182252123"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Newspaper</p>"
+                          onclick="load_book_lightbox('_book2')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/1.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Newspaper
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_39512573"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                      <div class="bs-shelf-image">
+                        <!--  action redirect    -->
+
+                        <a
+                          title="<p>Newspaper</p>"
+                          onclick="load_book_lightbox('_book2')"
+                          style="cursor: pointer"
+                        >
+                          <img
+                            src="http://www.page-flip.info/newspaper_wp/wp-content/uploads/2018/03/5.jpg"
+                          />
+                        </a>
+
+                        <!-- title for image -->
+                        <div class="bs-mask">
+                          <div class="bs-mask">
+                            <div class="bs-mask">
+                              <div class="bs-mask">
+                                <div class="bs-mask">
+                                  <div class="bs-mask">
+                                    <div class="bs-mask">
+                                      <div class="bs-mask">
+                                        <div class="bs-mask">
+                                          <div class="bs-mask">
+                                            <div class="bs-mask">
+                                              <div class="bs-mask">
+                                                <div class="bs-mask">
+                                                  <div class="bs-mask">
+                                                    <div class="bs-mask">
+                                                      <div class="bs-mask">
+                                                        <div class="bs-mask">
+                                                          <div class="bs-mask">
+                                                            <div
+                                                              class="bs-mask"
+                                                            >
+                                                              <div
+                                                                class="bs-mask"
+                                                              >
+                                                                <div
+                                                                  class="bs-mask"
+                                                                >
+                                                                  <div
+                                                                    class="bs-mask"
+                                                                  >
+                                                                    <div
+                                                                      class="bs-mask"
+                                                                    >
+                                                                      <div
+                                                                        class="bs-mask"
+                                                                      >
+                                                                        <div
+                                                                          class="bs-mask"
+                                                                        >
+                                                                          <div
+                                                                            class="bs-mask"
+                                                                          >
+                                                                            <div
+                                                                              class="bs-mask"
+                                                                            >
+                                                                              <div
+                                                                                class="bs-mask"
+                                                                              >
+                                                                                <div
+                                                                                  class="bs-mask"
+                                                                                >
+                                                                                  <div
+                                                                                    class="bs-mask"
+                                                                                  >
+                                                                                    <div
+                                                                                      class="bs-mask"
+                                                                                    >
+                                                                                      <div
+                                                                                        class="bs-mask"
+                                                                                      >
+                                                                                        <div
+                                                                                          class="bs-mask"
+                                                                                        >
+                                                                                          <div
+                                                                                            class="bs-mask"
+                                                                                          >
+                                                                                            <div
+                                                                                              class="bs-mask"
+                                                                                            >
+                                                                                              <div
+                                                                                                class="bs-mask"
+                                                                                              >
+                                                                                                <div
+                                                                                                  class="bs-mask"
+                                                                                                >
+                                                                                                  <div
+                                                                                                    class="bs-mask"
+                                                                                                  >
+                                                                                                    <div
+                                                                                                      class="bs-mask"
+                                                                                                    >
+                                                                                                      <div
+                                                                                                        class="bs-mask"
+                                                                                                      >
+                                                                                                        <div
+                                                                                                          class="bs-mask"
+                                                                                                        >
+                                                                                                          <div
+                                                                                                            class="bs-mask"
+                                                                                                          >
+                                                                                                            <div
+                                                                                                              class="bs-mask"
+                                                                                                            >
+                                                                                                              <div
+                                                                                                                class="bs-mask"
+                                                                                                              >
+                                                                                                                <div
+                                                                                                                  class="bs-mask"
+                                                                                                                >
+                                                                                                                  <div
+                                                                                                                    class="bs-mask"
+                                                                                                                  >
+                                                                                                                    <div
+                                                                                                                      class="bs-textbox"
+                                                                                                                    >
+                                                                                                                      <p>
+                                                                                                                        Newspaper
+                                                                                                                      </p>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- text from wysiwig -->
+                        <div
+                          id="_1383711078"
+                          class="zoom-anim-dialog mfp-hide dialog-bookshelf"
+                        ></div>
+                      </div>
+                    </div>
+                  </section>
+                  <!-- end images for bookshelf -->
+                </div>
+                <!-- end BookShelf html -->
+
+                <!-- CUSTOM CSS -->
+                <style>
+                  #_173601479.bs-container {
+                    max-width: 800px;
+                  }
+
+                  #_173601479.bs-container .bs-shelf-image .bs-textbox {
+                    background-color: #ffffff;
+                  }
+
+                  #_173601479.bs-container .bs-shelf-image .bs-textbox {
+                    opacity: 1;
+                  }
+
+                  #_173601479.bs-container .bs-shelf-image .bs-textbox p {
+                    color: #000000;
+                  }
+
+                  #_173601479.bs-container .bs-shelf-image img {
+                    box-shadow: 0px 0px 3px #666666;
+                  }
+
+                  #_173601479.bs-container .bs-shelf-image .bs-textbox p {
+                    font-size: 11px;
+                  }
+
+                  #_173601479.bs-container .bs-shelf-background .bs-rectangle {
+                    box-shadow: 0px 7px 1px rgba(224, 224, 224, 1);
+
+                    background: -moz-linear-gradient(
+                      top,
+                      rgba(224, 224, 224, 1) 0%,
+                      rgba(0, 0, 0, 0.4) 100%
+                    );
+
+                    background: -webkit-linear-gradient(
+                      top,
+                      rgba(224, 224, 224, 1) 0%,
+                      rgba(224, 224, 224, 0.4) 100%
+                    );
+
+                    background: linear-gradient(
+                      to bottom,
+                      rgba(224, 224, 224, 1) 0%,
+                      rgba(224, 224, 224, 0.4) 100%
+                    );
+
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40000000', endColorstr='#0f000000',GradientType=0 );
+                  }
+
+                  #_173601479.bs-container .bs-shelf-image a img:hover {
+                    opacity: 1;
+                  }
+
+                  /* css style for lightbox magnific-popup */
+
+                  .mfp-title {
+                    color: #f3f3f3;
+                  }
+
+                  .mfp-close-btn-in .mfp-close {
+                    color: #333;
+                  }
+
+                  .mfp-image-holder .mfp-close,
+                  .mfp-iframe-holder .mfp-close {
+                    color: #ffffff;
+                  }
+
+                  .dialog-bookshelf {
+                    max-width: 800px;
+                    background: #ffffff;
+                  }
+
+                  .mfp-bg {
+                    background: #0b0b0b;
+                    opacity: 0.8;
+                  }
+
+                  .my-mfp-zoom-in.mfp-ready.mfp-bg {
+                    opacity: 0.8;
+                  }
+                </style>
+
+                <!-- begin start bookshelf -->
+                <script>
+                  jQuery("#_173601479").bookshelf();
+
+                  //popup with text html
+                  jQuery(".fm-popup-with-zoom-anim").magnificPopup({
+                    type: "inline",
+
+                    fixedContentPos: false,
+                    fixedBgPos: true,
+
+                    overflowY: "auto",
+
+                    closeBtnInside: true,
+                    preloader: false,
+
+                    midClick: true,
+                    removalDelay: 300,
+                    mainClass: "my-mfp-zoom-in",
+                  });
+
+                  //youtube, vimeo
+                  jQuery(".fm-popup-youtube").magnificPopup({
+                    disableOn: 700,
+                    type: "iframe",
+                    mainClass: "mfp-fade",
+                    removalDelay: 160,
+                    preloader: false,
+                    fixedContentPos: false,
+                  });
+
+                  //single image
+                  jQuery(".fm-single-image").magnificPopup({
+                    type: "image",
+                    closeOnContentClick: true,
+                    mainClass: "mfp-img-mobile",
+                    image: {
+                      verticalFit: true,
+                    },
+                  });
+                </script>
+                <!-- end start bookshelf -->
+              </div>
+            </div>
+          </article>
+        </main>
+        <!-- .content -->
+      </div>
+    </div>
+  </body>
+</html>
